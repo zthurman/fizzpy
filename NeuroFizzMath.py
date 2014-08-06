@@ -23,12 +23,13 @@ class Neuron:
 	
 	def solve():
 	
-	def modelsolve():
 		
 class Model:
 	params = []
 	dynams = []
 	def model():
+	
+	def modelsolve():
 
 def pplot():
 	
