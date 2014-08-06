@@ -11,13 +11,20 @@ import sys
 import math as mt
 
 # First we need to come up with a class that will be general enough to encompass all of the neuron models
+# Step 1: Create the Neuron class to be the most general, all specific neuron models should inherit from this class
+# Things to determine, what is common to all of the models? parameters and equations
+#	-The parameters are constants fed into the equations when they are solved, will not need to be defined until
+#        the system is evaluated
+#	-The equations consist of a combination of dynamical variables and constants which will need to be evaluated
+# 	 together to come up with the solution
 
 class Neuron:
 	params = []
-	def model(eqns,params):
-		
+	dynams = []
+	def model(dynams,params):
+		return np.array()
 
-	def solver():
+	def RK4():
 
 #  The following is an excerpt from HindmarshRose, something along these lines would be a nice and clean way to do the
 # general neuron.
