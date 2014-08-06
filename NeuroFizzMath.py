@@ -27,7 +27,7 @@ class Neuron:
 class Model:
 	params = []
 	dynams = []
-	def model():
+	def model(dynams,params):
 	
 	def modelsolve():
 
