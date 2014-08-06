@@ -25,6 +25,10 @@ class Neuron:
 		return np.array()
 
 	def RK4():
+	
+	def solve():
+	
+	def modelsolve():
 
 #  The following is an excerpt from HindmarshRose, something along these lines would be a nice and clean way to do the
 # general neuron.
