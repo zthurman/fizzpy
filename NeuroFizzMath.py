@@ -29,7 +29,13 @@ class Model:
 	params = []
 	dynams = []
 	def model():
-		
+
+def pplot():
+	
+def tplot():
+
+def fftplot():
+
 
 #  The following is an excerpt from HindmarshRose, something along these lines would be a nice and clean way to do the
 # general neuron.
