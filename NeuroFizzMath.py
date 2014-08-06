@@ -19,16 +19,18 @@ import math as mt
 # 	 together to come up with the solution
 
 class Neuron:
-	params = []
-	dynams = []
-	def model(dynams,params):
-		return np.array()
 
 	def RK4():
 	
 	def solve():
 	
 	def modelsolve():
+		
+class Model:
+	params = []
+	dynams = []
+	def model():
+		
 
 #  The following is an excerpt from HindmarshRose, something along these lines would be a nice and clean way to do the
 # general neuron.
