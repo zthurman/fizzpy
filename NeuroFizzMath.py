@@ -19,7 +19,6 @@ import math as mt
 # 	 together to come up with the solution
 
 class Neuron:
-
 	def RK4():
 	
 	def solve():
