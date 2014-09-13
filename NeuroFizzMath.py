@@ -21,21 +21,21 @@ import math as mt
 class Neuron:
 	def RK4():
 	
-	def solve():
+	def FN():
 	
-		
-class Model:
-	params = []
-	dynams = []
-	def model(dynams,params):
+	def ML():
 	
-	def modelsolve():
+	def HR():
+	
+	def pplot():
+	
+	def tplot():
 
-def pplot():
+	def fftplot():
 	
-def tplot():
-
-def fftplot():
+	def p2plot():
+	
+	def t2plot():
 
 
 #  The following is an excerpt from HindmarshRose, something along these lines would be a nice and clean way to do the
