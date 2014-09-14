@@ -21,7 +21,9 @@ import math as mt
 class Neuron:
 	def RK4():
 	
-	def FN():
+	def FN(x,t,a = 0.75,b = 0.8,c = 3, I = -0.40):
+    		return np.array([c*(x[0]+ x[1]- x[0]**3/3 + I), \
+                    	-1/c*(x[0]- a + b*x[1])])
 	
 	def ML():
 	
