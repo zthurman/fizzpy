@@ -45,7 +45,9 @@ class Neuron:
     		return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I, \
                         c - d*(x[0]**2) - x[1], \
                         r*(s*(x[0] - xnot) - x[2])])
-	
+
+
+Q = Neuron()
 	
 def pplot(Q):
 	X = RK4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = Q)
