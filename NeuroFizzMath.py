@@ -32,14 +32,20 @@ class Neuron:
 		        k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
         		X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     		      return X
+    	
+    	FNparams = [a = 0.75,b = 0.8,c = 3, I = -0.40]
 
 	def FN(x,t,a = 0.75,b = 0.8,c = 3, I = -0.40):
     		return np.array([c*(x[0]+ x[1]- x[0]**3/3 + I), \
                     	-1/c*(x[0]- a + b*x[1])])
 	
+	MLparams = [c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 90]
+	
 	def ML(v,t,c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 90):
     		return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp), \
                      (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
+                     
+        HRparams = [a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 2.5, xnot = -1.5]
 	
 	def HR(x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 2.5, xnot = -1.5):
     		return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I, \
