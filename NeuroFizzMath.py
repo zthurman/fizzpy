@@ -50,6 +50,12 @@ class Neuron:
 	def ML(v,t,c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 90):
     		return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp), \
                      (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
+        
+        def ML2(v,t,c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 125,k = 1.5):
+    		return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp + k*(v[2] - v[0])), \
+                     		(phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4))),
+                     		(-gca*(0.5*(1 + mt.tanh((v[2] - v1)/v2)))*(v[2]-vca) - gk*v[3]*(v[2]-vk) - gl*(v[2]-vl) + k*(v[0] - v[2])), 
+                     		(phi*((0.5*(1 + mt.tanh((v[2] - v3)/v4))) - v[3]))/(1/mt.cosh((v[2] - v3)/(2*v4)))])
                      
         HRparams = [a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 2.5, xnot = -1.5]
 	
