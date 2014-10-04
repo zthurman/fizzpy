@@ -38,7 +38,13 @@ class Neuron:
 	def FN(x,t,a = 0.75,b = 0.8,c = 3, I = -0.40):
     		return np.array([c*(x[0]+ x[1]- x[0]**3/3 + I), \
                     	-1/c*(x[0]- a + b*x[1])])
-	
+        
+        def FN2(x,t,a = 0.75,b = 0.8,c = 3, I = -0.80, k = 0.75):
+    		return np.array([c*(x[0]+ x[1]- x[0]**3/3 + I + k*(x[2] - x[0])), \
+                    		-1/c*(x[0]- a + b*x[1]), \
+                     		c*(x[2]+ x[3]- x[2]**3/3 + k*(x[0] - x[2])),
+                    		-1/c*(x[2]- a + b*x[3])])
+
 	MLparams = [c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 90]
 	
 	def ML(v,t,c = 20,vk = -84,gk = 8,vca = 120,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 90):
