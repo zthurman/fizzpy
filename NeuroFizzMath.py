@@ -85,6 +85,13 @@ class Neuron:
 	                        alpha_n*(1-x[1]) - beta_n*x[1], \
 	                        alpha_m*(1-x[2]) - beta_m*x[2], \
 	                        alpha_h*(1-x[3]) - beta_h*x[3]])
+	
+	def Izhi(x,t, a = 0.02, b = 0.2, c = -65, d = 2, I = 10):
+    		if x[0] >= 30:
+        	   x[0] = c
+        	   x[1] = x[1] + d
+    		return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + I, \
+                    		a*(b*x[0] - x[1])])
 
 Q = Neuron()
 	
