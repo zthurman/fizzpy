@@ -85,6 +85,8 @@ class Neuron:
 	                        alpha_n*(1-x[1]) - beta_n*x[1], \
 	                        alpha_m*(1-x[2]) - beta_m*x[2], \
 	                        alpha_h*(1-x[3]) - beta_h*x[3]])
+	                        
+	Izhiparams = [a = 0.02, b = 0.2, c = -65, d = 2, I = 10]
 	
 	def Izhi(x,t, a = 0.02, b = 0.2, c = -65, d = 2, I = 10):
     		if x[0] >= 30:
