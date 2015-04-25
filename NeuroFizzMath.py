@@ -11,13 +11,14 @@ import sys
 import math as mt
 
 class Neuron():
+    x0 = []
     def __init__(self, name):
         self.name = name
 
     def model(self,x,t):
         pass
 
-    def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    def rk4(self, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
@@ -29,6 +30,15 @@ class Neuron():
             k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
             X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
         return X
+
+    def pplot(self):
+        pass
+
+    def tplot(self):
+        pass
+
+    def fftplot(self):
+        pass
 
 class FN(Neuron):
     name = 'Fitzhugh-Nagumo'
