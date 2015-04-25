@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 import sys
 import math as mt
 
-class Neuron:
+class Neuron():
 	def __init__(self, params, inputs, model):
 	self.params = []
 	self.inputs = []
@@ -21,7 +21,6 @@ class Neuron:
 	    Nsize = np.size(tsp)
 	    X = np.empty((Nsize, np.size(x0)))
 	    X[0] = x0
-
 	    for i in range(1, Nsize):
 		k1 = ng(X[i-1],tsp[i-1])
 		k2 = ng(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
@@ -39,9 +38,9 @@ class FN(Neuron):
 	  
 
 class ML(Neuron):
-	self.params = {}
-	self.inputs = 
-	def ML(v,t,c = 20,vk = -84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 79):
+	self.params = {c = 20,vk = -84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30}
+	self.inputs = 79
+	def ML(v,t,self.params['c'],self.params['vk'],gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,self.inputs):
 	    return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp), \
 		             (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
 
