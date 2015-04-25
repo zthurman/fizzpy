@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-#  Eventually I'd like to create an application that provides an intuitive GUI that enables the user to 
-# manipulate different models of differential equations to exhibit different behaviors given different input 
-# parameters.
+#  Classes for different neuron models that all inherit from parent neuron.
 
 from __future__ import division
 from Neuro import *
@@ -15,8 +13,24 @@ import math as mt
 
 class Neuron:
 	def __init__(self, params, inputs, model):
-	params = []
-	inputs = []
-	model = []
+	self.params = []
+	self.inputs = []
+	self.model = []
+
+class FN(Neuron):
+	def __init__(self, params, inputs, model):
+	self.params = []
+	self.inputs = []
+	self.model = def 
+	  
+
+class ML(Neuron):
+
+class IZ(Neuron):
+
+class HR(Neuron):
+
+class HH(Neuron)
+	
 	
 		
