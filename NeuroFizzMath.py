@@ -14,6 +14,9 @@ import sys
 import math as mt
 
 class Neuron:
+	def __init__(self, params, inputs, model):
 	params = []
-	def model(eqns,params):
+	inputs = []
+	model = []
+	
 		
