@@ -11,7 +11,7 @@ import sys
 import math as mt
 
 class Neuron():
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
 
     def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
@@ -28,33 +28,33 @@ class Neuron():
         return X
 
 class FN(Neuron):
-    def __init__(self, name, params, inputs, x, t):
-        self.name = 'Fitzhugh-Nagumo'
-        self.params = [0.75, 0.8, 3]        # a, b and c constants
-        self.i = [-1.476]            # input stimulus
-        self.x0 = np.array([0.01,0.01])
+    name = 'Fitzhugh-Nagumo'
+    x0 = np.array([0.01,0.01])
 
-    def model(x,t, params[0], params[1], params[2], i):
-        return np.array([params[2]*(x[0]+ x[1]- x[0]**3/3 + inputs), -1/params[2]*(x[0]- params[0] + params[1]*x[1])])
+    def model(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
+        return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
+                         -1/c*(x[0]- a + b*x[1])])
 
 
 class ML(Neuron):
-	self.params = {c = 20,vk = -84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30}
-	self.inputs = 79
-	def model(v,t,self.params['c'],self.params['vk'],gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,self.inputs):
-	    return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp), \
-		             (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
+    name = 'Morris-Lecar'
+    x0 = np.array([0,0])
+
+    def model(v,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 79):
+        return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + i),
+                        (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
 
 
 class IZ(Neuron):
-	self.params = {}
-	self.inputs = 
-	def Izhi(x,t, a = 0.02, b = 0.2, c = -65, d = 2, I = 10):
-	    if x[0] >= 30:
-		x[0] = c
-		x[1] = x[1] + d
-	    return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + I, \
-			    a*(b*x[0] - x[1])])
+    name = 'Izhikevich'
+
+    def model(x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
+        if x[0] >= 30:
+            x[0] = c
+            x[1] = x[1] + d
+        return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
+                        a*(b*x[0] - x[1])])
+
 
 class HR(Neuron):
 	self.params = {}
