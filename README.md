@@ -3,7 +3,7 @@ NeuroFizzMath
 
 Generalized Differential Equation Solver Application for Neurons
 
-This is a work in progress. Eventually I'd like to create an application that provides a nice intuitive GUI that enables the user to manipulate different models of differential equations to exhibit different behaviors given different input parameters.
+This is a work in progress. Making OOP neuron models.
 
 Physics is the language of the universe expressed in the form of mathematics. Explore it and discover the elegance and beauty underlying that which we experience every day as reality.
 
