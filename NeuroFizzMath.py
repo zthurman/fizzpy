@@ -39,8 +39,22 @@ class FN(Neuron):
 	  
 
 class ML(Neuron):
+	self.params = {}
+	self.inputs = 
+	def ML(v,t,c = 20,vk = -84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,Iapp = 79):
+	    return np.array([(-gca*(0.5*(1 + mt.tanh((v[0] - v1)/v2)))*(v[0]-vca) - gk*v[1]*(v[0]-vk) - gl*(v[0]-vl) + Iapp), \
+		             (phi*((0.5*(1 + mt.tanh((v[0] - v3)/v4))) - v[1]))/(1/mt.cosh((v[0] - v3)/(2*v4)))])
+
 
 class IZ(Neuron):
+	self.params = {}
+	self.inputs = 
+	def Izhi(x,t, a = 0.02, b = 0.2, c = -65, d = 2, I = 10):
+	    if x[0] >= 30:
+		x[0] = c
+		x[1] = x[1] + d
+	    return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + I, \
+			    a*(b*x[0] - x[1])])
 
 class HR(Neuron):
 
