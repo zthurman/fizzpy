@@ -57,8 +57,12 @@ class IZ(Neuron):
 			    a*(b*x[0] - x[1])])
 
 class HR(Neuron):
+	self.params = {}
+	self.inputs = 
 
-class HH(Neuron)
+class HH(Neuron):
+	self.params = {}
+	self.inputs = 
 	
 	
 		
