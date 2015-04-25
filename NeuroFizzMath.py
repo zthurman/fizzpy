@@ -70,6 +70,17 @@ class HR(Neuron):
 class HH(Neuron):
 	self.params = {}
 	self.inputs = 
+	def HH(x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
+	    alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
+	    beta_n = 0.125*exp(x[0]/80)
+	    alpha_m = (0.1*(x[0]+25))/(exp((x[0]+25)/10)-1)
+	    beta_m = 4*exp(x[0]/18)
+	    alpha_h = (0.07*exp(x[0]/20))
+	    beta_h = 1 / (exp((x[0]+30)/10)+1)
+	    return np.array([(g_K*(x[1]**4)*(x[0]-E_K) + g_Na*(x[2]**3)*x[3]*(x[0]-E_Na) + g_L*(x[0]-E_L) - I)*(-1/C_m), \
+		              alpha_n*(1-x[1]) - beta_n*x[1], \
+		              alpha_m*(1-x[2]) - beta_m*x[2], \
+		              alpha_h*(1-x[3]) - beta_h*x[3]])
 	
 	
 		
