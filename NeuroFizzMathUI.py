@@ -1,1 +1,5 @@
-__author__ = 'zechthurman'
+#!/usr/bin/env python
+# User interface for program
+
+import NeuroFizzMath
+
