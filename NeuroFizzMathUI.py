@@ -27,17 +27,38 @@ class Cheese(QtGui.QMainWindow):
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(self.close)
 
+        saveAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Save', self)
+        saveAction.setShortcut('Ctrl+S')
+        saveAction.setStatusTip('Save')
+        saveAction.triggered.connect(self.saveState)
+
         self.statusBar()
 
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction('New')
+        fileMenu.addAction(saveAction)
         fileMenu.addAction(exitAction)
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&Models')
+        fileMenu.addAction('Fitzhugh-Nagumo')
+        fileMenu.addAction('Morris-Lecar')
+        fileMenu.addAction('Izikevich')
+        fileMenu.addAction('Hindmarsh-Rose')
+        fileMenu.addAction('Hodgkins-Huxley')
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&Plots')
+        fileMenu.addAction('Phase Plot')
+        fileMenu.addAction('Membrane Potential over Time')
+        fileMenu.addAction('FFT')
 
         toolbar = self.addToolBar('Exit')
         toolbar.addAction(exitAction)
         
         self.setGeometry(300, 300, 350, 250)
-        self.setWindowTitle('Main window')    
+        self.setWindowTitle('NeuroFizzMath')
         self.show()
         
         
