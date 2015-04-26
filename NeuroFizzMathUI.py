@@ -164,6 +164,14 @@ class ApplicationWindow(QtGui.QMainWindow):
                                  QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
         self.menuBar().addMenu(self.file_menu)
 
+        self.model_menu = QtGui.QMenu('&Models', self)
+        self.model_menu.addAction('Fitzhugh-Nagumo')
+        self.model_menu.addAction('Morris-Lecar')
+        self.model_menu.addAction('Izikevich')
+        self.model_menu.addAction('Hindmarsh-Rose')
+        self.model_menu.addAction('Hodgkins-Huxley')
+        self.menuBar().addMenu(self.model_menu)
+
         self.help_menu = QtGui.QMenu('&Help', self)
         self.menuBar().addSeparator()
         self.menuBar().addMenu(self.help_menu)
