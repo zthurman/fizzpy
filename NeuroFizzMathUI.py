@@ -2,12 +2,33 @@
 # User interface for program
 
 import NeuroFizzMath
+import sys
+from PyQt4 import QtGui
 import logging
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
-import sys
-from PyQt4 import QtGui
 
+class Example(QtGui.QWidget):
+
+    def __init__(self):
+        super(Example, self).__init__()
+
+        self.initUI()
+
+    def initUI(self):
+
+        QtGui.QToolTip.setFont(QtGui.QFont('SansSerif', 10))
+
+        self.setToolTip('This is a <b>QWidget</b> widget')
+
+        btn = QtGui.QPushButton('Button', self)
+        btn.setToolTip('This is a <b>QPushButton</b> widget')
+        btn.resize(btn.sizeHint())
+        btn.move(50, 50)
+
+        self.setGeometry(300, 300, 250, 150)
+        self.setWindowTitle('Tooltips')
+        self.show()
 
 def main():
 
