@@ -99,6 +99,49 @@ class ML(Neuron):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
                         (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
+    def do_pplot():
+        pylab.figure()
+        X = rk4(x0, t1 = 1000,dt = 0.1, ng = model)
+        pylab.plot(X[:,0], X[:,1])
+        pylab.title("Phase Portrait - single uncoupled ML neuron")
+        pylab.xlabel("Membrane Potential")
+        pylab.ylabel("Membrane Recovery Variable")
+        pylab.savefig('MLpplot.png')
+        pylab.show()
+        return
+
+    def do_tplot():
+        pylab.figure()
+        X = rk4(x0, t1 = 1000,dt = 0.1, ng = model)
+        t0 = 0
+        t1 = 1000
+        dt = 0.1
+        tsp = np.arange(t0, t1, dt)
+        pylab.plot(tsp,X[:,0])
+        pylab.title("Membrane Potential over Time - single uncoupled ML neuron")
+        pylab.xlabel("Time")
+        pylab.ylabel("Membrane Potential")
+        pylab.savefig('MLtplot.png')
+        pylab.show()
+        return
+
+    def do_fftplot():
+        X = rk4(x0, t1 = 800,dt = 0.1, ng = model)
+        Y = mean(X)		# determine DC component of signal
+        X = X - Y		# subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int(X.size/2 - 1), time_step)
+        idx = np.argsort(freqs)
+        pylab.plot(freqs[idx], ps[idx])
+        pylab.title("Power Spectrum of Membrane Potential Signal")
+        pylab.xlabel("Frequency (kHz)")
+        pylab.ylabel("Power")
+        pylab.xlim(0,0.4)
+        pylab.ylim(0,2e10)
+        pylab.savefig('MLfftplot.png')
+        pylab.show()
+        return
 
 class IZ(Neuron):
     name = 'Izhikevich'
