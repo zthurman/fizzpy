@@ -8,41 +8,49 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
-class Example(QtGui.QWidget):
+
+class Example(QtGui.QMainWindow):
 
     def __init__(self):
         super(Example, self).__init__()
 
         self.initUI()
 
+
     def initUI(self):
 
-        QtGui.QToolTip.setFont(QtGui.QFont('SansSerif', 10))
+        self.resize(250, 150)
+        self.center()
 
-        self.setToolTip('This is a <b>QWidget</b> widget')
+        exitAction = QtGui.QAction(QtGui.QIcon('exit.png'), '&Exit', self)
+        exitAction.setShortcut('Ctrl+Q')
+        exitAction.setStatusTip('Exit application')
+        exitAction.triggered.connect(QtGui.qApp.quit)
 
-        btn = QtGui.QPushButton('Button', self)
-        btn.setToolTip('This is a <b>QPushButton</b> widget')
-        btn.resize(btn.sizeHint())
-        btn.move(50, 50)
+        self.statusBar().showMessage('Ready')
 
-        self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('Tooltips')
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(exitAction)
+
+        self.setGeometry(300, 300, 300, 200)
+        self.setWindowTitle('NeuroFizzMath')
         self.show()
+
+
+    def center(self):
+
+        qr = self.frameGeometry()
+        cp = QtGui.QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 def main():
 
     app = QtGui.QApplication(sys.argv)
-
-    w = QtGui.QWidget()
-    w.resize(250, 150)
-    w.move(300, 300)
-    w.setWindowTitle('NeuroFizzMath')
-    w.show()
-
+    ex = Example()
     sys.exit(app.exec_())
 
 
 if __name__ == '__main__':
     main()
-
