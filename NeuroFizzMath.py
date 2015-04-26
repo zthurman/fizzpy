@@ -31,13 +31,13 @@ class Neuron():
             X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
         return X
 
-    def pplot(self):
+    def do_pplot(self):
         pass
 
-    def tplot(self):
+    def do_tplot(self):
         pass
 
-    def fftplot(self):
+    def do_fftplot(self):
         pass
 
 class FN(Neuron):
@@ -48,6 +48,48 @@ class FN(Neuron):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 
+    def do_pplot():
+        pylab.figure()
+        X = rk4(x0, t1=100, dt=0.02, ng=model)
+        pylab.plot(X[:,1], X[:,0])
+        pylab.title("Phase Portrait")
+        pylab.xlabel("Membrane Recovery Variable")
+        pylab.ylabel("Membrane Potential")
+        pylab.savefig('FNpplot.png')
+        pylab.show()
+        return
+
+    def do_tplot():
+        pylab.figure()
+        X = rk4(x0, t1 = 100,dt = 0.02, ng = model)
+        t0 = 0
+        t1 = 100
+        dt = 0.02
+        tsp = np.arange(t0, t1, dt)
+        pylab.plot(tsp,X[:,0])
+        pylab.title("Membrane Potential over Time - single uncoupled FN neuron")
+        pylab.xlabel("Time")
+        pylab.savefig('FNtplot.png')
+        pylab.show()
+        return
+
+    def do_fftplot():
+        X = rk4(x0, t1 = 100,dt = 0.02, ng = model)
+        Y = mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[4:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int(len(X[4:,0])/2 - 1), time_step)
+        idx = np.argsort(freqs)
+        pylab.plot(freqs[idx], ps[idx])
+        pylab.title("Power Spectrum of Membrane Potential Signal - FN")
+        pylab.xlabel("Frequency (kHz)")
+        pylab.ylabel("Power")
+        pylab.xlim(0,0.4)
+        pylab.ylim(0,2e7)
+        pylab.savefig('FNfftplot.png')
+        pylab.show()
+        return
 
 class ML(Neuron):
     name = 'Morris-Lecar'
