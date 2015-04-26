@@ -1,12 +1,9 @@
 #!/usr/bin/env python
-# User interface for program
+# User interface for NeuroFizzMath program
 
 import NeuroFizzMath
 import sys
 from PyQt4 import QtGui
-import logging
-logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger(__name__)
 
 
 class Cheese(QtGui.QMainWindow):
@@ -22,12 +19,12 @@ class Cheese(QtGui.QMainWindow):
         textEdit = QtGui.QTextEdit()
         self.setCentralWidget(textEdit)
 
-        exitAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Exit', self)
+        exitAction = QtGui.QAction(QtGui.QIcon('exit.png'), 'Exit', self)
         exitAction.setShortcut('Ctrl+Q')
         exitAction.setStatusTip('Exit application')
         exitAction.triggered.connect(self.close)
 
-        saveAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Save', self)
+        saveAction = QtGui.QAction(QtGui.QIcon('save.png'), 'Save', self)
         saveAction.setShortcut('Ctrl+S')
         saveAction.setStatusTip('Save')
         saveAction.triggered.connect(self.saveState)
@@ -56,6 +53,8 @@ class Cheese(QtGui.QMainWindow):
 
         toolbar = self.addToolBar('Exit')
         toolbar.addAction(exitAction)
+        toolbar = self.addToolBar('Save')
+        toolbar.addAction(saveAction)
         
         self.setGeometry(300, 300, 350, 250)
         self.setWindowTitle('NeuroFizzMath')
