@@ -1,88 +1,12 @@
 #!/usr/bin/env python
-# User interface for NeuroFizzMath program
-
-'''import NeuroFizzMath
-import sys
-from PyQt4 import QtGui
-from matplotlib.backends import qt4_compat
-
-
-class Cheese(QtGui.QMainWindow):
-    
-    def __init__(self):
-        super(Cheese, self).__init__()
-        
-        self.initUI()
-        
-        
-    def initUI(self):               
-        
-        textEdit = QtGui.QTextEdit()
-        self.setCentralWidget(textEdit)
-
-        exitAction = QtGui.QAction(QtGui.QIcon('exit.png'), 'Exit', self)
-        exitAction.setShortcut('Ctrl+Q')
-        exitAction.setStatusTip('Exit application')
-        exitAction.triggered.connect(self.close)
-
-        saveAction = QtGui.QAction(QtGui.QIcon('save.png'), 'Save', self)
-        saveAction.setShortcut('Ctrl+S')
-        saveAction.setStatusTip('Save')
-        saveAction.triggered.connect(self.saveState)
-
-        self.statusBar()
-
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction('New')
-        fileMenu.addAction(saveAction)
-        fileMenu.addAction(exitAction)
-
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&Models')
-        fileMenu.addAction('Fitzhugh-Nagumo')
-        fileMenu.addAction('Morris-Lecar')
-        fileMenu.addAction('Izikevich')
-        fileMenu.addAction('Hindmarsh-Rose')
-        fileMenu.addAction('Hodgkins-Huxley')
-
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&Plots')
-        fileMenu.addAction('Phase Plot')
-        fileMenu.addAction('Membrane Potential over Time')
-        fileMenu.addAction('FFT')
-
-        toolbar = self.addToolBar('Exit')
-        toolbar.addAction(exitAction)
-        toolbar = self.addToolBar('Save')
-        toolbar.addAction(saveAction)
-        
-        self.setGeometry(300, 300, 350, 250)
-        self.setWindowTitle('NeuroFizzMath')
-        self.show()
-        
-        
-def main():
-    
-    app = QtGui.QApplication(sys.argv)
-    ex = Cheese()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    main()    '''
-
-
-#!/usr/bin/env python
+# User interface for NeuroFizzMath program based on:
 
 # embedding_in_qt4.py --- Simple Qt4 application embedding matplotlib canvases
 #
 # Copyright (C) 2005 Florent Rougon
 #               2006 Darren Dale
-#
-# This file is an example program for matplotlib. It may be used and
-# modified with no restriction; raw copies as well as modified versions
-# may be distributed without limitation.
+
+
 
 from __future__ import unicode_literals
 import sys
@@ -174,9 +98,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.help_menu = QtGui.QMenu('&Help', self)
         self.menuBar().addSeparator()
-        self.menuBar().addMenu(self.help_menu)
-
         self.help_menu.addAction('&About', self.about)
+        self.help_menu.addAction('&Copyright', self.copyright)
+        self.menuBar().addMenu(self.help_menu)
 
         self.main_widget = QtGui.QWidget(self)
 
@@ -199,14 +123,51 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def about(self):
         QtGui.QMessageBox.about(self, "About",
-"""embedding_in_qt4.py example
+"""NeuroFizzMath
+Based on:
+embedding_in_qt4.py example
 Copyright 2005 Florent Rougon, 2006 Darren Dale
 
-This program is a simple example of a Qt4 application embedding matplotlib
-canvases.
+This application allows the user to play with
+different models of point neurons. Plots of
+the membrane potential over time, phase plots
+and FFTs are available.
 
-It may be used and modified with no restriction; raw copies as well as
-modified versions may be distributed without limitation."""
+Supported models are Fitzhugh-Nagumo, Morris-
+Lecar, Izikevich, Hindmarsh-Rose and Hodgkins-
+Huxley.
+""")
+
+    def copyright(self):
+            QtGui.QMessageBox.about(self, "Copyright",
+"""Copyright (C) 2015 by Zechariah Thurman
+
+Permission is hereby granted, free of charge,
+to any person obtaining a copy of this software
+and associated documentation files (the
+"Software"), to deal in the Software without
+restriction, including without limitation the
+rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the
+following conditions:
+
+The above copyright notice and this permission
+notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT
+WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+"""
 )
 
 
