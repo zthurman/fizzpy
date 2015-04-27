@@ -91,11 +91,11 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         # model menu
         self.model_menu = QtGui.QMenu('&Models', self)
-        self.model_menu.addAction('Fitzhugh-Nagumo')
-        self.model_menu.addAction('Morris-Lecar')
-        self.model_menu.addAction('Izikevich')
-        self.model_menu.addAction('Hindmarsh-Rose')
-        self.model_menu.addAction('Hodgkins-Huxley')
+        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo)
+        self.model_menu.addAction('&Morris-Lecar', self.morrisLecar)
+        self.model_menu.addAction('&Izikevich', self.izhikevich)
+        self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose)
+        self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley)
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
@@ -129,19 +129,49 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fitzhughNagumo(self):
-        pass
+        QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
+"""Fitzhugh-Nagumo
+
+The Fitzhugh-Nagumo model is a system
+of two coupled nonlinear differential
+equations.
+""")
 
     def morrisLecar(self):
-        pass
+        QtGui.QMessageBox.about(self, "Morris-Lecar",
+"""Morris-Lecar
+
+The Morris-Lecar model is a system
+of two coupled nonlinear differential
+equations.
+""")
 
     def izhikevich(self):
-        pass
+        QtGui.QMessageBox.about(self, "Izhikevich",
+"""Izhikevich
+
+The Izhikevich model is a system
+of two coupled nonlinear differential
+equations.
+""")
 
     def hindmarshRose(self):
-        pass
+        QtGui.QMessageBox.about(self, "Hindmarsh-Rose",
+"""Hindmarsh-Rose
+
+The Hindmarsh-Rose model is a system
+of three coupled nonlinear differential
+equations.
+""")
 
     def hodgkinsHuxley(self):
-        pass
+        QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
+"""Hodgkins-Huxley
+
+The Hodgkins-Huxley model is a system
+of four coupled nonlinear differential
+equations.
+""")
 
     def about(self):
         QtGui.QMessageBox.about(self, "About",
