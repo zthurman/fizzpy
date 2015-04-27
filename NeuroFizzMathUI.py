@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+# NeuroFizzMath
+# Copyright (C) 2015 Zechariah Thurman
 # User interface for NeuroFizzMath program based on:
 
 # embedding_in_qt4.py --- Simple Qt4 application embedding matplotlib canvases
-#
 # Copyright (C) 2005 Florent Rougon
 #               2006 Darren Dale
 
@@ -33,8 +34,6 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
-        self.axes.set_xlabel("x-axis")
-        self.axes.set_ylabel("y-axis")
 
         self.compute_initial_figure()
 
@@ -109,8 +108,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget = QtGui.QWidget(self)
 
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = MyStaticMplCanvas(self.main_widget, width=5, height=7, dpi=100)
-        dc = MyDynamicMplCanvas(self.main_widget, width=5, height=7, dpi=100)
+        sc = MyStaticMplCanvas(self.main_widget, width=5, height=7, dpi=90)
+        dc = MyDynamicMplCanvas(self.main_widget, width=5, height=7, dpi=90)
         l.addWidget(sc)
         l.addWidget(dc)
 
@@ -130,6 +129,18 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fitzhughNagumo(self):
+        pass
+
+    def morrisLecar(self):
+        pass
+
+    def izhikevich(self):
+        pass
+
+    def hindmarshRose(self):
+        pass
+
+    def hodgkinsHuxley(self):
         pass
 
     def about(self):
