@@ -50,15 +50,15 @@ class MyMplCanvas(FigureCanvas):
 
 class MyStaticMplCanvas(MyMplCanvas):
     """Simple canvas with a sine plot."""
-    def compute_initial_figure(self):
+    '''def compute_initial_figure(self):
         t = arange(0.0, 3.0, 0.01)
         s = sin(2*pi*t)
-        self.axes.plot(t, s)
+        self.axes.plot(t, s)'''
 
 
 class MyDynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
-    def __init__(self, *args, **kwargs):
+    '''def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.update_figure)
@@ -72,7 +72,7 @@ class MyDynamicMplCanvas(MyMplCanvas):
         l = [random.randint(0, 10) for i in range(4)]
 
         self.axes.plot([0, 1, 2, 3], l, 'r')
-        self.draw()
+        self.draw()'''
 
 
 class ApplicationWindow(QtGui.QMainWindow):
@@ -105,11 +105,14 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.main_widget = QtGui.QWidget(self)
 
-        '''l = QtGui.QVBoxLayout(self.main_widget)
+        lbl1 = QtGui.QLabel('Welcome to NeuroFizzMath!', self)
+        lbl1.move(20, 25)
+
+        l = QtGui.QVBoxLayout(self.main_widget)
         sc = MyStaticMplCanvas(self.main_widget, width=5, height=4, dpi=100)
         dc = MyDynamicMplCanvas(self.main_widget, width=5, height=4, dpi=100)
         l.addWidget(sc)
-        l.addWidget(dc)'''
+        l.addWidget(dc)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
