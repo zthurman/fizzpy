@@ -9,6 +9,7 @@
 
 from __future__ import unicode_literals
 import NeuroFizzMath
+import numpy as np
 import sys
 import os
 import random
@@ -56,6 +57,36 @@ class MyStaticMplCanvas(MyMplCanvas):
         s = sin(2*pi*t)
         self.axes.plot(t, s)"""
 
+    def rk4( t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+        tsp = np.arange(t0, t1, dt)
+        Nsize = np.size(tsp)
+        X = np.empty((Nsize, np.size(x0)))
+        X[0] = x0
+        for i in range(1, Nsize):
+            k1 = ng(X[i-1],tsp[i-1])
+            k2 = ng(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
+            k3 = ng(X[i-1] + dt/2*k2, tsp[i-1] + dt/2)
+            k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
+            X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
+        return X
+
+    def FN(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
+        return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
+                         -1/c*(x[0]- a + b*x[1])])
+
+    def do_tplot(self):
+        X = rk4(x0, t1 = 100,dt = 0.02, ng = model)
+        t0 = 0
+        t1 = 100
+        dt = 0.02
+        tsp = np.arange(t0, t1, dt)
+        self.axes.plot(tsp, X[:,0])
+        """pylab.plot(tsp,X[:,0])
+        pylab.title("Membrane Potential over Time - single uncoupled FN neuron")
+        pylab.xlabel("Time")
+        pylab.savefig('FNtplot.png')
+        pylab.show()
+        return"""
 
 class MyDynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
