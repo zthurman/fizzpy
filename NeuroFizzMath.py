@@ -44,7 +44,10 @@ class FN(Neuron):
     name = 'Fitzhugh-Nagumo'
     x0 = np.array([0.01,0.01])
 
-    def model(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
+    def __init__(self, name):
+        self.name = name
+
+    def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 

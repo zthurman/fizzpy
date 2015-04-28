@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-import NeuroFizzMath
+from NeuroFizzMath import *
 import numpy as np
 import sys
 import os
@@ -62,19 +62,20 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
             X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
         return X
 
-def FN(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
+"""def FN(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
     return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
-                    -1/c*(x[0]- a + b*x[1])])
+                    -1/c*(x[0]- a + b*x[1])])"""
 
 class MyStaticMplCanvas(MyMplCanvas):
     """Simple canvas with a sine plot."""
+    X = FN(Neuron)
+    X.rk4
     def compute_initial_figure(self):
-        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = FN)
+        X = FN(Neuron)
+        X.rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        #X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = FN)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
-        """t = arange(0.0, 3.0, 0.01)
-        s = sin(2*pi*t)
-        self.axes.plot(t, s)"""
 
 
 class MyDynamicMplCanvas(MyMplCanvas):
