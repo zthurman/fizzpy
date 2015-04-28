@@ -41,8 +41,8 @@ class Neuron():
         pass
 
 class FN(Neuron):
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, *args, **kwargs):
+        super(FN, self).__init__(*args, **kwargs)
 
     def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
