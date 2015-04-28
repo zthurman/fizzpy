@@ -41,9 +41,6 @@ class Neuron():
         pass
 
 class FN(Neuron):
-    name = 'Fitzhugh-Nagumo'
-    x0 = np.array([0.01,0.01])
-
     def __init__(self, name):
         self.name = name
 

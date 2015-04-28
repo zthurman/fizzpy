@@ -49,38 +49,20 @@ class MyMplCanvas(FigureCanvas):
     def compute_initial_figure(self):
         pass
 
-def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
-        tsp = np.arange(t0, t1, dt)
-        Nsize = np.size(tsp)
-        X = np.empty((Nsize, np.size(x0)))
-        X[0] = x0
-        for i in range(1, Nsize):
-            k1 = ng(X[i-1],tsp[i-1])
-            k2 = ng(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
-            k3 = ng(X[i-1] + dt/2*k2, tsp[i-1] + dt/2)
-            k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
-            X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
-        return X
-
-"""def FN(x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
-    return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
-                    -1/c*(x[0]- a + b*x[1])])"""
 
 class MyStaticMplCanvas(MyMplCanvas):
     """Simple canvas with a sine plot."""
-    X = FN(Neuron)
-    X.rk4
-    def compute_initial_figure(self):
+    """def compute_initial_figure(self):
         X = FN(Neuron)
         X.rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         #X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = FN)
         t = np.arange(0, 100, 0.02)
-        self.axes.plot(t, X[:,0])
+        self.axes.plot(t, X[:,0])"""
 
 
 class MyDynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
-    """def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.update_figure)
@@ -94,7 +76,7 @@ class MyDynamicMplCanvas(MyMplCanvas):
         l = [random.randint(0, 10) for i in range(4)]
 
         self.axes.plot([0, 1, 2, 3], l, 'r')
-        self.draw()"""
+        self.draw()
 
 
 class ApplicationWindow(QtGui.QMainWindow):
@@ -129,9 +111,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget = QtGui.QWidget(self)
 
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = MyStaticMplCanvas(self.main_widget, width=5, height=7, dpi=90)
+        #sc = MyStaticMplCanvas(self.main_widget, width=5, height=7, dpi=90)
         dc = MyDynamicMplCanvas(self.main_widget, width=5, height=7, dpi=90)
-        l.addWidget(sc)
+        #l.addWidget(sc)
         l.addWidget(dc)
 
         self.main_widget.setFocus()
