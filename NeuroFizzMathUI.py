@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # NeuroFizzMath
 # Copyright (C) 2015 Zechariah Thurman
-# User interface for NeuroFizzMath program based on:
+# User interface for NeuroFizzMath with help from:
 
 # embedding_in_qt4.py --- Simple Qt4 application embedding matplotlib canvases
 # Copyright (C) 2005 Florent Rougon
@@ -209,7 +209,7 @@ equations.
 
     def about(self):
         QtGui.QMessageBox.about(self, "About",
-"""NeuroFizzMath
+"""NeuroFizzMath v0.1
 
 This application allows the user to play with
 different models of point neurons. Plots of
@@ -256,7 +256,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 qApp = QtGui.QApplication(sys.argv)
 
 aw = ApplicationWindow()
-aw.setWindowTitle("NeuroFizzMath")
+aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
 aw.show()
 sys.exit(qApp.exec_())
 #qApp.exec_()
