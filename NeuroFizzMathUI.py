@@ -87,15 +87,15 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         # file menu
         self.file_menu = QtGui.QMenu('&File', self)
-        self.file_menu.addAction('&Quit', self.fileQuit,
-                                 QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
+        self.file_menu.addAction('&Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
         self.menuBar().addMenu(self.file_menu)
 
         # model menu
         self.model_menu = QtGui.QMenu('&Models', self)
-        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo,QtCore.Qt.CTRL + QtCore.Qt.Key_F)
+        self.menuBar().addSeparator()
+        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo, QtCore.Qt.CTRL + QtCore.Qt.Key_F)
         self.model_menu.addAction('&Morris-Lecar', self.morrisLecar, QtCore.Qt.CTRL + QtCore.Qt.Key_M)
-        self.model_menu.addAction('&Izikevich', self.izhikevich, QtCore.Qt.CTRL + QtCore.Qt.Key_I)
+        self.model_menu.addAction('&Izikevich', self.izhikevich, QtCore. Qt.CTRL + QtCore.Qt.Key_I)
         self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose, QtCore.Qt.CTRL + QtCore.Qt.Key_R)
         self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley, QtCore.Qt.CTRL + QtCore.Qt.Key_H)
         self.menuBar().addMenu(self.model_menu)
@@ -103,8 +103,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         # help menu
         self.help_menu = QtGui.QMenu('&Help', self)
         self.menuBar().addSeparator()
-        self.help_menu.addAction('&About', self.about)
-        self.help_menu.addAction('&Copyright', self.copyright)
+        self.help_menu.addAction('&About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
+        self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
         self.menuBar().addMenu(self.help_menu)
 
         # tool bar
