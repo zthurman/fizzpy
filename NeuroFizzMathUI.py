@@ -93,11 +93,11 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         # model menu
         self.model_menu = QtGui.QMenu('&Models', self)
-        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo)
-        self.model_menu.addAction('&Morris-Lecar', self.morrisLecar)
-        self.model_menu.addAction('&Izikevich', self.izhikevich)
-        self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose)
-        self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley)
+        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo,QtCore.Qt.CTRL + QtCore.Qt.Key_F)
+        self.model_menu.addAction('&Morris-Lecar', self.morrisLecar, QtCore.Qt.CTRL + QtCore.Qt.Key_M)
+        self.model_menu.addAction('&Izikevich', self.izhikevich, QtCore.Qt.CTRL + QtCore.Qt.Key_I)
+        self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose, QtCore.Qt.CTRL + QtCore.Qt.Key_R)
+        self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley, QtCore.Qt.CTRL + QtCore.Qt.Key_H)
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
