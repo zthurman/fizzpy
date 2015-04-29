@@ -49,6 +49,15 @@ class MyMplCanvas(FigureCanvas):
     def compute_initial_figure(self):
         pass
 
+# static canvas methods
+class StaticFNCanvas(MyMplCanvas):
+    # separate plot methods for each neuron class
+    def compute_initial_figure(self):
+        X = FN("Fitzhugh-Nagumo")
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
+        self.axes.plot(t, X[:,0])
+
 
 class MyStaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
@@ -113,12 +122,22 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         FNAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Fitzhugh-Nagumo', self)
         MLAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Morris-Lecar', self)
+        IZAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Izhikevich', self)
+        HRAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Hindmarsh-Rose', self)
+        HHAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Hodgkins-Huxley', self)
+
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
         self.toolbar = self.addToolBar('Morris-Lecar')
         self.toolbar.addAction(MLAction)
+        self.toolbar = self.addToolBar('Izhikevich')
+        self.toolbar.addAction(IZAction)
+        self.toolbar = self.addToolBar('Hindmarsh-Rose')
+        self.toolbar.addAction(HRAction)
+        self.toolbar = self.addToolBar('Hodgkins-Huxley')
+        self.toolbar.addAction(HHAction)
 
         self.main_widget = QtGui.QWidget(self)
 
