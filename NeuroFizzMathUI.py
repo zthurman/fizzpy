@@ -59,7 +59,7 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.plot(t, X[:,0])
 
 
-class MyStaticMplCanvas(MyMplCanvas):
+class StaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
     def compute_initial_figure(self):
         X = FN("Fitzhugh-Nagumo")
@@ -68,7 +68,7 @@ class MyStaticMplCanvas(MyMplCanvas):
         self.axes.plot(t, X[:,0])
 
 
-class MyDynamicMplCanvas(MyMplCanvas):
+class DynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
     def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
@@ -142,8 +142,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget = QtGui.QWidget(self)
 
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = MyStaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
-        #dc = MyDynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
         #l.addWidget(dc)
 
@@ -253,10 +253,11 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 """
 )
 
-qApp = QtGui.QApplication(sys.argv)
+if __name__ == "__main__":
+    qApp = QtGui.QApplication(sys.argv)
 
-aw = ApplicationWindow()
-aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
-aw.show()
-sys.exit(qApp.exec_())
-#qApp.exec_()
+    aw = ApplicationWindow()
+    aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
+    aw.show()
+    sys.exit(qApp.exec_())
+    #qApp.exec_()
