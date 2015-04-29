@@ -117,14 +117,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.menuBar().addMenu(self.help_menu)
 
         # tool bar
-        exitAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Exit', self)
+        exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
-        FNAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Fitzhugh-Nagumo', self)
-        MLAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Morris-Lecar', self)
-        IZAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Izhikevich', self)
-        HRAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Hindmarsh-Rose', self)
-        HHAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Hodgkins-Huxley', self)
+        FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Fitzhugh-Nagumo', self)
+        MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Morris-Lecar', self)
+        IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Izhikevich', self)
+        HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Hindmarsh-Rose', self)
+        HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Hodgkins-Huxley', self)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
