@@ -28,7 +28,7 @@ class FN():
     def __init__(self, name):
        self.name = name
 
-    def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
+    def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.39):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 
@@ -60,8 +60,8 @@ class FN():
         pylab.savefig('FNfftplot.png')
         pylab.show()
         return
-"""
-class ML(Neuron):
+
+class ML():
     name = 'Morris-Lecar'
     x0 = np.array([0,0])
 
@@ -113,7 +113,7 @@ class ML(Neuron):
         pylab.show()
         return
 
-class IZ(Neuron):
+class IZ():
     name = 'Izhikevich'
     x0 = np.array([0,0])
 
@@ -125,7 +125,7 @@ class IZ(Neuron):
                         a*(b*x[0] - x[1])])
 
 
-class HR(Neuron):
+class HR():
     name = 'Hindmarsh-Rose'
     x0 = np.array([3, 0, -1.2])
 
@@ -137,7 +137,7 @@ class HR(Neuron):
                         c - d*(x[3]**2) - x[4],
                         r*(s*(x[3] - xnot) - x[5])])
 
-class HH(Neuron):
+class HH():
     name = 'Hodgkins-Huxley'
     x0 = np.array([0.01,0.01,0.01,0.01])
 
@@ -152,6 +152,6 @@ class HH(Neuron):
                         alpha_n*(1-x[1]) - beta_n*x[1],
                         alpha_m*(1-x[2]) - beta_m*x[2],
                         alpha_h*(1-x[3]) - beta_h*x[3]])
-	"""
+
 	
 		
