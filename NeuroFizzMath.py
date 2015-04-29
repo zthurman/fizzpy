@@ -10,39 +10,37 @@ from matplotlib import pyplot as plt
 import sys
 import math as mt
 
-class Neuron():
+"""class Neuron():
     x0 = []
     def __init__(self, name):
-        self.name = name
+        self.name = name"""
 
-    def model(self,x,t):
-        pass
+def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    tsp = np.arange(t0, t1, dt)
+    Nsize = np.size(tsp)
+    X = np.empty((Nsize, np.size(x0)))
+    X[0] = x0
+    for i in range(1, Nsize):
+        k1 = ng(X[i-1],tsp[i-1])
+        k2 = ng(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
+        k3 = ng(X[i-1] + dt/2*k2, tsp[i-1] + dt/2)
+        k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
+        X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
+    return X
 
-    def rk4(self, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
-        tsp = np.arange(t0, t1, dt)
-        Nsize = np.size(tsp)
-        X = np.empty((Nsize, np.size(x0)))
-        X[0] = x0
-        for i in range(1, Nsize):
-            k1 = ng(X[i-1],tsp[i-1])
-            k2 = ng(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
-            k3 = ng(X[i-1] + dt/2*k2, tsp[i-1] + dt/2)
-            k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
-            X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
-        return X
-
-    def do_pplot(self):
+    """def do_pplot(self):
         pass
 
     def do_tplot(self):
         pass
 
     def do_fftplot(self):
-        pass
+        pass"""
 
-class FN(Neuron):
-    def __init__(self, *args, **kwargs):
-        super(FN, self).__init__(*args, **kwargs)
+class FN():
+    name = "Fitzhugh-Nagumo"
+    def __init__(self, name):
+       self.name = name
 
     def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -1.476):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
@@ -90,7 +88,7 @@ class FN(Neuron):
         pylab.savefig('FNfftplot.png')
         pylab.show()
         return
-
+"""
 class ML(Neuron):
     name = 'Morris-Lecar'
     x0 = np.array([0,0])
@@ -182,6 +180,6 @@ class HH(Neuron):
                         alpha_n*(1-x[1]) - beta_n*x[1],
                         alpha_m*(1-x[2]) - beta_m*x[2],
                         alpha_h*(1-x[3]) - beta_h*x[3]])
-	
+	"""
 	
 		

@@ -53,8 +53,8 @@ class MyMplCanvas(FigureCanvas):
 class MyStaticMplCanvas(MyMplCanvas):
     """Simple canvas with a sine plot."""
     def compute_initial_figure(self):
-        X = FN(Neuron)
-        X.rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        X = FN("Fitzhugh-Nagumo")
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         #X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = FN)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
