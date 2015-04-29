@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#  Classes for different neuron models that all inherit from parent neuron.
+#  Classes for different neuron models.
 
 from __future__ import division
 from scipy import *
@@ -9,11 +9,6 @@ import matplotlib as mp
 from matplotlib import pyplot as plt  
 import sys
 import math as mt
-
-"""class Neuron():
-    x0 = []
-    def __init__(self, name):
-        self.name = name"""
 
 def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     tsp = np.arange(t0, t1, dt)
@@ -27,15 +22,6 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         k4 = ng(X[i-1] + dt*k3, tsp[i-1] + dt)
         X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
-
-    """def do_pplot(self):
-        pass
-
-    def do_tplot(self):
-        pass
-
-    def do_fftplot(self):
-        pass"""
 
 class FN():
     name = "Fitzhugh-Nagumo"
@@ -54,20 +40,6 @@ class FN():
         pylab.xlabel("Membrane Recovery Variable")
         pylab.ylabel("Membrane Potential")
         pylab.savefig('FNpplot.png')
-        pylab.show()
-        return
-
-    def do_tplot():
-        pylab.figure()
-        X = rk4(x0, t1 = 100,dt = 0.02, ng = model)
-        t0 = 0
-        t1 = 100
-        dt = 0.02
-        tsp = np.arange(t0, t1, dt)
-        pylab.plot(tsp,X[:,0])
-        pylab.title("Membrane Potential over Time - single uncoupled FN neuron")
-        pylab.xlabel("Time")
-        pylab.savefig('FNtplot.png')
         pylab.show()
         return
 
