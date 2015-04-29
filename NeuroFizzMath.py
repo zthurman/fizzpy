@@ -25,8 +25,10 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
 
 class FN():
     name = "Fitzhugh-Nagumo"
+    x0 = np.array([0.01,0.01])
+
     def __init__(self, name):
-       self.name = name
+        self.name = name
 
     def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.39):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
@@ -64,6 +66,8 @@ class FN():
 class ML():
     name = 'Morris-Lecar'
     x0 = np.array([0,0])
+    def __init__(self, name, x0):
+       self.name = name
 
     def model(x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 79):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
@@ -116,6 +120,8 @@ class ML():
 class IZ():
     name = 'Izhikevich'
     x0 = np.array([0,0])
+    def __init__(self, name, x0):
+       self.name = name
 
     def model(x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
         if x[0] >= 30:
@@ -128,6 +134,8 @@ class IZ():
 class HR():
     name = 'Hindmarsh-Rose'
     x0 = np.array([3, 0, -1.2])
+    def __init__(self, name, x0):
+       self.name = name
 
     def model(x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
         return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I + k*(x[3] - x[0]),
@@ -140,6 +148,8 @@ class HR():
 class HH():
     name = 'Hodgkins-Huxley'
     x0 = np.array([0.01,0.01,0.01,0.01])
+    def __init__(self, name, x0):
+       self.name = name
 
     def model(x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
         alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)

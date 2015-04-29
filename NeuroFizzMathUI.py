@@ -107,13 +107,26 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.help_menu.addAction('&Copyright', self.copyright)
         self.menuBar().addMenu(self.help_menu)
 
+        # tool bar
+        exitAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Exit', self)
+        exitAction.triggered.connect(QtGui.qApp.quit)
+
+        FNAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Fitzhugh-Nagumo', self)
+        MLAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Morris-Lecar', self)
+        self.toolbar = self.addToolBar('Exit')
+        self.toolbar.addAction(exitAction)
+        self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
+        self.toolbar.addAction(FNAction)
+        self.toolbar = self.addToolBar('Morris-Lecar')
+        self.toolbar.addAction(MLAction)
+
         self.main_widget = QtGui.QWidget(self)
 
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = MyStaticMplCanvas(self.main_widget, width=5, height=7, dpi=90)
-        dc = MyDynamicMplCanvas(self.main_widget, width=5, height=7, dpi=90)
+        sc = MyStaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        #dc = MyDynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
-        l.addWidget(dc)
+        #l.addWidget(dc)
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
