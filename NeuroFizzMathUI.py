@@ -49,7 +49,8 @@ class MyMplCanvas(FigureCanvas):
     def compute_initial_figure(self):
         pass
 
-# MOST VULNERABLE PORTION OF CODE - START
+### MOST VULNERABLE PORTION OF CODE - START ###
+
 # static canvas methods
 
 class StaticFNCanvas(MyMplCanvas):
@@ -91,7 +92,7 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
-# MOST VULNERABLE PORTION OF CODE - END
+### MOST VULNERABLE PORTION OF CODE - END ###
 
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -158,6 +159,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
         #l.addWidget(dc)
+
+        # *NOTE* We want a QTevent driven conditional here to select
+        # between the different models to display on the static canvas
+        # this will allow for the UI to determine which plot shows
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
