@@ -49,7 +49,9 @@ class MyMplCanvas(FigureCanvas):
     def compute_initial_figure(self):
         pass
 
+# MOST VULNERABLE PORTION OF CODE - START
 # static canvas methods
+
 class StaticFNCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
     def compute_initial_figure(self):
@@ -65,10 +67,11 @@ class StaticMplCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         #X = FN("Fitzhugh-Nagumo")
         X = RD("Rikitake Dynamo")
-        X = rk4(X.x0, t1 = 100,dt = 0.0001, ng = X.model)
-        t = X.t
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
 
+# dynamic canvas method
 
 class DynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
@@ -88,6 +91,7 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
+# MOST VULNERABLE PORTION OF CODE - END
 
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -143,11 +147,15 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.main_widget = QtGui.QWidget(self)
 
+        # INTERFACE PORTION OF CODE - START
+
         l = QtGui.QVBoxLayout(self.main_widget)
         sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
         #l.addWidget(dc)
+
+        # INTERFACE PORTION OF CODE - END
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
