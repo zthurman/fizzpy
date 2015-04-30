@@ -69,7 +69,7 @@ class ML():
     def __init__(self, name, x0):
        self.name = name
 
-    def model(x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 79):
+    def model(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 79):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
                         (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
@@ -123,7 +123,7 @@ class IZ():
     def __init__(self, name, x0):
        self.name = name
 
-    def model(x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
+    def model(self,x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
         if x[0] >= 30:
             x[0] = c
             x[1] = x[1] + d
@@ -137,7 +137,7 @@ class HR():
     def __init__(self, name, x0):
        self.name = name
 
-    def model(x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
+    def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
         return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I + k*(x[3] - x[0]),
                         c - d*(x[0]**2) - x[1],
                         r*(s*(x[0] - xnot) - x[2]),
@@ -151,7 +151,7 @@ class HH():
     def __init__(self, name, x0):
        self.name = name
 
-    def model(x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
+    def model(self,x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
         alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
         beta_n = 0.125*exp(x[0]/80)
         alpha_m = (0.1*(x[0]+25))/(exp((x[0]+25)/10)-1)
@@ -163,5 +163,23 @@ class HH():
                         alpha_m*(1-x[2]) - beta_m*x[2],
                         alpha_h*(1-x[3]) - beta_h*x[3]])
 
-	
+class RD():
+    name = 'Rikitake Dynamo'
+    x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5])
+    t = np.arange(0, 100, 0.0001)
+    def __init__(self, name, x0, t):
+       self.name = name
+
+    def model(self, x,t, m = 0.5, g = 50, r = 8, f = 0.5):
+        return np.array([r*(x[3] - x[0]), \
+                     r*(x[2] - x[1]), \
+                     x[0]*x[4] + m*x[1] - (1 + m)*x[2], \
+                     x[1]*x[5] + m*x[0] - (1 + m)*x[3], \
+                     g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4], \
+                     g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
+
+    # will need this later for making plots of this:
+    # X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100, dt = 0.0001, ng = model)
+
+
 		

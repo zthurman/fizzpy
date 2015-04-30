@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import FN, rk4
+from NeuroFizzMath import FN, rk4, RD
 import numpy as np
 import sys
 import os
@@ -53,18 +53,20 @@ class MyMplCanvas(FigureCanvas):
 class StaticFNCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
     def compute_initial_figure(self):
-        X = FN("Fitzhugh-Nagumo")
-        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
-        t = np.arange(0, 100, 0.02)
+        # X = FN("Fitzhugh-Nagumo")
+        X = RD("Rikitake Dynamo")
+        X = rk4(X.x0, t1 = 100,dt = 0.0001, ng = X.model)
+        t = X.t
         self.axes.plot(t, X[:,0])
 
 
 class StaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
     def compute_initial_figure(self):
-        X = FN("Fitzhugh-Nagumo")
-        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
-        t = np.arange(0, 100, 0.02)
+        #X = FN("Fitzhugh-Nagumo")
+        X = RD("Rikitake Dynamo")
+        X = rk4(X.x0, t1 = 100,dt = 0.0001, ng = X.model)
+        t = X.t
         self.axes.plot(t, X[:,0])
 
 
