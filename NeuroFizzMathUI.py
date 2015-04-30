@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import *
+from NeuroFizzMath import FN, rk4
 import numpy as np
 import sys
 import os
