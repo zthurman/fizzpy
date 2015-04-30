@@ -66,6 +66,8 @@ class StaticFNCanvas(MyMplCanvas):
 class StaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
     def compute_initial_figure(self):
+        # soon to be generalized method that will take any model as arguments
+        # provided by QT event actions
         #X = FN("Fitzhugh-Nagumo")
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
