@@ -113,11 +113,11 @@ class RD():
 
     def model(self, x,t, m = 0.5, g = 50, r = 8, f = 0.5):
         return np.array([r*(x[3] - x[0]),
-                     r*(x[2] - x[1]),
-                     x[0]*x[4] + m*x[1] - (1 + m)*x[2],
-                     x[1]*x[5] + m*x[0] - (1 + m)*x[3],
-                     g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
-                     g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
+                         r*(x[2] - x[1]),
+                         x[0]*x[4] + m*x[1] - (1 + m)*x[2],
+                         x[1]*x[5] + m*x[0] - (1 + m)*x[3],
+                         g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
+                         g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
 
     # will need this later for making plots of this:
     # X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100, dt = 0.0001, ng = model)

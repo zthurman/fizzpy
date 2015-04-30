@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import FN, rk4, RD
+from NeuroFizzMath import rk4, FN, ML, HR, HH, RD, W
 import numpy as np
 import sys
 import os
@@ -113,6 +113,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.model_menu.addAction('&Izikevich', self.izhikevich, QtCore. Qt.CTRL + QtCore.Qt.Key_I)
         self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose, QtCore.Qt.CTRL + QtCore.Qt.Key_R)
         self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley, QtCore.Qt.CTRL + QtCore.Qt.Key_H)
+        self.model_menu.addAction('&Rikitake Dynamo', self.rikitakeDynamo, QtCore.Qt.CTRL + QtCore.Qt.Key_D)
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
@@ -126,11 +127,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
-        FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Fitzhugh-Nagumo', self)
-        MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Morris-Lecar', self)
-        IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Izhikevich', self)
-        HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Hindmarsh-Rose', self)
-        HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'Hodgkins-Huxley', self)
+        FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
+        MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
+        IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
+        HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
+        HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
+        RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('man'), 'RD', self)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
@@ -144,10 +146,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.toolbar.addAction(HRAction)
         self.toolbar = self.addToolBar('Hodgkins-Huxley')
         self.toolbar.addAction(HHAction)
+        self.toolbar = self.addToolBar('Rikitake Dynamo')
+        self.toolbar.addAction(RDAction)
 
         self.main_widget = QtGui.QWidget(self)
 
-        # INTERFACE PORTION OF CODE - START
+        # INTERFACE PORTION OF CANVAS DISPLAYED - START
 
         l = QtGui.QVBoxLayout(self.main_widget)
         sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
@@ -155,7 +159,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         #l.addWidget(dc)
 
-        # INTERFACE PORTION OF CODE - END
+        # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
@@ -214,7 +218,17 @@ equations.
 
 The Hodgkins-Huxley model is a system
 of four coupled nonlinear differential
-equations.
+equations and four functions.
+""")
+
+    def rikitakeDynamo(self):
+        QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
+"""Rikitake Dynamo
+
+The Rikitake Dynamo is a system
+of six coupled nonlinear differential
+equations that govern the phenom-
+enon of geomagnetic polarity reversal.
 """)
 
     def about(self):
