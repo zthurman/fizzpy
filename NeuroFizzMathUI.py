@@ -101,7 +101,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self.setWindowTitle("application main window")
-
+        #self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
 
         # file menu
         self.file_menu = QtGui.QMenu('&File', self)
@@ -129,14 +129,18 @@ class ApplicationWindow(QtGui.QMainWindow):
         # tool bar
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
-
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.triggered.connect(QtGui.qApp.quit)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
+        MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
+        IZAction.connect(IZAction,QtCore.SIGNAL('triggered()'), self.izhikevich)
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
+        HRAction.connect(HRAction,QtCore.SIGNAL('triggered()'), self.hindmarshRose)
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
+        HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.hodgkinsHuxley)
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
+        RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.rikitakeDynamo)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
@@ -166,6 +170,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         # *NOTE* We want a QTevent driven conditional here to select
         # between the different models to display on the static canvas
         # this will allow for the UI to determine which plot shows
+
+        # Probably a good idea to do this with toolbar for starters
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
