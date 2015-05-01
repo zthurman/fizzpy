@@ -211,95 +211,95 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def morrisLecar(self):
         QtGui.QMessageBox.about(self, "Morris-Lecar",
-"""Morris-Lecar
+        """Morris-Lecar
 
-The Morris-Lecar model is a system
-of two coupled nonlinear differential
-equations.
-""")
+        The Morris-Lecar model is a system
+        of two coupled nonlinear differential
+        equations.
+        """)
 
     def izhikevich(self):
         QtGui.QMessageBox.about(self, "Izhikevich",
-"""Izhikevich
+        """Izhikevich
 
-The Izhikevich model is a system
-of two coupled nonlinear differential
-equations.
-""")
+        The Izhikevich model is a system
+        of two coupled nonlinear differential
+        equations.
+        """)
 
     def hindmarshRose(self):
         QtGui.QMessageBox.about(self, "Hindmarsh-Rose",
-"""Hindmarsh-Rose
+        """Hindmarsh-Rose
 
-The Hindmarsh-Rose model is a system
-of three coupled nonlinear differential
-equations.
-""")
+        The Hindmarsh-Rose model is a system
+        of three coupled nonlinear differential
+        equations.
+        """)
 
     def hodgkinsHuxley(self):
         QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
-"""Hodgkins-Huxley
+        """Hodgkins-Huxley
 
-The Hodgkins-Huxley model is a system
-of four coupled nonlinear differential
-equations and four functions.
-""")
+        The Hodgkins-Huxley model is a system
+        of four coupled nonlinear differential
+        equations and four functions.
+        """)
 
     def rikitakeDynamo(self):
         QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
-"""Rikitake Dynamo
+        """Rikitake Dynamo
 
-The Rikitake Dynamo is a system
-of six coupled nonlinear differential
-equations that govern the phenom-
-enon of geomagnetic polarity reversal.
-""")
+        The Rikitake Dynamo is a system
+        of six coupled nonlinear differential
+        equations that govern the phenom-
+        enon of geomagnetic polarity reversal.
+        """)
 
     def about(self):
         QtGui.QMessageBox.about(self, "About",
-"""NeuroFizzMath v0.1
+        """NeuroFizzMath v0.1
 
-This application allows the user to play with
-different models of point neurons. Plots of
-the membrane potential over time, phase plots
-and FFTs are available.
+        This application allows the user to play with
+        different models of point neurons. Plots of
+        the membrane potential over time, phase plots
+        and FFTs are available.
 
-Supported models are Fitzhugh-Nagumo, Morris-
-Lecar, Izikevich, Hindmarsh-Rose and Hodgkins-
-Huxley.
-""")
+        Supported models are Fitzhugh-Nagumo, Morris-
+        Lecar, Izikevich, Hindmarsh-Rose and Hodgkins-
+        Huxley.
+        """)
 
     def copyright(self):
-            QtGui.QMessageBox.about(self, "Copyright",
-"""Copyright (C) 2015 by Zechariah Thurman
+        QtGui.QMessageBox.about(self, "Copyright",
+        """Copyright (C) 2015 by Zechariah Thurman
 
-Permission is hereby granted, free of charge,
-to any person obtaining a copy of this software
-and associated documentation files (the
-"Software"), to deal in the Software without
-restriction, including without limitation the
-rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the
-following conditions:
+        Permission is hereby granted, free of charge,
+        to any person obtaining a copy of this software
+        and associated documentation files (the
+        "Software"), to deal in the Software without
+        restriction, including without limitation the
+        rights to use, copy, modify, merge, publish,
+        distribute, sublicense, and/or sell copies of
+        the Software, and to permit persons to whom the
+        Software is furnished to do so, subject to the
+        following conditions:
 
-The above copyright notice and this permission
-notice shall be included in all copies or
-substantial portions of the Software.
+        The above copyright notice and this permission
+        notice shall be included in all copies or
+        substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT
-WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
-OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
-OR OTHER DEALINGS IN THE SOFTWARE.
-"""
-)
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT
+        WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+        AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+        OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+        OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+        OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+        OR OTHER DEALINGS IN THE SOFTWARE.
+        """
+        )
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
