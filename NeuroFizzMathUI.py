@@ -46,7 +46,7 @@ class MyMplCanvas(FigureCanvas):
                                    QtGui.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
-    def compute_initial_figure(self):
+    def compute_initial_figure(self, X):
         pass
 
 ### MOST VULNERABLE PORTION OF CODE - START ###
@@ -65,12 +65,12 @@ class StaticFNCanvas(MyMplCanvas):
 
 class StaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
-    def compute_initial_figure(self):
+    def compute_initial_figure(self, X):
         # soon to be generalized method that will take any model as arguments
         # provided by QT event actions
         #X = FN("Fitzhugh-Nagumo")
-        X = RD("Rikitake Dynamo")
-        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
+        #X = RD("Rikitake Dynamo")
+        #X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
 
@@ -190,14 +190,24 @@ class ApplicationWindow(QtGui.QMainWindow):
     def closeEvent(self, ce):
         self.fileQuit()
 
+    def fnplot(self):
+        X = RD("Rikitake Dynamo")
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
+        l = QtGui.QVBoxLayout(self.main_widget)
+        sc = StaticMplCanvas(self.main_widget, self.X, width=7, height=7, dpi=90)
+        l.addWidget(sc)
+
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
-"""Fitzhugh-Nagumo
+        """Fitzhugh-Nagumo
 
-The Fitzhugh-Nagumo model is a system
-of two coupled nonlinear differential
-equations.
-""")
+        The Fitzhugh-Nagumo model is a system
+        of two coupled nonlinear differential
+        equations.
+
+        For more details check out:
+        http://goo.gl/qMu6eb
+        """)
 
     def morrisLecar(self):
         QtGui.QMessageBox.about(self, "Morris-Lecar",
