@@ -131,15 +131,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction.triggered.connect(QtGui.qApp.quit)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
+        FNAction.triggered.connect(QtGui.qApp.quit)
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
-        RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('man'), 'RD', self)
+        RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
-        self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
+        self.toolbar = self.addToolBar('&Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
         self.toolbar = self.addToolBar('Morris-Lecar')
         self.toolbar.addAction(MLAction)
