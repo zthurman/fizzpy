@@ -129,4 +129,7 @@ class W():
     def __init__(self, name):
        self.name = name
 
+    def model(self, x, t):
+        pass
+
 
