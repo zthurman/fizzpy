@@ -136,7 +136,8 @@ class W():
 
 class L():
     name = 'Lorenz Equations'
-    def __init(self, name):
+    x0 = np.array([1.0, 2.0, 1.0])
+    def __init__(self, name):
         self.name = name
 
     def model(self, x, t, sigma = 10.0, rho = 28.0, beta = 10.0/3):
@@ -145,3 +146,13 @@ class L():
                          x[0]*x[1] - beta*x[2]])
 
 
+class R():
+    name = 'Robbins Equations'
+
+    def __init__(self, name):
+        self.name = name
+
+    def model(x,t, V = 1, sigma = 5, R = 13):
+        return np.array([R - x[1]*x[2] - V*x[0],
+                         x[0]*x[2] - x[1],
+                         sigma*(x[1] - x[2])])

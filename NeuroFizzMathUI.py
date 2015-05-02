@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import rk4, FN, ML, HR, HH, RD, W
+from NeuroFizzMath import rk4, FN, ML, HR, HH, RD, W, L
 import numpy as np
 import sys
 import os
@@ -61,9 +61,9 @@ class StaticFNCanvas(MyMplCanvas):
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
         t = np.arange(0, 100, 0.02)
+        self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('DUDE')
         self.axes.set_ylabel('DUDE')
-        self.axes.plot(t, X[:,0])
 
 
 class StaticMplCanvas(MyMplCanvas):
@@ -71,9 +71,9 @@ class StaticMplCanvas(MyMplCanvas):
         # soon to be generalized method that will take any model as arguments
         # provided by QT event actions
         #X = FN("Fitzhugh-Nagumo")
-        X = RD("Rikitake Dynamo")
-        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
-        t = np.arange(0, 100, 0.02)
+        X = L("Rikitake Dynamo")
+        X = rk4(x0 = np.array([1.0, 2.0, 1.0]) , t1 = 100,dt = 0.01, ng = X.model)
+        t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('DUDE')
         self.axes.set_ylabel('DUDE')
