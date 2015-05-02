@@ -65,12 +65,12 @@ class StaticFNCanvas(MyMplCanvas):
 
 class StaticMplCanvas(MyMplCanvas):
     # separate plot methods for each neuron class
-    def compute_initial_figure(self, X):
+    def compute_initial_figure(self):
         # soon to be generalized method that will take any model as arguments
         # provided by QT event actions
         #X = FN("Fitzhugh-Nagumo")
-        #X = RD("Rikitake Dynamo")
-        #X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
+        X = RD("Rikitake Dynamo")
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
 
@@ -130,7 +130,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fnplot)
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
@@ -194,7 +194,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticMplCanvas(self.main_widget, self.X, width=7, height=7, dpi=90)
+        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def fitzhughNagumo(self):
