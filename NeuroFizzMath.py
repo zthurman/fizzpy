@@ -132,4 +132,16 @@ class W():
     def model(self, x, t):
         pass
 
+# L atmospheric model
+
+class L():
+    name = 'Lorenz Equations'
+    def __init(self, name):
+        self.name = name
+
+    def model(self, x, t, sigma = 10.0, rho = 28.0, beta = 10.0/3):
+        return np.array([sigma * (x[1] - x[0]),
+                         rho*x[0] - x[1] - x[0]*x[2],
+                         x[0]*x[1] - beta*x[2]])
+
 
