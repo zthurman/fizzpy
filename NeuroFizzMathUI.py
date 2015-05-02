@@ -35,8 +35,6 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
-        self.axes.set_xlabel('DUDE')
-        self.axes.set_ylabel('DUDE')
 
         self.compute_initial_figure()
 
@@ -64,6 +62,7 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('DUDE')
         self.axes.set_ylabel('DUDE')
+        self.axes.set_title('PLOT')
 
 
 class StaticMplCanvas(MyMplCanvas):
@@ -77,6 +76,7 @@ class StaticMplCanvas(MyMplCanvas):
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('DUDE')
         self.axes.set_ylabel('DUDE')
+        self.axes.set_title('PLOT')
 
 # dynamic canvas method
 
