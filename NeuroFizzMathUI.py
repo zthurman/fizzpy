@@ -114,12 +114,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         # model menu
         self.model_menu = QtGui.QMenu('&Models', self)
         self.menuBar().addSeparator()
-        self.model_menu.addAction('&Fitzhugh-Nagumo', self.fitzhughNagumo, QtCore.Qt.CTRL + QtCore.Qt.Key_F)
-        self.model_menu.addAction('&Morris-Lecar', self.morrisLecar, QtCore.Qt.CTRL + QtCore.Qt.Key_M)
-        self.model_menu.addAction('&Izikevich', self.izhikevich, QtCore. Qt.CTRL + QtCore.Qt.Key_I)
-        self.model_menu.addAction('&Hindmarsh-Rose', self.hindmarshRose, QtCore.Qt.CTRL + QtCore.Qt.Key_R)
-        self.model_menu.addAction('&Hodgkins-Huxley', self.hodgkinsHuxley, QtCore.Qt.CTRL + QtCore.Qt.Key_H)
-        self.model_menu.addAction('&Rikitake Dynamo', self.rikitakeDynamo, QtCore.Qt.CTRL + QtCore.Qt.Key_D)
+        self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
+        self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
+        self.model_menu.addAction('Izikevich', self.izhikevich)
+        self.model_menu.addAction('Hindmarsh-Rose', self.hindmarshRose)
+        self.model_menu.addAction('Hodgkins-Huxley', self.hodgkinsHuxley)
+        self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
+        self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
@@ -257,6 +258,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         of six coupled nonlinear differential
         equations that govern the phenom-
         enon of geomagnetic polarity reversal.
+        """)
+
+    def lorenzEqns(self):
+        QtGui.QMessageBox.about(self, "Lorenz Equations",
+        """Lorenz Equations
+
+        The Lorenz Equations are a system
+        of three coupled nonlinear differential
+        equations that govern atmospheric
+        convection behavior.
         """)
 
     def about(self):
