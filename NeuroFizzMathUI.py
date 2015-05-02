@@ -35,6 +35,8 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
+        self.axes.set_xlabel('DUDE')
+        self.axes.set_ylabel('DUDE')
 
         self.compute_initial_figure()
 
@@ -54,17 +56,17 @@ class MyMplCanvas(FigureCanvas):
 # static canvas methods
 
 class StaticFNCanvas(MyMplCanvas):
-    # separate plot methods for each neuron class
     def compute_initial_figure(self):
         # X = FN("Fitzhugh-Nagumo")
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
         t = np.arange(0, 100, 0.02)
+        self.axes.set_xlabel('DUDE')
+        self.axes.set_ylabel('DUDE')
         self.axes.plot(t, X[:,0])
 
 
 class StaticMplCanvas(MyMplCanvas):
-    # separate plot methods for each neuron class
     def compute_initial_figure(self):
         # soon to be generalized method that will take any model as arguments
         # provided by QT event actions
@@ -73,6 +75,8 @@ class StaticMplCanvas(MyMplCanvas):
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('DUDE')
+        self.axes.set_ylabel('DUDE')
 
 # dynamic canvas method
 
@@ -131,7 +135,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fnplot)
+
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
@@ -145,7 +150,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
-        self.toolbar = self.addToolBar('&Fitzhugh-Nagumo')
+        self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
         self.toolbar = self.addToolBar('Morris-Lecar')
         self.toolbar.addAction(MLAction)
@@ -192,9 +197,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fnplot(self):
-        l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
+        self.figure.add_subplot(111)
+        self.StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
+        self.canvas.draw()
 
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
