@@ -58,8 +58,8 @@ class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         # X = FN("Fitzhugh-Nagumo")
         X = RD("Rikitake Dynamo")
-        X = rk4(X.x0, t1 = 100,dt = 0.0001, ng = X.model)
-        t = X.t
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
+        t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
 
 
@@ -90,7 +90,6 @@ class DynamicMplCanvas(MyMplCanvas):
     def update_figure(self):
         # Build a list of 4 random integers between 0 and 10 (both inclusive)
         l = [random.randint(0, 10) for i in range(4)]
-
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
@@ -191,10 +190,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fnplot(self):
-        X = RD("Rikitake Dynamo")
-        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def fitzhughNagumo(self):
