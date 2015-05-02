@@ -125,11 +125,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
         self.menuBar().addMenu(self.help_menu)
 
+        # toolbar action list
+
         # tool bar
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fnplot)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
