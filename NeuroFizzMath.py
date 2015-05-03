@@ -144,6 +144,7 @@ class L():
                          rho*x[0] - x[1] - x[0]*x[2],
                          x[0]*x[1] - beta*x[2]])
 
+# R geomagnetic polarity reversal
 
 class R():
     name = 'Robbins Equations'

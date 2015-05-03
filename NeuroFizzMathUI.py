@@ -107,9 +107,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
 
         # landing screen text
-        self.text = 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
-                    assist with understanding numerical solutions to different systems  \n\
-                    of differential equations.'
+        self.text = \
+                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
+assist you with understanding numerical solutions to systems  \n\
+    of differential equations.'
+        self.setGeometry(300, 300, 500, 350)
 
         # file menu
         self.file_menu = QtGui.QMenu('&File', self)
