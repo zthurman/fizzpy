@@ -74,9 +74,9 @@ class StaticMplCanvas(MyMplCanvas):
         X = rk4(x0 = np.array([1.0, 2.0, 1.0]) , t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
-        self.axes.set_xlabel('DUDE')
-        self.axes.set_ylabel('DUDE')
-        self.axes.set_title('PLOT')
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('X[:,0]')
+        self.axes.set_title('Lorenz Equations')
 
 # dynamic canvas method
 
@@ -121,6 +121,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.model_menu.addAction('Hodgkins-Huxley', self.hodgkinsHuxley)
         self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
         self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
+        self.model_menu.addAction('Robbins Model', self.robbins)
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
@@ -148,6 +149,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.hodgkinsHuxley)
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
         RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.rikitakeDynamo)
+        LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
+        LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.lorenzEqns)
+        RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
+        RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.robbins)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
@@ -163,6 +168,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.toolbar.addAction(HHAction)
         self.toolbar = self.addToolBar('Rikitake Dynamo')
         self.toolbar.addAction(RDAction)
+        self.toolbar = self.addToolBar('Lorenz Equations')
+        self.toolbar.addAction(LAction)
+        self.toolbar = self.addToolBar('Robbins Equations')
+        self.toolbar.addAction(RAction)
+
 
         self.main_widget = QtGui.QWidget(self)
 
@@ -268,6 +278,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         of three coupled nonlinear differential
         equations that govern atmospheric
         convection behavior.
+        """)
+
+    def robbins(self):
+        QtGui.QMessageBox.about(self, "Robbins Equations",
+        """Robbins Equations
+
+        The Robbins Equations are a system
+        of three coupled nonlinear differential
+        equations that model geomagnetic
+        polarity reversal.
         """)
 
     def about(self):
