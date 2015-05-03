@@ -75,7 +75,7 @@ class StaticMplCanvas(MyMplCanvas):
         t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
-        self.axes.set_ylabel('X[:,0]')
+        self.axes.set_ylabel('X Dynamical Variable')
         self.axes.set_title('Lorenz Equations')
 
 # dynamic canvas method
@@ -105,6 +105,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self.setWindowTitle("application main window")
         #self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
+
+        # landing screen text
+        self.text = 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
+                    assist with understanding numerical solutions to different systems  \n\
+                    of differential equations.'
 
         # file menu
         self.file_menu = QtGui.QMenu('&File', self)
@@ -136,20 +141,28 @@ class ApplicationWindow(QtGui.QMainWindow):
         # tool bar
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
+
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fnplot)
+
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
+
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
         IZAction.connect(IZAction,QtCore.SIGNAL('triggered()'), self.izhikevich)
+
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
         HRAction.connect(HRAction,QtCore.SIGNAL('triggered()'), self.hindmarshRose)
+
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
         HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.hodgkinsHuxley)
+
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
         RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.rikitakeDynamo)
+
         LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
         LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.lorenzEqns)
+
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
         RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.robbins)
 
@@ -177,13 +190,13 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - START
 
-        l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        #l = QtGui.QVBoxLayout(self.main_widget)
+        #sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
+        #l.addWidget(sc)
         #l.addWidget(dc)
 
-        # *NOTE* We want a QTevent driven conditional here to select
+        # *NOTE* We want a Qt event driven conditional here to select
         # between the different models to display on the static canvas
         # this will allow for the UI to determine which plot shows
 
@@ -194,7 +207,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
         self.setCentralWidget(self.main_widget)
 
-        self.statusBar().showMessage("All hail matplotlib!", 2000)
+        self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
     def buttonClicked(self):
         sender = self.sender()
@@ -207,9 +220,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fnplot(self):
-        l = QtGui.QVBoxLayout(self.main_widget)
         sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
 
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
@@ -334,6 +345,21 @@ class ApplicationWindow(QtGui.QMainWindow):
         OR OTHER DEALINGS IN THE SOFTWARE.
         """
         )
+
+    # landing screen text events
+
+    def paintEvent(self, event):
+
+        qp = QtGui.QPainter()
+        qp.begin(self)
+        self.drawText(event, qp)
+        qp.end()
+
+    def drawText(self, event, qp):
+
+        qp.setPen(QtGui.QColor(168, 34, 3))
+        qp.setFont(QtGui.QFont('Decorative', 10))
+        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)

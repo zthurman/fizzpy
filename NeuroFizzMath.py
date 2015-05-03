@@ -39,7 +39,6 @@ class FN():
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 
-
 # ML neuron model
 
 class ML():
