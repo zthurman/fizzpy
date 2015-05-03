@@ -148,7 +148,7 @@ class L():
 
 class R():
     name = 'Robbins Equations'
-
+    x0 = np.array([0.00032,0.23,0.51])
     def __init__(self, name):
         self.name = name
 
