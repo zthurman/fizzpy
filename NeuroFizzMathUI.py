@@ -32,6 +32,7 @@ class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
+        self.fig.clear()
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
@@ -58,11 +59,11 @@ class StaticFNCanvas(MyMplCanvas):
         # X = FN("Fitzhugh-Nagumo")
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
-        t = np.arange(0, 100, 0.02)
+        t = np.arange(0, 100, 0.0001)
         self.axes.plot(t, X[:,0])
-        self.axes.set_xlabel('DUDE')
-        self.axes.set_ylabel('DUDE')
-        self.axes.set_title('PLOT')
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Membrane Potential')
+        self.axes.set_title('Fitzhugh-Nagumo')
 
 
 class StaticMplCanvas(MyMplCanvas):
@@ -107,10 +108,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
 
         # landing screen text
-        self.text = \
-                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
-assist you with understanding numerical solutions to systems  \n\
-    of differential equations.'
+#        self.text = \
+#                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
+#assist you with understanding numerical solutions to systems  \n\
+#    of differential equations.'
         self.setGeometry(300, 300, 500, 350)
 
         # file menu
@@ -222,6 +223,7 @@ assist you with understanding numerical solutions to systems  \n\
         self.fileQuit()
 
     def fnplot(self):
+
         sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
 
     def fitzhughNagumo(self):
@@ -350,7 +352,7 @@ assist you with understanding numerical solutions to systems  \n\
 
     # landing screen text events
 
-    def paintEvent(self, event):
+    """def paintEvent(self, event):
 
         qp = QtGui.QPainter()
         qp.begin(self)
@@ -361,7 +363,7 @@ assist you with understanding numerical solutions to systems  \n\
 
         qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QtGui.QFont('Decorative', 10))
-        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)
+        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)"""
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
