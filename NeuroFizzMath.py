@@ -81,7 +81,7 @@ class HR():
 # HH neuron model
 
 class HH():
-    name = 'Hodgkins-Huxley'
+    name = "Hodgkins-Huxley"
     x0 = np.array([0.01,0.01,0.01,0.01])
     def __init__(self, name):
        self.name = name
@@ -130,7 +130,7 @@ class W():
 # L atmospheric model
 
 class L():
-    name = 'Lorenz Equations'
+    name = "Lorenz Equations"
     x0 = np.array([1.0, 2.0, 1.0])
     def __init__(self, name):
         self.name = name
@@ -143,7 +143,7 @@ class L():
 # R geomagnetic polarity reversal
 
 class R():
-    name = 'Robbins Equations'
+    name = "Robbins Equations"
     x0 = np.array([0.00032,0.23,0.51])
     def __init__(self, name):
         self.name = name
