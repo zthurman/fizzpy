@@ -32,9 +32,7 @@ class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        # self.fig.clear()
         self.axes = fig.add_subplot(111)
-        # We want the axes cleared every time plot() is called
         self.axes.hold(False)
         self.compute_initial_figure()
 
@@ -133,9 +131,6 @@ class StaticRCanvas(MyMplCanvas):
 
 class StaticMplCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        # soon to be generalized method that will take any model as arguments
-        # provided by QT event actions
-        #X = FN("Fitzhugh-Nagumo")
         X = L("Lorenz Eqns")
         X = rk4(x0 = np.array([1.0, 2.0, 1.0]) , t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
