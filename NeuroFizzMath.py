@@ -31,7 +31,6 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
 class FN():
     name = "Fitzhugh-Nagumo"
     x0 = np.array([0.01,0.01])
-
     def __init__(self, name):
         self.name = name
 
@@ -56,6 +55,7 @@ class ML():
 class IZ():
     name = 'Izhikevich'
     x0 = np.array([0,0])
+
     def __init__(self, name):
        self.name = name
 

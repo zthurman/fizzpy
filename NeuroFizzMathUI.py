@@ -50,23 +50,29 @@ class MyMplCanvas(FigureCanvas):
     def compute_initial_figure(self, X):
         pass
 
-### MOST VULNERABLE PORTION OF CODE - START ###
-
 # static canvas methods
 
 class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        # X = FN("Fitzhugh-Nagumo")
         # self.fig.clear()
-        X = RD("Rikitake Dynamo")
-        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
-        t = np.arange(0, 100, 0.0001)
+        X = RD("Fitzhugh-Nagumo")
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.01, ng = X.model)
+        t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('Membrane Potential')
         self.axes.set_title('Fitzhugh-Nagumo')
 
-
+class StaticRDCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        # self.fig.clear()
+        X = RD("Rikitake Dynamo")
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.01, ng = X.model)
+        t = np.arange(0, 100, 0.01)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Geomagnetic Polarity')
+        self.axes.set_title('Rikitake Dynamo')
 
 class StaticMplCanvas(MyMplCanvas):
     def compute_initial_figure(self):
@@ -100,7 +106,7 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
-### MOST VULNERABLE PORTION OF CODE - END ###
+# main window
 
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -216,7 +222,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def draw_canvas(self):
         l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        sc = StaticRDCanvas(self.main_widget, width=7, height=7, dpi=90)
         #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
