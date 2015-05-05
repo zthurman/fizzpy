@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import rk4, FN, ML, HR, HH, RD, W, L
+from NeuroFizzMath import rk4, FN, ML, IZ, HR, HH, RD, W, L
 import numpy as np
 import sys
 import os
@@ -53,7 +53,6 @@ class MyMplCanvas(FigureCanvas):
 
 class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        # self.fig.clear()
         X = FN("Fitzhugh-Nagumo")
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
@@ -62,9 +61,38 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.set_ylabel('Membrane Potential')
         self.axes.set_title('Fitzhugh-Nagumo')
 
+class StaticMLCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = ML("Morris-Lecar")
+        X = rk4(x0 = np.array([0,0]), t1 = 1000,dt = 0.30, ng = X.model)
+        t = np.arange(0, 1000, 0.30)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Membrane Potential')
+        self.axes.set_title('Morris-Lecar')
+
+class StaticIZCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = IZ("Izhikevich")
+        X = rk4(x0 = np.array([0,0]), t1 = 300,dt = 0.1, ng = X.model)
+        t = np.arange(0, 300, 0.1)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Membrane Potential')
+        self.axes.set_title('Izhikevich')
+
+class StaticHRCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = HR("Hindmarsh-Rose")
+        X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('Membrane Potential')
+        self.axes.set_title('Hindmarsh-Rose')
+
 class StaticRDCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        # self.fig.clear()
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
@@ -154,13 +182,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_FNcanvas)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
-        MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
+        MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.draw_MLcanvas)
 
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
-        IZAction.connect(IZAction,QtCore.SIGNAL('triggered()'), self.izhikevich)
+        IZAction.connect(IZAction,QtCore.SIGNAL('triggered()'), self.draw_IZcanvas)
 
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
-        HRAction.connect(HRAction,QtCore.SIGNAL('triggered()'), self.hindmarshRose)
+        HRAction.connect(HRAction,QtCore.SIGNAL('triggered()'), self.draw_HRcanvas)
 
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
         HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.hodgkinsHuxley)
@@ -224,6 +252,30 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
+
+    def draw_MLcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticMLCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
+
+    def draw_IZcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticIZCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
+
+    def draw_HRcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticHRCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def draw_RDcanvas(self):
@@ -324,7 +376,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def about(self):
         QtGui.QMessageBox.about(self, "About",
-        """NeuroFizzMath v0.1
+        """NeuroFizzMath
 
         This application allows the user to play with
         different models of point neurons. Plots of

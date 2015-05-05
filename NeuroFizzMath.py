@@ -41,7 +41,7 @@ class FN():
 # ML neuron model
 
 class ML():
-    name = 'Morris-Lecar'
+    name = "Morris-Lecar"
     x0 = np.array([0,0])
     def __init__(self, name):
        self.name = name
@@ -53,9 +53,8 @@ class ML():
 # IZ neuron model
 
 class IZ():
-    name = 'Izhikevich'
+    name = "Izhikevich"
     x0 = np.array([0,0])
-
     def __init__(self, name):
        self.name = name
 
@@ -69,18 +68,15 @@ class IZ():
 # HR neuron model
 
 class HR():
-    name = 'Hindmarsh-Rose'
+    name = "Hindmarsh-Rose"
     x0 = np.array([3, 0, -1.2])
     def __init__(self, name):
        self.name = name
 
     def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
-        return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I + k*(x[3] - x[0]),
+        return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I,
                         c - d*(x[0]**2) - x[1],
-                        r*(s*(x[0] - xnot) - x[2]),
-                        x[4] - a*(x[3]**3) + (b*(x[3]**2)) - x[5] + I + k*(x[0] - x[3]),
-                        c - d*(x[3]**2) - x[4],
-                        r*(s*(x[3] - xnot) - x[5])])
+                        r*(s*(x[0] - xnot) - x[2])])
 
 # HH neuron model
 
