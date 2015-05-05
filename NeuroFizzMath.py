@@ -148,7 +148,7 @@ class R():
     def __init__(self, name):
         self.name = name
 
-    def model(x,t, V = 1, sigma = 5, R = 13):
+    def model(self,x,t, V = 1, sigma = 5, R = 13):
         return np.array([R - x[1]*x[2] - V*x[0],
                          x[0]*x[2] - x[1],
                          sigma*(x[1] - x[2])])

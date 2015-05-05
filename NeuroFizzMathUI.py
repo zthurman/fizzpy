@@ -123,7 +123,7 @@ class StaticLCanvas(MyMplCanvas):
 
 class StaticRCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        X = R("Lorenz Equations")
+        X = R("Robbins Equations")
         X = rk4(x0 = np.array([0.00032,0.23,0.51]), t1 = 200,dt = 0.1, ng = X.model)
         t = np.arange(0, 200, 0.1)
         self.axes.plot(t, X[:,2])
