@@ -36,7 +36,6 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
-
         self.compute_initial_figure()
 
         FigureCanvas.__init__(self, fig)
@@ -55,7 +54,7 @@ class MyMplCanvas(FigureCanvas):
 class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         # self.fig.clear()
-        X = RD("Fitzhugh-Nagumo")
+        X = FN("Fitzhugh-Nagumo")
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
@@ -113,7 +112,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self.setWindowTitle("application main window")
-        #self.connect(exit, QtCore.SIGNAL('triggered()'), QtCore.SLOT('close()'))
 
         # landing screen text
 #        self.text = \
@@ -147,14 +145,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
         self.menuBar().addMenu(self.help_menu)
 
-        # toolbar action list
+        # tool bar action list
 
-        # tool bar
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_canvas)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_FNcanvas)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
@@ -169,7 +166,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.hodgkinsHuxley)
 
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
-        RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.rikitakeDynamo)
+        RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.draw_RDcanvas)
 
         LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
         LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.lorenzEqns)
@@ -198,6 +195,12 @@ class ApplicationWindow(QtGui.QMainWindow):
 
 
         self.main_widget = QtGui.QWidget(self)
+        #l = QtGui.QVBoxLayout(self.main_widget)
+
+        self.main_widget.setFocus()
+        self.setCentralWidget(self.main_widget)
+
+        self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - START
 
@@ -215,15 +218,14 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
-        self.main_widget.setFocus()
-        self.setCentralWidget(self.main_widget)
+    def draw_FNcanvas(self):
+        l = QtGui.QVBoxLayout(self.main_widget)
+        sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
 
-        self.statusBar().showMessage("The Diff EQ playground!", 2000)
-
-    def draw_canvas(self):
+    def draw_RDcanvas(self):
         l = QtGui.QVBoxLayout(self.main_widget)
         sc = StaticRDCanvas(self.main_widget, width=7, height=7, dpi=90)
-        #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def buttonClicked(self):
