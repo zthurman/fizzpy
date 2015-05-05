@@ -32,7 +32,7 @@ class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        self.fig.clear()
+        # self.fig.clear()
         self.axes = fig.add_subplot(111)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
@@ -55,8 +55,14 @@ class MyMplCanvas(FigureCanvas):
 # static canvas methods
 
 class StaticFNCanvas(MyMplCanvas):
+    """def __init__(self, width=5, height=5, dpi=100):
+        super(StaticFNCanvas, self).__init__(self, width=5, height=5, dpi=100)"""
+    def __init__(self, *args, **kwargs):
+        MyMplCanvas.__init__(self, *args, **kwargs)
+
     def compute_initial_figure(self):
         # X = FN("Fitzhugh-Nagumo")
+        # self.fig.clear()
         X = RD("Rikitake Dynamo")
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
         t = np.arange(0, 100, 0.0001)
@@ -64,6 +70,13 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('Membrane Potential')
         self.axes.set_title('Fitzhugh-Nagumo')
+
+    def update_figure(self):
+        X = RD("Rikitake Dynamo")
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
+        t = np.arange(0, 100, 0.0001)
+        self.axes.plot(t, X[:,0])
+        self.draw()
 
 
 class StaticMplCanvas(MyMplCanvas):
@@ -115,12 +128,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setGeometry(300, 300, 500, 350)
 
         # file menu
-        self.file_menu = QtGui.QMenu('&File', self)
+        self.file_menu = QtGui.QMenu('File', self)
         self.file_menu.addAction('&Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
         self.menuBar().addMenu(self.file_menu)
 
         # model menu
-        self.model_menu = QtGui.QMenu('&Models', self)
+        self.model_menu = QtGui.QMenu('Models', self)
         self.menuBar().addSeparator()
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
         self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
@@ -133,7 +146,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.menuBar().addMenu(self.model_menu)
 
         # help menu
-        self.help_menu = QtGui.QMenu('&Help', self)
+        self.help_menu = QtGui.QMenu('Help', self)
         self.menuBar().addSeparator()
         self.help_menu.addAction('&About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
         self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
@@ -146,7 +159,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction.triggered.connect(QtGui.qApp.quit)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fnplot)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
@@ -212,6 +225,12 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
+    def draw_canvas(self):
+        l = QtGui.QVBoxLayout(self.main_widget)
+        sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
+
     def buttonClicked(self):
         sender = self.sender()
         self.statusBar().showMessage(sender.text() + ' was pressed')
@@ -223,8 +242,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fileQuit()
 
     def fnplot(self):
-
+        self.main_widget = QtGui.QWidget(self)
+        l = QtGui.QVBoxLayout(self.main_widget)
         sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
 
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
