@@ -25,7 +25,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 progname = os.path.basename(sys.argv[0])
-progversion = "0.1"
+progversion = "0.11"
 
 
 class MyMplCanvas(FigureCanvas):
@@ -167,20 +167,24 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setWindowTitle("application main window")
 
         # landing screen text
-#        self.text = \
-#                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
-#assist you with understanding numerical solutions to systems  \n\
-#    of differential equations.'
+        self.text = \
+                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
+assist you with understanding numerical solutions to systems  \n\
+    of differential equations.'
         self.setGeometry(300, 300, 800, 500)
 
         # file menu
+
         self.file_menu = QtGui.QMenu('File', self)
-        self.file_menu.addAction('&Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
         self.menuBar().addMenu(self.file_menu)
+        self.file_menu.addAction('&Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
+        #self.menuBar().addMenu(self.file_menu)
 
         # model menu
+
         self.model_menu = QtGui.QMenu('Models', self)
-        self.menuBar().addSeparator()
+        #self.menuBar().addSeparator()
+        self.menuBar().addMenu(self.model_menu)
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
         self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
         self.model_menu.addAction('Izikevich', self.izhikevich)
@@ -189,14 +193,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
         self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
         self.model_menu.addAction('Robbins Model', self.robbins)
-        self.menuBar().addMenu(self.model_menu)
+        #self.menuBar().addMenu(self.model_menu)
 
         # help menu
+
         self.help_menu = QtGui.QMenu('Help', self)
-        self.menuBar().addSeparator()
+        self.menuBar().addMenu(self.help_menu)
+        #self.menuBar().addSeparator()
         self.help_menu.addAction('&About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
         self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
-        self.menuBar().addMenu(self.help_menu)
+        #self.menuBar().addMenu(self.help_menu)
 
         # tool bar action list
 
@@ -351,7 +357,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         The Fitzhugh-Nagumo model is a system
         of two coupled nonlinear differential
-        equations.
+        equations that models point neuron
+        behavior.
 
         For more details check out:
         http://goo.gl/qMu6eb
@@ -472,7 +479,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     # landing screen text events
 
-    """def paintEvent(self, event):
+    def paintEvent(self, event):
 
         qp = QtGui.QPainter()
         qp.begin(self)
@@ -483,7 +490,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QtGui.QFont('Decorative', 10))
-        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)"""
+        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
