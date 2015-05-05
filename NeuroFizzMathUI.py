@@ -195,10 +195,10 @@ class ApplicationWindow(QtGui.QMainWindow):
 
 
         self.main_widget = QtGui.QWidget(self)
-        #l = QtGui.QVBoxLayout(self.main_widget)
-
         self.main_widget.setFocus()
-        self.setCentralWidget(self.main_widget)
+
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
@@ -219,13 +219,19 @@ class ApplicationWindow(QtGui.QMainWindow):
         # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
     def draw_FNcanvas(self):
-        l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def draw_RDcanvas(self):
-        l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticRDCanvas(self.main_widget, width=7, height=7, dpi=90)
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticRDCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
 
     def buttonClicked(self):
@@ -237,12 +243,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def closeEvent(self, ce):
         self.fileQuit()
-
-    def fnplot(self):
-        self.main_widget = QtGui.QWidget(self)
-        l = QtGui.QVBoxLayout(self.main_widget)
-        sc = StaticFNCanvas(self.main_widget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
 
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
