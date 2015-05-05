@@ -55,11 +55,6 @@ class MyMplCanvas(FigureCanvas):
 # static canvas methods
 
 class StaticFNCanvas(MyMplCanvas):
-    """def __init__(self, width=5, height=5, dpi=100):
-        super(StaticFNCanvas, self).__init__(self, width=5, height=5, dpi=100)"""
-    def __init__(self, *args, **kwargs):
-        MyMplCanvas.__init__(self, *args, **kwargs)
-
     def compute_initial_figure(self):
         # X = FN("Fitzhugh-Nagumo")
         # self.fig.clear()
@@ -71,12 +66,6 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.set_ylabel('Membrane Potential')
         self.axes.set_title('Fitzhugh-Nagumo')
 
-    def update_figure(self):
-        X = RD("Rikitake Dynamo")
-        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.0001, ng = X.model)
-        t = np.arange(0, 100, 0.0001)
-        self.axes.plot(t, X[:,0])
-        self.draw()
 
 
 class StaticMplCanvas(MyMplCanvas):
@@ -125,7 +114,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 #                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
 #assist you with understanding numerical solutions to systems  \n\
 #    of differential equations.'
-        self.setGeometry(300, 300, 500, 350)
+        self.setGeometry(300, 300, 800, 500)
 
         # file menu
         self.file_menu = QtGui.QMenu('File', self)
@@ -159,7 +148,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction.triggered.connect(QtGui.qApp.quit)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.fitzhughNagumo)
+        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_canvas)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.morrisLecar)
