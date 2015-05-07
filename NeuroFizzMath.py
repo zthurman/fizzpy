@@ -26,13 +26,15 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
 
-# FN neuron model
-
-class FN():
-    name = "Fitzhugh-Nagumo"
-    x0 = np.array([0.01,0.01])
+class System():
     def __init__(self, name):
         self.name = name
+
+# FN neuron model
+
+class FN(System):
+    name = "Fitzhugh-Nagumo"
+    x0 = np.array([0.01,0.01])
 
     def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.39):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
@@ -40,11 +42,9 @@ class FN():
 
 # ML neuron model
 
-class ML():
+class ML(System):
     name = "Morris-Lecar"
     x0 = np.array([0,0])
-    def __init__(self, name):
-       self.name = name
 
     def model(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 79):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
@@ -52,11 +52,9 @@ class ML():
 
 # IZ neuron model
 
-class IZ():
+class IZ(System):
     name = "Izhikevich"
     x0 = np.array([0,0])
-    def __init__(self, name):
-       self.name = name
 
     def model(self,x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
         if x[0] >= 30:
@@ -67,11 +65,9 @@ class IZ():
 
 # HR neuron model
 
-class HR():
+class HR(System):
     name = "Hindmarsh-Rose"
     x0 = np.array([3, 0, -1.2])
-    def __init__(self, name):
-       self.name = name
 
     def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
         return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I,
@@ -80,11 +76,9 @@ class HR():
 
 # HH neuron model
 
-class HH():
+class HH(System):
     name = "Hodgkins-Huxley"
     x0 = np.array([0.01,0.01,0.01,0.01])
-    def __init__(self, name):
-       self.name = name
 
     def model(self,x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
         alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
@@ -100,7 +94,7 @@ class HH():
 
 # RD model for geomagnetic reversal
 
-class RD():
+class RD(System):
     name = 'Rikitake Dynamo'
     x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5])
     def __init__(self, name):
@@ -119,21 +113,18 @@ class RD():
 
 # W neuron model
 
-class W():
+class W(System):
     name = 'Wilson Model'
-    def __init__(self, name):
-       self.name = name
+    x0 = []
 
     def model(self, x, t):
         pass
 
 # L atmospheric model
 
-class L():
+class L(System):
     name = "Lorenz Equations"
     x0 = np.array([1.0, 2.0, 1.0])
-    def __init__(self, name):
-        self.name = name
 
     def model(self, x, t, sigma = 10.0, rho = 28.0, beta = 10.0/3):
         return np.array([sigma * (x[1] - x[0]),
@@ -142,11 +133,9 @@ class L():
 
 # R geomagnetic polarity reversal
 
-class R():
+class R(System):
     name = "Robbins Equations"
     x0 = np.array([0.00032,0.23,0.51])
-    def __init__(self, name):
-        self.name = name
 
     def model(self,x,t, V = 1, sigma = 5, R = 13):
         return np.array([R - x[1]*x[2] - V*x[0],
