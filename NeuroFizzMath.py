@@ -40,6 +40,15 @@ class System():
     def __init__(self, name):
         self.name = name
 
+# van der Pol oscillator
+
+class VDP(System):
+    name = "van der Pol oscillator"
+
+    def model(x,t):
+        return np.array([x[1],
+                        -x[0] + x[1]*(1-x[0]**2)])
+
 # FN neuron model
 
 class FN(System):
