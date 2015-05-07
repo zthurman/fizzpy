@@ -26,6 +26,8 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
 
+# System, super class of all models
+
 class System():
     def __init__(self, name):
         self.name = name
@@ -97,8 +99,6 @@ class HH(System):
 class RD(System):
     name = 'Rikitake Dynamo'
     x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5])
-    def __init__(self, name):
-       self.name = name
 
     def model(self, x,t, m = 0.5, g = 50, r = 8, f = 0.5):
         return np.array([r*(x[3] - x[0]),
@@ -131,7 +131,7 @@ class L(System):
                          rho*x[0] - x[1] - x[0]*x[2],
                          x[0]*x[1] - beta*x[2]])
 
-# R geomagnetic polarity reversal
+# R geomagnetic polarity reversal model
 
 class R(System):
     name = "Robbins Equations"
