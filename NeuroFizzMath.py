@@ -137,14 +137,17 @@ class W(System):
     def model(self, x, t):
         pass
 
-    """def Wilson(x,t, g_K=26, g_T=0.1, g_H=5, E_K=-0.95, E_Na=0.50, E_T=1.20, C=0.01, E_H=-0.95, tau_T=14, tau_R=4.2, tau_H=45, I=-1):
-        g_Na = 17.8 + 0.476*x[0] + (33.8*10**-4)*(x[0]**2)
-        Rnot = 1.24 + 0.037*x[0] + (3.2*10**-4)*(x[0]**2)
-        Tnot = 4.205 + 0.116*x[0] + (8*10**-4)*(x[0]**2)
-        return np.array([(-g_Na*(x[0]-E_Na) - g_K*x[1]*(x[0]-E_K) - g_T*x[2]*(x[0]-E_T) - g_H*x[3]*(x[0]-E_H) + I)*(1/C), \
-                          -(x[1] - Rnot)*(1/tau_R), \
-                          -(x[2] - Tnot)*(1/tau_T), \
-                          -(x[3] - 3*x[2])*(1/tau_H)])"""
+    """def Wilson(x,t, g_K=26, g_T=0.1, g_H=5, E_K=-0.95, E_Na=0.50, E_Ca=1.20, C=0.01, E_H=-0.95, tau_T=14, tau_R=4.2, tau_H=45, I=1):
+            G_K = g_K*x[1]*100
+            G_Na = 17.8 + 47.6*x[0] + 33.8*(x[0]**2)
+            G_Ca = g_T*x[2]*100
+            G_H = g_H*x[3]*100
+            Rnot = 1.24 + (3.7*x[0]) + 3.20*(x[0]**2)
+            Tnot = 4.205 + (11.6*x[0]) + 8*(x[0]**2)
+            return np.array([(-G_Na*(x[0]-(E_Na/100)) - G_K*(x[0]-(E_K/100)) - G_Ca*(x[0]-(E_Ca/100)) - G_H*(x[0]-(E_H/100)) + I)*(C),
+                              -(x[1] - Rnot)*(1/tau_R),
+                              -(x[2] - Tnot)*(1/tau_T),
+                              -(x[3] - 3*x[2])*(1/tau_H)])"""
 
 # L atmospheric model
 
