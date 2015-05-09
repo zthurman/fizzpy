@@ -17,7 +17,8 @@ import math as mt
 
 # global Euler solver
 
-
+def euler():
+    pass
 
 # global Runge-Kutte solver
 
