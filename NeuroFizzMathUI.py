@@ -53,7 +53,7 @@ class StaticVDPCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         X = VDP("van der Pol oscillator")
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
-        t = np.arange(0, 100, 0.01)
+        t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('X Dynamical Variable')
