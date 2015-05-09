@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import rk4, FN, ML, IZ, HR, HH, RD, W, L, R
+from NeuroFizzMath import rk4, VDP, FN, ML, IZ, HR, HH, RD, W, L, R
 import numpy as np
 import sys
 import os
@@ -48,6 +48,16 @@ class MyMplCanvas(FigureCanvas):
         pass
 
 # static canvas methods
+
+class StaticVDPCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = VDP("van der Pol oscillator")
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.01)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('X Dynamical Variable')
+        self.axes.set_title('van der Pol oscillator')
 
 class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
@@ -185,6 +195,7 @@ assist you with understanding numerical solutions to systems  \n\
         self.model_menu = QtGui.QMenu('Models', self)
         #self.menuBar().addSeparator()
         self.menuBar().addMenu(self.model_menu)
+        self.model_menu.addAction('van der Pol', self.vanderPol)
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
         self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
         self.model_menu.addAction('Izikevich', self.izhikevich)
@@ -208,6 +219,9 @@ assist you with understanding numerical solutions to systems  \n\
 
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
+
+        VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
+        VDPAction.connect(VDPAction,QtCore.SIGNAL('triggered()'), self.draw_VDPcanvas)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_FNcanvas)
@@ -235,6 +249,8 @@ assist you with understanding numerical solutions to systems  \n\
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
+        self.toolbar = self.addToolBar('van der Pol')
+        self.toolbar.addAction(VDPAction)
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
         self.toolbar = self.addToolBar('Morris-Lecar')
@@ -276,6 +292,14 @@ assist you with understanding numerical solutions to systems  \n\
         # Probably a good idea to do this with toolbar for starters
 
         # INTERFACE PORTION OF CANVAS DISPLAYED - END
+
+    def draw_VDPcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        l.addWidget(sc)
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
@@ -350,6 +374,18 @@ assist you with understanding numerical solutions to systems  \n\
 
     def closeEvent(self, ce):
         self.fileQuit()
+
+    def vanderPol(self):
+        QtGui.QMessageBox.about(self, "van der Pol",
+        """van der Pol Oscillator
+
+        The van der Pol Oscillator is a basic
+        system of two coupled nonlinear
+        differential equations that provides a
+        starting point for studying nonlinear
+        differential equations.
+
+        """)
 
     def fitzhughNagumo(self):
         QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",

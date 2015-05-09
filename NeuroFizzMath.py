@@ -27,14 +27,14 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     X = np.empty((Nsize, np.size(x0)))
     X[0] = x0
     for i in range(0, Nsize-1):
-        k1 = ng(X[i],tsp[i-1])
+        k1 = ng(X[i],tsp[i])
         k2 = ng(X[i] + dt/2*k1, tsp[i] + dt/2)
         k3 = ng(X[i] + dt/2*k2, tsp[i] + dt/2)
         k4 = ng(X[i] + dt*k3, tsp[i] + dt)
         X[i+1] = X[i] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
 
-# System, super class of all models
+# System, super class for all models
 
 class System():
     def __init__(self, name):
@@ -44,8 +44,9 @@ class System():
 
 class VDP(System):
     name = "van der Pol oscillator"
+    x0 = np.array([0.01,0.01])
 
-    def model(x,t):
+    def model(self,x,t):
         return np.array([x[1],
                         -x[0] + x[1]*(1-x[0]**2)])
 
