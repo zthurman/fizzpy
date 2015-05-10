@@ -277,21 +277,6 @@ assist you with understanding numerical solutions to systems  \n\
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-        # INTERFACE PORTION OF CANVAS DISPLAYED - START
-
-        #l = QtGui.QVBoxLayout(self.main_widget)
-        #sc = StaticMplCanvas(self.main_widget, width=7, height=7, dpi=90)
-        #dc = DynamicMplCanvas(self.main_widget, width=7, height=7, dpi=90)
-        #l.addWidget(sc)
-        #l.addWidget(dc)
-
-        # *NOTE* We want a Qt event driven conditional here to select
-        # between the different models to display on the static canvas
-        # this will allow for the UI to determine which plot shows
-
-        # Probably a good idea to do this with toolbar for starters
-
-        # INTERFACE PORTION OF CANVAS DISPLAYED - END
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
