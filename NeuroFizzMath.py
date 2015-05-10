@@ -55,7 +55,11 @@ class VDP(System):
 # EPSP - excitatory post-synaptic potential
 
 class EPSP(System):
+    name = "EPSP"
+    x0 = np.array([0,0,0])
 
+    def model(self):
+        pass
 
 # FN neuron model
 
