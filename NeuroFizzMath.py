@@ -22,7 +22,6 @@ def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     Nsize = np.size(tsp)
     X = np.empty((Nsize, np.size(x0)))
     X[0] = x0
-
     for i in range(0, Nsize-1):
         k1 = ng(X[i],tsp[i])
         X[i+1] = X[i] + k1*dt
