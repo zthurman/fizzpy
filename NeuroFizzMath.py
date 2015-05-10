@@ -27,6 +27,19 @@ def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i+1] = X[i] + k1*dt
     return X
 
+# global second order solver (second order Runge-Kutta)
+
+def ord2(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    tsp = np.arange(t0, t1, dt)
+    Nsize = np.size(tsp)
+    X = np.empty((Nsize, np.size(x0)))
+    X[0] = x0
+    for i in range(0, Nsize-1):
+        k1 = ng(X[i],tsp[i])
+        k2 = ng(X[i],tsp[i]) + k1*(dt/2)
+        X[i+1] = X[i] + k2*dt
+    return X
+
 # global fourth order Runge-Kutte solver
 
 def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):

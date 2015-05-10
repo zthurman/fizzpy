@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import euler, rk4, VDP, FN, ML, IZ, HR, HH, RD, W, L, R
+from NeuroFizzMath import euler, ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, W, L, R
 import numpy as np
 import sys
 import os
@@ -52,7 +52,7 @@ class MyMplCanvas(FigureCanvas):
 class StaticVDPCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         X = VDP("van der Pol oscillator")
-        X = euler(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        X = ord2(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
