@@ -17,7 +17,8 @@ import math as mt
 
 # global Euler solver
 
-def euler():
+def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+
     pass
 
 # global Runge-Kutte solver
@@ -50,6 +51,11 @@ class VDP(System):
     def model(self,x,t):
         return np.array([x[1],
                         -x[0] + x[1]*(1-x[0]**2)])
+
+# EPSP - excitatory post-synaptic potential
+
+class EPSP(System):
+
 
 # FN neuron model
 
