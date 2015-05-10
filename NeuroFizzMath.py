@@ -15,13 +15,20 @@ import sys
 import math as mt
 
 
-# global Euler solver
+# global Euler solver (first order Runge-Kutta)
 
 def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    tsp = np.arange(t0, t1, dt)
+    Nsize = np.size(tsp)
+    X = np.empty((Nsize, np.size(x0)))
+    X[0] = x0
 
-    pass
+    for i in range(0, Nsize-1):
+        k1 = ng(X[i],tsp[i])
+        X[i+1] = X[i] + k1*dt
+    return X
 
-# global Runge-Kutte solver
+# global fourth order Runge-Kutte solver
 
 def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     tsp = np.arange(t0, t1, dt)
