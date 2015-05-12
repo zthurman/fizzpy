@@ -92,8 +92,8 @@ class StaticIZCanvas(MyMplCanvas):
 class StaticHRCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         X = HR("Hindmarsh-Rose")
-        X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 100,dt = 0.02, ng = X.model)
-        t = np.arange(0, 100, 0.02)
+        X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 800,dt = 0.1, ng = X.model)
+        t = np.arange(0, 800, 0.1)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('Membrane Potential')

@@ -119,7 +119,7 @@ class HR(System):
     name = "Hindmarsh-Rose"
     x0 = np.array([3, 0, -1.2])
 
-    def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1.84, xnot = -1.5, k = 0.05):
+    def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1, xnot = -1.5):
         return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I,
                         c - d*(x[0]**2) - x[1],
                         r*(s*(x[0] - xnot) - x[2])])
