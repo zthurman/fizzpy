@@ -106,7 +106,7 @@ class IZ(System):
     name = "Izhikevich"
     x0 = np.array([0,0])
 
-    def model(self,x,t, a = 0.02, b = 0.2, c = -65, d = 2, i = 10):
+    def model(self,x,t, a = 0.02, b = 0.2, c = -55, d = 2, i = 10):
         if x[0] >= 30:
             x[0] = c
             x[1] = x[1] + d
