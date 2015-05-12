@@ -8,13 +8,13 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import euler, ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, W, L, R
+from NeuroFizzMath import euler, ord2, rk4, VDP, EPSP, FN, ML, IZ, HR, HH, RD, W, L, R
 import numpy as np
 import sys
 import os
 import random
-from matplotlib.backends import qt4_compat
-use_pyside = qt4_compat.QT_API == qt4_compat.QT_API_PYSIDE
+from matplotlib.backends import qt_compat
+use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
 if use_pyside:
     from PySide import QtGui, QtCore
 else:
@@ -55,6 +55,16 @@ class StaticVDPCanvas(MyMplCanvas):
         X = ord2(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('X Dynamical Variable')
+        self.axes.set_title('van der Pol oscillator')
+
+class StaticEPSPCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = EPSP("EPSP")
+        X = X.model
+        t = np.arange(0, 12, 0.01)
+        self.axes.plot(t, X.v_m)
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('X Dynamical Variable')
         self.axes.set_title('van der Pol oscillator')
