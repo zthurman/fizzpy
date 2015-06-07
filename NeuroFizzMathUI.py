@@ -13,6 +13,8 @@ import numpy as np
 import sys
 import os
 import random
+from matplotlib import pyplot as plt
+import matplotlib.animation as animation
 from matplotlib.backends import qt_compat
 use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
 if use_pyside:
@@ -168,6 +170,41 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
+"""class DynamicFNCanvas(MyMplCanvas):
+    #A canvas that updates itself every second with a new plot.
+    def __init__(self, *args, **kwargs):
+        MyMplCanvas.__init__(self, *args, **kwargs)
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.update_figure)
+        timer.start(1000)
+
+    # initialization function: plot the background of each frame
+    def init():
+        fig = plt.figure()
+        ax = plt.axes(xlim=(0, 55.1), ylim=(-2, 2.1))
+        line, = ax.plot([], [], lw=2)
+        line.set_data([], [])
+        return line,
+
+    # animation function.  This is called sequentially by FuncAnimation
+    def animate(i):
+        global RK4, FN
+        X = RK4(x0 = np.array([0.01,0.01]), t1 = 500,dt = 0.02, ng = FN)
+        t0 = 0
+        t1 = 500
+        dt = 0.02
+        tsp = np.arange(t0, t1, dt)
+        line.set_data(tsp-0.5*i, X[:,0])
+        return line,
+
+    # call the animator.  blit=True means only re-draw the parts that have changed.
+    anim = animation.FuncAnimation(fig, animate, init_func=init,
+                                   frames=500, interval=20, blit=True)
+    pylab.xlabel("Time")
+    pylab.ylabel("Single uncoupled FN Neuron")
+    pylab.title("Animation of super-threshold FN Neuron")
+    anim.save('basic_FN.mp4', fps=30)"""
+
 # main window
 
 class ApplicationWindow(QtGui.QMainWindow):
@@ -187,6 +224,7 @@ assist you with understanding numerical solutions to systems  \n\
 
         self.file_menu = QtGui.QMenu('File', self)
         self.menuBar().addMenu(self.file_menu)
+        self.menuBar().addSeparator()
 
         self.model_menu = QtGui.QMenu('Models', self)
         self.menuBar().addSeparator()
