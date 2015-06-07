@@ -187,8 +187,7 @@ assist you with understanding numerical solutions to systems  \n\
 
         self.file_menu = QtGui.QMenu('File', self)
         self.menuBar().addMenu(self.file_menu)
-        self.file_menu.addAction('&Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
-        #self.menuBar().addMenu(self.file_menu)
+        self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
 
         # model menu
 
@@ -204,16 +203,14 @@ assist you with understanding numerical solutions to systems  \n\
         self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
         self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
         self.model_menu.addAction('Robbins Model', self.robbins)
-        #self.menuBar().addMenu(self.model_menu)
 
         # help menu
 
         self.help_menu = QtGui.QMenu('Help', self)
         self.menuBar().addMenu(self.help_menu)
         self.menuBar().addSeparator()
-        self.help_menu.addAction('&About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
-        self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
-        #self.menuBar().addMenu(self.help_menu)
+        self.help_menu.addAction('About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
+        self.help_menu.addAction('Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
 
         # tool bar action list
 
@@ -285,6 +282,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
@@ -293,6 +291,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
     def draw_MLcanvas(self):
         self.centralWidget.close()
@@ -301,6 +300,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticMLCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
     def draw_IZcanvas(self):
         self.centralWidget.close()
@@ -309,6 +309,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticIZCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Izhikevich model!", 2000)
 
     def draw_HRcanvas(self):
         self.centralWidget.close()
@@ -317,6 +318,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticHRCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Hindmarsh-Rose model!", 2000)
 
     def draw_HHcanvas(self):
         self.centralWidget.close()
@@ -325,6 +327,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticHHCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
     def draw_RDcanvas(self):
         self.centralWidget.close()
@@ -333,6 +336,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticRDCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
     def draw_Lcanvas(self):
         self.centralWidget.close()
@@ -341,6 +345,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticLCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Lorenz equations!", 2000)
 
     def draw_Rcanvas(self):
         self.centralWidget.close()
@@ -349,6 +354,7 @@ assist you with understanding numerical solutions to systems  \n\
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticRCanvas(self.centralWidget, width=7, height=7, dpi=90)
         l.addWidget(sc)
+        self.statusBar().showMessage("The Robbins Dynamo!", 2000)
 
     def buttonClicked(self):
         sender = self.sender()
@@ -520,4 +526,3 @@ if __name__ == "__main__":
     aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
     aw.show()
     sys.exit(qApp.exec_())
-    #qApp.exec_()
