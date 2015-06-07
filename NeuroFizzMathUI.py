@@ -177,10 +177,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setWindowTitle("application main window")
 
         # landing screen text
-        self.text = \
+        """self.text = \
                 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
 assist you with understanding numerical solutions to systems  \n\
-    of differential equations.'
+    of differential equations.'"""
         self.setGeometry(300, 300, 800, 500)
 
         # file menu
@@ -193,7 +193,7 @@ assist you with understanding numerical solutions to systems  \n\
         # model menu
 
         self.model_menu = QtGui.QMenu('Models', self)
-        #self.menuBar().addSeparator()
+        self.menuBar().addSeparator()
         self.menuBar().addMenu(self.model_menu)
         self.model_menu.addAction('van der Pol', self.vanderPol)
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
@@ -210,7 +210,7 @@ assist you with understanding numerical solutions to systems  \n\
 
         self.help_menu = QtGui.QMenu('Help', self)
         self.menuBar().addMenu(self.help_menu)
-        #self.menuBar().addSeparator()
+        self.menuBar().addSeparator()
         self.help_menu.addAction('&About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
         self.help_menu.addAction('&Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
         #self.menuBar().addMenu(self.help_menu)
@@ -222,9 +222,6 @@ assist you with understanding numerical solutions to systems  \n\
 
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
         VDPAction.connect(VDPAction,QtCore.SIGNAL('triggered()'), self.draw_VDPcanvas)
-
-        EPSPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'EPSP', self)
-        EPSPAction.connect(VDPAction,QtCore.SIGNAL('triggered()'), self.draw_EPSPcanvas)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_FNcanvas)
@@ -254,8 +251,6 @@ assist you with understanding numerical solutions to systems  \n\
         self.toolbar.addAction(exitAction)
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
-        self.toolbar = self.addToolBar('EPSP')
-        self.toolbar.addAction(EPSPAction)
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
         self.toolbar = self.addToolBar('Morris-Lecar')
@@ -284,14 +279,6 @@ assist you with understanding numerical solutions to systems  \n\
 
 
     def draw_VDPcanvas(self):
-        self.centralWidget.close()
-        self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
-
-    def draw_EPSPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
