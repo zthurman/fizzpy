@@ -8,7 +8,7 @@
 #               2006 Darren Dale
 
 from __future__ import unicode_literals
-from NeuroFizzMath import euler, ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
+from NeuroFizzMath import ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
 import numpy as np
 import sys
 import os
@@ -177,23 +177,31 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setWindowTitle("application main window")
 
         # landing screen text
-        """self.text = \
+        self.text = \
                 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
 assist you with understanding numerical solutions to systems  \n\
-    of differential equations.'"""
-        self.setGeometry(300, 300, 800, 500)
+    of differential equations.'
+        self.setGeometry(300, 300, 800, 550)
 
-        # file menu
+        # Menu drop down options
 
         self.file_menu = QtGui.QMenu('File', self)
         self.menuBar().addMenu(self.file_menu)
-        self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
-
-        # model menu
 
         self.model_menu = QtGui.QMenu('Models', self)
         self.menuBar().addSeparator()
         self.menuBar().addMenu(self.model_menu)
+
+        self.help_menu = QtGui.QMenu('Help', self)
+        self.menuBar().addMenu(self.help_menu)
+        self.menuBar().addSeparator()
+
+        # file menu actions
+
+        self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
+
+        # model menu actions
+
         self.model_menu.addAction('van der Pol', self.vanderPol)
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
         self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
@@ -204,11 +212,8 @@ assist you with understanding numerical solutions to systems  \n\
         self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
         self.model_menu.addAction('Robbins Model', self.robbins)
 
-        # help menu
+        # help menu actions
 
-        self.help_menu = QtGui.QMenu('Help', self)
-        self.menuBar().addMenu(self.help_menu)
-        self.menuBar().addSeparator()
         self.help_menu.addAction('About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
         self.help_menu.addAction('Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
 
@@ -507,17 +512,16 @@ assist you with understanding numerical solutions to systems  \n\
     # landing screen text events
 
     def paintEvent(self, event):
-
         qp = QtGui.QPainter()
         qp.begin(self)
         self.drawText(event, qp)
         qp.end()
 
     def drawText(self, event, qp):
-
         qp.setPen(QtGui.QColor(168, 34, 3))
         qp.setFont(QtGui.QFont('Decorative', 10))
         qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)
+
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
