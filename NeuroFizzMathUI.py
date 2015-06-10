@@ -215,7 +215,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setWindowTitle("application main window")
 
         # landing screen text
-        self. QLabel = \
+        self.text = \
                 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
 assist you with understanding numerical solutions to systems  \n\
     of differential equations.'
