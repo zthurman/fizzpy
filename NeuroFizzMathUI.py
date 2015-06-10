@@ -171,7 +171,7 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
-class DynamicFNCanvas(MyMplCanvas):
+"""class DynamicFNCanvas(MyMplCanvas):
     #A canvas that updates itself every second with a new plot.
     def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
@@ -204,7 +204,7 @@ class DynamicFNCanvas(MyMplCanvas):
     pylab.xlabel("Time")
     pylab.ylabel("Single uncoupled FN Neuron")
     pylab.title("Animation of super-threshold FN Neuron")
-    anim.save('basic_FN.mp4', fps=30)
+    anim.save('basic_FN.mp4', fps=30)"""
 
 # main window
 
@@ -215,7 +215,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setWindowTitle("application main window")
 
         # landing screen text
-        self.text = \
+        self. QLabel = \
                 'Welcome to NeuroFizzMath! This is a project that is designed to \n\
 assist you with understanding numerical solutions to systems  \n\
     of differential equations.'
