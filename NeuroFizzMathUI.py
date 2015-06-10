@@ -16,6 +16,7 @@ import random
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backends import qt_compat
+
 use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
 if use_pyside:
     from PySide import QtGui, QtCore
@@ -170,7 +171,7 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
-"""class DynamicFNCanvas(MyMplCanvas):
+class DynamicFNCanvas(MyMplCanvas):
     #A canvas that updates itself every second with a new plot.
     def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
@@ -203,7 +204,7 @@ class DynamicMplCanvas(MyMplCanvas):
     pylab.xlabel("Time")
     pylab.ylabel("Single uncoupled FN Neuron")
     pylab.title("Animation of super-threshold FN Neuron")
-    anim.save('basic_FN.mp4', fps=30)"""
+    anim.save('basic_FN.mp4', fps=30)
 
 # main window
 
