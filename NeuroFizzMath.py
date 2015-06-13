@@ -175,9 +175,6 @@ class RD(System):
                          g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
                          g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
 
-    # will need this later for making plots of this:
-    # X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100, dt = 0.0001, ng = model)
-
 # W neuron model
 
 class W(System):
