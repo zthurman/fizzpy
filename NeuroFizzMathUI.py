@@ -286,8 +286,8 @@ assist you with understanding numerical solutions to systems  \n\
         LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.draw_Lcanvas)
 
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
-        #RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.draw_Rcanvas)
-        RAction.clicked.connect(self.draw_Rcanvas)
+        RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.draw_Rcanvas)
+        #RAction.clicked.connect(self.draw_Rcanvas)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
