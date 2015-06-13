@@ -8,10 +8,6 @@
 from __future__ import division
 from scipy import *
 import numpy as np
-import pylab
-import matplotlib as mp
-from matplotlib import pyplot as plt  
-import sys
 import math as mt
 
 
