@@ -55,7 +55,7 @@ class MyMplCanvas(FigureCanvas):
 class StaticVDPCanvas(MyMplCanvas):
     def compute_initial_figure(self):
         X = VDP("van der Pol oscillator")
-        X = ord2(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        X = ord2(x0 = np.array([0.01, 0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel('Time')
@@ -219,7 +219,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         # Sub-label bar
 
         self.menuBar().addSeparator()
-        self.subLabel = QtGui.QMenu('ODE Solver Toolkit', self)
+        self.subLabel = QtGui.QMenu('Neuroscience | Physics | Mathematics Toolkit', self)
         self.menuBar().addMenu(self.subLabel)
         self.menuBar().addSeparator()
 
@@ -314,7 +314,7 @@ class ApplicationWindow(QtGui.QMainWindow):
             super(QCustomWidget, self).__init__(parent)
             self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
 
-    def draw_VDPcanvas(self, QCustomTabWidget):
+    def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -455,8 +455,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
-    #myQCustomTabWidget = QtGui.QCustomTabWidget()
-    #myQCustomTabWidget.show()
     aw = ApplicationWindow()
     aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
     aw.show()
