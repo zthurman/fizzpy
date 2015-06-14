@@ -326,8 +326,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         l1 = QtGui.QVBoxLayout(self.tab1)
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        l1.addwidget()
-        l.addWidget(sc)
+        self.tab_widget.addTab(self.tab1, "Test Tab")
+        mainLayout = QtGui.QVBoxLayout(self, self.tab1, self.centralWidget)
+        mainLayout.addWidget(self.tab_widget)
+        mainLayout.addWidget(sc)
+        self.setLayout(mainLayout)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
