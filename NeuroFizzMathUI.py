@@ -3,31 +3,31 @@
 # Neuroscience | Physics | Mathematics Toolkit
 
 # Copyright (C) 2015 Zechariah Thurman
-# User interface for NeuroFizzMath with help from:
 
-# embedding_in_qt4.py --- Simple Qt4 application embedding matplotlib canvases
-# Copyright (C) 2005 Florent Rougon
-#               2006 Darren Dale
+# User interface for NeuroFizzMath Toolkit with help from:
+# http://matplotlib.org/examples/user_interfaces/embedding_in_qt4.html
 
 from __future__ import unicode_literals
-from NeuroFizzMath import ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
+from NeuroFizzMath import *    #ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
 import numpy as np
 import sys
 import os
 import random
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
+from numpy import arange, sin, pi
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
+
+#   Choose PyQt4 or PySide, be aware of the licensing cost of building a PyQt application. Compare
+# that to the lack of licensing fee for commercial applications with PySide.
 
 use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
 if use_pyside:
     from PySide import QtGui, QtCore
 else:
     from PyQt4 import QtGui, QtCore
-
-from numpy import arange, sin, pi
-from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.12"
@@ -222,6 +222,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.menuBar().addSeparator()
         self.subLabel = QtGui.QMenu('Neuroscience | Physics | Mathematics Toolkit', self)
+        self.statusBar().showMessage("Click some buttons!!!", 2000)
         self.menuBar().addMenu(self.subLabel)
         self.menuBar().addSeparator()
 
@@ -320,8 +321,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
+        self.tab_widget = QtGui.QTabWidget(self)
+        self.tab1 = QtGui.QWidget(self)
+        l1 = QtGui.QVBoxLayout(self.tab1)
         l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        l1.addwidget()
         l.addWidget(sc)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 

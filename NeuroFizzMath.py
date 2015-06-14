@@ -10,8 +10,9 @@ from scipy import *
 import numpy as np
 import math as mt
 
+# global solver methods:
 
-# global Euler solver (first order Runge-Kutta)
+# Euler solver (first order Runge-Kutta)
 
 def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     tsp = np.arange(t0, t1, dt)
@@ -23,7 +24,7 @@ def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i+1] = X[i] + k1*dt
     return X
 
-# global second order solver (second order Runge-Kutta)
+# second order solver (second order Runge-Kutta)
 
 def ord2(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     tsp = np.arange(t0, t1, dt)
@@ -36,7 +37,7 @@ def ord2(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i+1] = X[i] + k2*dt
     return X
 
-# global fourth order Runge-Kutte solver
+# fourth order Runge-Kutte solver
 
 def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
     tsp = np.arange(t0, t1, dt)
