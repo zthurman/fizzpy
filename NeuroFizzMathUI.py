@@ -228,9 +228,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
-        aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
-        aboutAction.triggered.connect(self.about)
-
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
         VDPAction.triggered.connect(self.draw_VDPcanvas)
 
@@ -258,13 +255,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
         RAction.triggered.connect(self.draw_Rcanvas)
 
+        aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
+        aboutAction.triggered.connect(self.about)
+
+
         copyrightAction = QtGui.QAction(QtGui.QIcon.fromTheme('copyright'), 'Copyright', self)
         copyrightAction.triggered.connect(self.copyright)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
-        self.toolbar = self.addToolBar('About')
-        self.toolbar.addAction(aboutAction)
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
@@ -283,6 +282,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.toolbar.addAction(LAction)
         self.toolbar = self.addToolBar('Robbins Equations')
         self.toolbar.addAction(RAction)
+        self.toolbar = self.addToolBar('About')
+        self.toolbar.addAction(aboutAction)
         self.toolbar = self.addToolBar('Copyright')
         self.toolbar.addAction(copyrightAction)
 
@@ -295,26 +296,25 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-    """def QCustomWidget(QtGui.QWidget):
+    def QCustomWidget(QWidget):
         # Your widget to implement
         # Put your override method here
 
         def paintEvent (self, eventQPaintEvent):
-            currentQPainter = QtGui.QPainter()
-            currentQPainter.begin(self)
-            currentQPainter.setBrush(QtGui.QColor(255, 0, 20, 200))
-            currentQPainter.drawRect(20, 20, 75, 75)
-            currentQPainter.drawRect(100, 20, 75, 75)
+            self.currentQPainter = QtGui.QPainter()
+            self.currentQPainter.begin(self)
+            self.currentQPainter.setBrush(QtGui.QColor(255, 0, 20, 200))
+            self.currentQPainter.drawRect(20, 20, 75, 75)
+            self.currentQPainter.drawRect(100, 20, 75, 75)
             self.update()
-            currentQPainter.end()
+            self.currentQPainter.end()
 
-    def QtGui.QCustomTabWidget(QTabWidget):
+    def QCustomTabWidget(self, QCustomWidget):
         def __init__ (self, parent = None):
-            super(QCustomTabWidget, self).__init__(parent)
+            super(QCustomWidget, self).__init__(parent)
             self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
-            self.addTab(QCustomWidget(),           'Tab 2')"""
 
-    def draw_VDPcanvas(self):
+    def draw_VDPcanvas(self, QCustomTabWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
