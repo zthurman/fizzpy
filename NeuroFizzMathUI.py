@@ -216,6 +216,13 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.setGeometry(300, 300, 800, 550)
 
+        # Sub-label bar
+
+        self.menuBar().addSeparator()
+        self.subLabel = QtGui.QMenu('ODE Solver Toolkit', self)
+        self.menuBar().addMenu(self.subLabel)
+        self.menuBar().addSeparator()
+
         # tool bar action list
 
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
@@ -246,10 +253,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         RDAction.triggered.connect(self.draw_RDcanvas)
 
         LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
-        LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.draw_Lcanvas)
+        LAction.triggered.connect(self.draw_Lcanvas)
 
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
-        RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.draw_Rcanvas)
+        RAction.triggered.connect(self.draw_Rcanvas)
+
+        copyrightAction = QtGui.QAction(QtGui.QIcon.fromTheme('copyright'), 'Copyright', self)
+        copyrightAction.triggered.connect(self.copyright)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
@@ -273,6 +283,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.toolbar.addAction(LAction)
         self.toolbar = self.addToolBar('Robbins Equations')
         self.toolbar.addAction(RAction)
+        self.toolbar = self.addToolBar('Copyright')
+        self.toolbar.addAction(copyrightAction)
 
 
         self.main_widget = QtGui.QWidget(self)
