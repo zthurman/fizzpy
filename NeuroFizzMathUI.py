@@ -458,6 +458,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
     aw = ApplicationWindow()
-    aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
+    aw.setWindowTitle("NeuroFizzMath" + ' - ' + progversion)
     aw.show()
     sys.exit(qApp.exec_())
