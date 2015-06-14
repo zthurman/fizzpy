@@ -214,22 +214,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self.setWindowTitle("application main window")
 
-        # landing screen text
-        self.text = \
-                'Welcome to NeuroFizzMath! This is a project that is designed to \n\
-assist you with understanding numerical solutions to systems  \n\
-    of differential equations.'
         self.setGeometry(300, 300, 800, 550)
 
         # Menu drop down options
-
-        self.file_menu = QtGui.QMenu('File', self)
-        self.menuBar().addMenu(self.file_menu)
-        self.menuBar().addSeparator()
-
-        self.model_menu = QtGui.QMenu('Models', self)
-        self.menuBar().addSeparator()
-        self.menuBar().addMenu(self.model_menu)
 
         self.help_menu = QtGui.QMenu('Help', self)
         self.menuBar().addMenu(self.help_menu)
@@ -237,11 +224,11 @@ assist you with understanding numerical solutions to systems  \n\
 
         # file menu actions
 
-        self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
+        #self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
 
         # model menu actions
 
-        self.model_menu.addAction('van der Pol', self.vanderPol)
+        """self.model_menu.addAction('van der Pol', self.vanderPol)
         self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
         self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
         self.model_menu.addAction('Izikevich', self.izhikevich)
@@ -249,7 +236,7 @@ assist you with understanding numerical solutions to systems  \n\
         self.model_menu.addAction('Hodgkins-Huxley', self.hodgkinsHuxley)
         self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
         self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
-        self.model_menu.addAction('Robbins Model', self.robbins)
+        self.model_menu.addAction('Robbins Model', self.robbins)"""
 
         # help menu actions
 
@@ -548,19 +535,6 @@ assist you with understanding numerical solutions to systems  \n\
         OR OTHER DEALINGS IN THE SOFTWARE.
         """
         )
-
-    # landing screen text events
-
-    def paintEvent(self, event):
-        qp = QtGui.QPainter()
-        qp.begin(self)
-        self.drawText(event, qp)
-        qp.end()
-
-    def drawText(self, event, qp):
-        qp.setPen(QtGui.QColor(168, 34, 3))
-        qp.setFont(QtGui.QFont('Decorative', 10))
-        qp.drawText(event.rect(), QtCore.Qt.AlignCenter, self.text)
 
 
 if __name__ == "__main__":
