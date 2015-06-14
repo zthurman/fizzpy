@@ -216,40 +216,13 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.setGeometry(300, 300, 800, 550)
 
-        # Menu drop down options
-
-        self.help_menu = QtGui.QMenu('Help', self)
-        self.menuBar().addMenu(self.help_menu)
-        self.menuBar().addSeparator()
-
-        # file menu actions
-
-        #self.file_menu.addAction('Quit', self.fileQuit, QtCore.Qt.CTRL + QtCore.Qt.Key_Q)
-
-        # model menu actions
-
-        """self.model_menu.addAction('van der Pol', self.vanderPol)
-        self.model_menu.addAction('Fitzhugh-Nagumo', self.fitzhughNagumo)
-        self.model_menu.addAction('Morris-Lecar', self.morrisLecar)
-        self.model_menu.addAction('Izikevich', self.izhikevich)
-        self.model_menu.addAction('Hindmarsh-Rose', self.hindmarshRose)
-        self.model_menu.addAction('Hodgkins-Huxley', self.hodgkinsHuxley)
-        self.model_menu.addAction('Rikitake Dynamo', self.rikitakeDynamo)
-        self.model_menu.addAction('Lorenz Equations', self.lorenzEqns)
-        self.model_menu.addAction('Robbins Model', self.robbins)"""
-
-        # help menu actions
-
-        self.help_menu.addAction('About', self.about, QtCore.Qt.CTRL + QtCore.Qt.Key_A)
-        self.help_menu.addAction('Copyright', self.copyright, QtCore.Qt.CTRL + QtCore.Qt.Key_C)
-
         # tool bar action list
 
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
         aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
-        aboutAction.triggered.connect(QtGui.qApp.quit)
+        aboutAction.triggered.connect(self.about)
 
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
         VDPAction.triggered.connect(self.draw_VDPcanvas)
@@ -258,26 +231,25 @@ class ApplicationWindow(QtGui.QMainWindow):
         FNAction.triggered.connect(self.draw_FNcanvas)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
-        MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.draw_MLcanvas)
+        MLAction.triggered.connect(self.draw_MLcanvas)
 
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
-        IZAction.connect(IZAction,QtCore.SIGNAL('triggered()'), self.draw_IZcanvas)
+        IZAction.triggered.connect(self.draw_IZcanvas)
 
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
-        HRAction.connect(HRAction,QtCore.SIGNAL('triggered()'), self.draw_HRcanvas)
+        HRAction.triggered.connect(self.draw_HRcanvas)
 
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
-        HHAction.connect(HHAction,QtCore.SIGNAL('triggered()'), self.draw_HHcanvas)
+        HHAction.triggered.connect(self.draw_HHcanvas)
 
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
-        RDAction.connect(RDAction,QtCore.SIGNAL('triggered()'), self.draw_RDcanvas)
+        RDAction.triggered.connect(self.draw_RDcanvas)
 
         LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
         LAction.connect(LAction,QtCore.SIGNAL('triggered()'), self.draw_Lcanvas)
 
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
         RAction.connect(RAction,QtCore.SIGNAL('triggered()'), self.draw_Rcanvas)
-        #RAction.clicked.connect(self.draw_Rcanvas)
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
