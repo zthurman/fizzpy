@@ -3,7 +3,7 @@ NeuroFizzMath
 
 Generalized Differential Equation Solver Application
 
-This is a work in progress. Making an OOP ODE solver library.
+This is a working program. Interactivifying an ODE solver library.
 
 Physics is the language of the universe expressed in the form of mathematics. Explore it and discover the elegance and beauty underlying that which we experience every day as reality.
 
