@@ -17,8 +17,10 @@ from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
+import itertools
 
 #   Choose PyQt4 or PySide, be aware of the licensing cost of building a PyQt application. Compare
 # that to the lack of licensing fee for commercial applications with PySide.
@@ -173,42 +175,72 @@ class DynamicMplCanvas(MyMplCanvas):
         self.axes.plot([0, 1, 2, 3], l, 'r')
         self.draw()
 
-"""class DynamicFNCanvas(MyMplCanvas):
-    #A canvas that updates itself every second with a new plot.
-    def __init__(self, *args, **kwargs):
-        MyMplCanvas.__init__(self, *args, **kwargs)
-        timer = QtCore.QTimer(self)
-        timer.timeout.connect(self.update_figure)
-        timer.start(1000)
-
-    # initialization function: plot the background of each frame
-    def init():
-        fig = plt.figure()
-        ax = plt.axes(xlim=(0, 55.1), ylim=(-2, 2.1))
-        line, = ax.plot([], [], lw=2)
-        line.set_data([], [])
-        return line,
-
-    # animation function.  This is called sequentially by FuncAnimation
-    def animate(i):
-        global RK4, FN
-        X = RK4(x0 = np.array([0.01,0.01]), t1 = 500,dt = 0.02, ng = FN)
-        t0 = 0
-        t1 = 500
-        dt = 0.02
-        tsp = np.arange(t0, t1, dt)
-        line.set_data(tsp-0.5*i, X[:,0])
-        return line,
-
-    # call the animator.  blit=True means only re-draw the parts that have changed.
-    anim = animation.FuncAnimation(fig, animate, init_func=init,
-                                   frames=500, interval=20, blit=True)
-    pylab.xlabel("Time")
-    pylab.ylabel("Single uncoupled FN Neuron")
-    pylab.title("Animation of super-threshold FN Neuron")
-    anim.save('basic_FN.mp4', fps=30)"""
-
 # main window
+
+# nav toolbar
+
+class MultiTabNavTool(NavigationToolbar):
+    #====================================================================================================
+    def __init__(self, canvases, tabs, parent=None):
+        self.canvases = canvases
+        self.tabs = tabs
+
+        NavigationToolbar.__init__(self, canvases[0], parent)
+
+    #====================================================================================================
+    def get_canvas(self):
+        return self.canvases[self.tabs.currentIndex()]
+
+    def set_canvas(self, canvas):
+        self._canvas = canvas
+
+    canvas = property(get_canvas, set_canvas)
+
+class MplMultiTab(QtGui.QMainWindow):
+    #====================================================================================================
+    def __init__(self, parent=None, figures=None, labels=None):
+        qt.QMainWindow.__init__(self, parent)
+
+        self.main_frame = QtGui.QWidget()
+        self.tabWidget = QtGui.QTabWidget( self.main_frame )
+        self.create_tabs( figures, labels )
+
+        # Create the navigation toolbar, tied to the canvas
+        self.mpl_toolbar = MultiTabNavTool(self.canvases, self.tabWidget, self.main_frame)
+
+        self.vbox = vbox = QtGui.QVBoxLayout()
+        vbox.addWidget(self.mpl_toolbar)
+        vbox.addWidget(self.tabWidget)
+
+        self.main_frame.setLayout(vbox)
+        self.setCentralWidget(self.main_frame)
+
+    #====================================================================================================
+    def create_tabs(self, figures, labels ):
+
+        if labels is None:      labels = []
+        figures =  [Figure()] if figures is None else figures     #initialise with empty figure in first tab if no figures provided
+        self.canvases = [self.add_tab(fig, lbl)
+                            for (fig, lbl) in itertools.zip_longest(figures, labels) ]
+
+    #====================================================================================================
+    def add_tab(self, fig=None, name=None):
+        '''dynamically add tabs with embedded matplotlib canvas with this function.'''
+
+        # Create the mpl Figure and FigCanvas objects.
+        if fig is None:
+            fig = Figure()
+            ax = fig.add_subplot(111)
+
+        canvas = fig.canvas if fig.canvas else FigureCanvas(fig)
+        canvas.setParent(self.tabWidget)
+        canvas.setFocusPolicy( QtCore.Qt.ClickFocus )
+
+        #self.tabs.append( tab )
+        name = 'Tab %i'%(self.tabWidget.count()+1) if name is None else name
+        self.tabWidget.addTab(canvas, name)
+
+        return canvas
 
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -301,7 +333,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-    def QCustomWidget(QWidget):
+    """def QCustomWidget(QWidget):
         # Your widget to implement
         # Put your override method here
 
@@ -317,21 +349,21 @@ class ApplicationWindow(QtGui.QMainWindow):
     def QCustomTabWidget(self, QCustomWidget):
         def __init__ (self, parent = None):
             super(QCustomWidget, self).__init__(parent)
-            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
+            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')"""
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
+        self.centralWidget = QtGui.QTabWidget(self)
         self.setCentralWidget(self.centralWidget)
-        self.tab_widget = QtGui.QTabWidget(self)
-        self.tab1 = QtGui.QWidget(self)
-        l = QtGui.QGridLayout(self.centralWidget)
+        #self.tab_widget = QtGui.QTabWidget(self)
+        #self.tab1 = QtGui.QWidget(self)
+        l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        self.tab_widget.addTab(self.tab1, "Test Tab")
+        #self.tab_widget.addTab(self.tab1, "Test Tab")
         #mainLayout = QtGui.QVBoxLayout(self, self.tab1, self.centralWidget)
-        l.addWidget(tab_widget, 0, 0)
-        l.addWidget(sc, 1, 1)
-        self.setLayout(mainLayout)
+        l.addWidget(sc)
+        #self.setLayout(mainLayout)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
