@@ -299,8 +299,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
 
-        self.tab_widget = QtGui.QTabWidget(self)
-
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
     def QCustomWidget(QWidget):
@@ -327,12 +325,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.tab_widget = QtGui.QTabWidget(self)
         self.tab1 = QtGui.QWidget(self)
-        l = QtGui.QHBoxLayout(self.centralWidget)
+        l = QtGui.QGridLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
         self.tab_widget.addTab(self.tab1, "Test Tab")
-        mainLayout = QtGui.QVBoxLayout(self, self.tab1, self.centralWidget)
-        mainLayout.addWidget(tab_widget)
-        mainLayout.addWidget(sc)
+        #mainLayout = QtGui.QVBoxLayout(self, self.tab1, self.centralWidget)
+        l.addWidget(tab_widget, 0, 0)
+        l.addWidget(sc, 1, 1)
         self.setLayout(mainLayout)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
