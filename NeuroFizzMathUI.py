@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # NeuroFizzMath
+# Neuroscience | Physics | Mathematics Toolkit
+
 # Copyright (C) 2015 Zechariah Thurman
 # User interface for NeuroFizzMath with help from:
 
