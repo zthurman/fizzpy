@@ -248,11 +248,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
 
+        aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
+        aboutAction.triggered.connect(QtGui.qApp.quit)
+
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
-        VDPAction.connect(VDPAction,QtCore.SIGNAL('triggered()'), self.draw_VDPcanvas)
+        VDPAction.triggered.connect(self.draw_VDPcanvas)
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
-        FNAction.connect(FNAction,QtCore.SIGNAL('triggered()'), self.draw_FNcanvas)
+        FNAction.triggered.connect(self.draw_FNcanvas)
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.connect(MLAction,QtCore.SIGNAL('triggered()'), self.draw_MLcanvas)
@@ -278,6 +281,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
+        self.toolbar = self.addToolBar('About')
+        self.toolbar.addAction(aboutAction)
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
