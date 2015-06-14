@@ -28,7 +28,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 progname = os.path.basename(sys.argv[0])
-progversion = "0.11"
+progversion = "0.12"
 
 
 class MyMplCanvas(FigureCanvas):
@@ -214,7 +214,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         self.setWindowTitle("application main window")
 
-        self.setGeometry(300, 300, 800, 550)
+        self.setGeometry(350, 350, 850, 550)
 
         # Sub-label bar
 
@@ -295,6 +295,24 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
+    """def QCustomWidget(QtGui.QWidget):
+        # Your widget to implement
+        # Put your override method here
+
+        def paintEvent (self, eventQPaintEvent):
+            currentQPainter = QtGui.QPainter()
+            currentQPainter.begin(self)
+            currentQPainter.setBrush(QtGui.QColor(255, 0, 20, 200))
+            currentQPainter.drawRect(20, 20, 75, 75)
+            currentQPainter.drawRect(100, 20, 75, 75)
+            self.update()
+            currentQPainter.end()
+
+    def QtGui.QCustomTabWidget(QTabWidget):
+        def __init__ (self, parent = None):
+            super(QCustomTabWidget, self).__init__(parent)
+            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
+            self.addTab(QCustomWidget(),           'Tab 2')"""
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
@@ -387,97 +405,6 @@ class ApplicationWindow(QtGui.QMainWindow):
     def closeEvent(self, ce):
         self.fileQuit()
 
-    def vanderPol(self):
-        QtGui.QMessageBox.about(self, "van der Pol",
-        """van der Pol Oscillator
-
-        The van der Pol Oscillator is a basic
-        system of two coupled nonlinear
-        differential equations that provides a
-        starting point for studying nonlinear
-        differential equations.
-
-        """)
-
-    def fitzhughNagumo(self):
-        QtGui.QMessageBox.about(self, "Fitzhugh-Nagumo",
-        """Fitzhugh-Nagumo
-
-        The Fitzhugh-Nagumo model is a system
-        of two coupled nonlinear differential
-        equations that models point neuron
-        behavior.
-
-        For more details check out:
-        http://goo.gl/qMu6eb
-        """)
-
-    def morrisLecar(self):
-        QtGui.QMessageBox.about(self, "Morris-Lecar",
-        """Morris-Lecar
-
-        The Morris-Lecar model is a system
-        of two coupled nonlinear differential
-        equations.
-        """)
-
-    def izhikevich(self):
-        QtGui.QMessageBox.about(self, "Izhikevich",
-        """Izhikevich
-
-        The Izhikevich model is a system
-        of two coupled nonlinear differential
-        equations.
-        """)
-
-    def hindmarshRose(self):
-        QtGui.QMessageBox.about(self, "Hindmarsh-Rose",
-        """Hindmarsh-Rose
-
-        The Hindmarsh-Rose model is a system
-        of three coupled nonlinear differential
-        equations.
-        """)
-
-    def hodgkinsHuxley(self):
-        QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
-        """Hodgkins-Huxley
-
-        The Hodgkins-Huxley model is a system
-        of four coupled nonlinear differential
-        equations and four functions.
-        """)
-
-    def rikitakeDynamo(self):
-        QtGui.QMessageBox.about(self, "Hodgkins-Huxley",
-        """Rikitake Dynamo
-
-        The Rikitake Dynamo is a system
-        of six coupled nonlinear differential
-        equations that govern the phenom-
-        enon of geomagnetic polarity reversal.
-        """)
-
-    def lorenzEqns(self):
-        QtGui.QMessageBox.about(self, "Lorenz Equations",
-        """Lorenz Equations
-
-        The Lorenz Equations are a system
-        of three coupled nonlinear differential
-        equations that govern atmospheric
-        convection behavior.
-        """)
-
-    def robbins(self):
-        QtGui.QMessageBox.about(self, "Robbins Equations",
-        """Robbins Equations
-
-        The Robbins Equations are a system
-        of three coupled nonlinear differential
-        equations that model geomagnetic
-        polarity reversal.
-        """)
-
     def about(self):
         QtGui.QMessageBox.about(self, "About",
         """NeuroFizzMath
@@ -528,7 +455,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
-
+    #myQCustomTabWidget = QtGui.QCustomTabWidget()
+    #myQCustomTabWidget.show()
     aw = ApplicationWindow()
     aw.setWindowTitle("NeuroFizzMath" + ' ' + progversion)
     aw.show()
