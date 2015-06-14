@@ -333,7 +333,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-    """def QCustomWidget(QWidget):
+    def QCustomWidget(QWidget):
         # Your widget to implement
         # Put your override method here
 
@@ -349,7 +349,7 @@ class ApplicationWindow(QtGui.QMainWindow):
     def QCustomTabWidget(self, QCustomWidget):
         def __init__ (self, parent = None):
             super(QCustomWidget, self).__init__(parent)
-            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')"""
+            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
