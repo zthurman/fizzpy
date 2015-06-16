@@ -346,10 +346,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
 
-    def drawcenralWidget(self):
-        def init():
-            pass
-
+    def draw_centralWidget(self):
+        def init(self):
+            self.centralWidget.close()
+            self.centralWidget = QtGui.QWidget(self)
+            self.tabWidget = QtGui.QTabWidget(self.centralWidget)
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
