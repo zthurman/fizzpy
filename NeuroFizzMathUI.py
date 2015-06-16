@@ -347,7 +347,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
 
     def draw_centralWidget(self):
-        def init(self):
+        def __init__(self):
             self.centralWidget.close()
             self.centralWidget = QtGui.QWidget(self)
             self.tabWidget = QtGui.QTabWidget(self.centralWidget)
@@ -367,7 +367,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.setLayout(mainLayout)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
-    def draw_FNcanvas(self):
+    def draw_FNcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -376,7 +376,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
-    def draw_MLcanvas(self):
+    def draw_MLcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -385,7 +385,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
-    def draw_IZcanvas(self):
+    def draw_IZcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -394,7 +394,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Izhikevich model!", 2000)
 
-    def draw_HRcanvas(self):
+    def draw_HRcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -403,7 +403,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Hindmarsh-Rose model!", 2000)
 
-    def draw_HHcanvas(self):
+    def draw_HHcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -412,7 +412,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
-    def draw_RDcanvas(self):
+    def draw_RDcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -421,7 +421,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
-    def draw_Lcanvas(self):
+    def draw_Lcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
@@ -430,7 +430,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         l.addWidget(sc)
         self.statusBar().showMessage("The Lorenz equations!", 2000)
 
-    def draw_Rcanvas(self):
+    def draw_Rcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
