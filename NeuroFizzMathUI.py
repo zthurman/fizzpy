@@ -295,7 +295,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
         aboutAction.triggered.connect(self.about)
 
-
         copyrightAction = QtGui.QAction(QtGui.QIcon.fromTheme('copyright'), 'Copyright', self)
         copyrightAction.triggered.connect(self.copyright)
 
@@ -332,33 +331,18 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
+        self.centralWidget.setFocus()
 
-    def QCustomWidget(QWidget):
-        # Your widget to implement
-        # Put your override method here
-
-        def paintEvent (self, eventQPaintEvent):
-            self.currentQPainter = QtGui.QPainter()
-            self.currentQPainter.begin(self)
-            self.currentQPainter.setBrush(QtGui.QColor(255, 0, 20, 200))
-            self.currentQPainter.drawRect(20, 20, 75, 75)
-            self.currentQPainter.drawRect(100, 20, 75, 75)
-            self.update()
-            self.currentQPainter.end()
-
-    def QCustomTabWidget(self, QCustomWidget):
-        def __init__ (self, parent = None):
-            super(QCustomWidget, self).__init__(parent)
-            self.addTab(QtGui.QPushButton('Test'), 'Tab 1')
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.centralWidget = QtGui.QTabWidget(self)
+        self.centralWidget = QtGui.QTabWidget(self.centralWidget)
+
         self.setCentralWidget(self.centralWidget)
         #self.tab_widget = QtGui.QTabWidget(self)
         #self.tab1 = QtGui.QWidget(self)
-        l = QtGui.QVBoxLayout(self.centralWidget)
+        l = QtGui.QGridLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
         #self.tab_widget.addTab(self.tab1, "Test Tab")
         #mainLayout = QtGui.QVBoxLayout(self, self.tab1, self.centralWidget)
