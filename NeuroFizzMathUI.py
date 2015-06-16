@@ -358,14 +358,13 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_VDPcanvas(self, draw_centralWidget):
         self.centralWidget.close()
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        vbox.addWidget(sc)
+        self.vbox.addWidget(sc)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self, draw_centralWidget):
         self.centralWidget.close()
-        l = QtGui.QGridLayout(self.centralWidget)
         sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
+        self.vbox.addWidget(sc)
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
     def draw_MLcanvas(self, draw_centralWidget):
