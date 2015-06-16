@@ -341,7 +341,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
@@ -350,14 +349,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.tabWidget = QtGui.QTabWidget(self.centralWidget)
-        self.vbox = QtGui.QGridLayout()
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        self.centralWidget = QtGui.QWidget(self)
-        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
-        self.vbox.addWidget(self.tabWidget, 0, 0)
-        self.vbox.addWidget(self.centralWidget, 2, 0)
-
-        self.vbox.addWidget(sc)
+        l.addWidget(sc)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
