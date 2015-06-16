@@ -350,9 +350,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.tabWidget = QtGui.QTabWidget(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        l.addWidget(sc)
+        l = QtGui.QGridLayout(self.centralWidget)
+        sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=70)
+        l.addWidget(sc,1,2)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
@@ -360,7 +360,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
@@ -369,7 +369,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticMLCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticMLCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
@@ -378,7 +378,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticIZCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticIZCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Izhikevich model!", 2000)
 
@@ -387,7 +387,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticHRCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticHRCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Hindmarsh-Rose model!", 2000)
 
@@ -396,7 +396,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticHHCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticHHCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
@@ -405,7 +405,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticRDCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticRDCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
@@ -414,7 +414,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticLCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticLCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Lorenz equations!", 2000)
 
@@ -423,7 +423,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticRCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        sc = StaticRCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("The Robbins Dynamo!", 2000)
 
