@@ -351,17 +351,11 @@ class ApplicationWindow(QtGui.QMainWindow):
             self.centralWidget.close()
             self.centralWidget = QtGui.QWidget(self)
             self.tabWidget = QtGui.QTabWidget(self.centralWidget)
+            self.vbox = vbox = QtGui.QGridLayout()
+            vbox.addWidget(self.tabWidget, 0, 0)
+            vbox.addWidget(self.centralWidget, 2, 0)
 
-    def draw_VDPcanvas(self):
-        self.centralWidget.close()
-        self.centralWidget = QtGui.QWidget(self)
-        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
-
-        self.vbox = vbox = QtGui.QGridLayout()
-
-        vbox.addWidget(self.tabWidget, 0, 0)
-        vbox.addWidget(self.centralWidget, 2, 0)
-
+    def draw_VDPcanvas(self, draw_centralWidget):
         self.setCentralWidget(self.centralWidget)
         #self.tab_widget = QtGui.QTabWidget(self)
         #self.tab1 = QtGui.QWidget(self)
