@@ -208,6 +208,7 @@ class MplMultiTab(QtGui.QMainWindow):
         # Create the navigation toolbar, tied to the canvas
         self.mpl_toolbar = MultiTabNavTool(self.canvases, self.tabWidget, self.main_frame)
 
+
         self.vbox = vbox = QtGui.QVBoxLayout()
         vbox.addWidget(self.mpl_toolbar)
         vbox.addWidget(self.tabWidget)
@@ -300,29 +301,41 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.toolbar = self.addToolBar('Exit')
         self.toolbar.addAction(exitAction)
+
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
+
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
+
         self.toolbar = self.addToolBar('Morris-Lecar')
         self.toolbar.addAction(MLAction)
+
         self.toolbar = self.addToolBar('Izhikevich')
         self.toolbar.addAction(IZAction)
+
         self.toolbar = self.addToolBar('Hindmarsh-Rose')
         self.toolbar.addAction(HRAction)
+
         self.toolbar = self.addToolBar('Hodgkins-Huxley')
         self.toolbar.addAction(HHAction)
+
         self.toolbar = self.addToolBar('Rikitake Dynamo')
         self.toolbar.addAction(RDAction)
+
         self.toolbar = self.addToolBar('Lorenz Equations')
         self.toolbar.addAction(LAction)
+
         self.toolbar = self.addToolBar('Robbins Equations')
         self.toolbar.addAction(RAction)
+
         self.toolbar = self.addToolBar('About')
         self.toolbar.addAction(aboutAction)
+
         self.toolbar = self.addToolBar('Copyright')
         self.toolbar.addAction(copyrightAction)
 
+        # final focus setting and other shiznats for main window
 
         self.main_widget = QtGui.QWidget(self)
         self.main_widget.setFocus()
@@ -333,11 +346,20 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
 
+    def drawcenralWidget(self):
+        def init():
+            pass
+
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.centralWidget = QtGui.QTabWidget(self.centralWidget)
+        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
+
+        self.vbox = vbox = QtGui.QGridLayout()
+
+        vbox.addWidget(self.tabWidget, 0, 0)
+        vbox.addWidget(self.centralWidget, 2, 0)
 
         self.setCentralWidget(self.centralWidget)
         #self.tab_widget = QtGui.QTabWidget(self)
