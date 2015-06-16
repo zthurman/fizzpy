@@ -357,14 +357,25 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def draw_VDPcanvas(self, draw_centralWidget):
         self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
+        self.vbox = QtGui.QGridLayout()
         sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=90)
+        self.centralWidget = QtGui.QWidget(self)
+        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
+        self.vbox.addWidget(self.tabWidget, 0, 0)
+        self.vbox.addWidget(self.centralWidget, 2, 0)
+
         self.vbox.addWidget(sc)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self, draw_centralWidget):
         self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
         sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=90)
-        self.vbox.addWidget(sc)
+        l.addWidget(sc)
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
     def draw_MLcanvas(self, draw_centralWidget):
