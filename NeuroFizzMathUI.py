@@ -340,7 +340,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget = QtGui.QWidget(self)
         self.main_widget.setFocus()
 
-        self.centralWidget = QtGui.QWidget(self)
+        self.centralWidget = QtGui.QTabWidget(self)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
