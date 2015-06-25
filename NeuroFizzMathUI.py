@@ -247,8 +247,7 @@ class MplMultiTab(QtGui.QMainWindow):
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
-        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-        self.setWindowTitle("application main window")
+        #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
         self.layout = QtGui.QGridLayout()
 
@@ -342,6 +341,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
+        self.tabs = QtGui.QTableWidget(self.centralWidget)
 
         #tab1 = QtGui.QWidget()
         #tab2 = QtGui.QWidget()
@@ -358,9 +358,10 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
-
-        self.tabs = QtGui.QTabWidget()
-        self.tab1 = QtGui.QWidget()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
 
         layout = QtGui.QVBoxLayout(self.tab1)
 
