@@ -17,7 +17,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
 import itertools
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore, QtWebKit
 
 #   Choose PyQt4 or PySide, be aware of the licensing cost of building a PyQt application. Compare
 # that to the lack of licensing fee for commercial applications with PySide.
@@ -321,17 +321,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
         layout = QtGui.QVBoxLayout(self.tab1)
+
+        webview = QtWebKit.QWebView(self.tab3)
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
-
+        layout.addWidget(webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
-
-        #webview = QtGui.QWebView(self.tab3)"""
-
-        #layout.addWidget(webview)
 
         self.tabs.setFixedWidth(850)
         self.tabs.setFixedHeight(450)
@@ -351,14 +349,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         sc = StaticEPSPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
 
-
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
-
-        #webview = QtGui.QWebView(self.tab3)"""
-
-        #layout.addWidget(webview)
 
         self.tabs.setFixedWidth(850)
         self.tabs.setFixedHeight(450)
@@ -377,7 +370,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         layout = QtGui.QVBoxLayout(self.tab1)
         sc = StaticFNCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
-
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
@@ -533,14 +525,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         sc = StaticRCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
 
-
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
-
-        #webview = QtGui.QWebView(self.tab3)"""
-
-        #layout.addWidget(webview)
 
         self.tabs.setFixedWidth(850)
         self.tabs.setFixedHeight(450)
