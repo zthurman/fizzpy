@@ -295,37 +295,32 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     # general class for tabbed interface for plotting canvas and other model options
 
-    def draw_Modelcanvas(self,centralWidget):
-        def __init__(self):
+    def draw_Modelcanvas(centralWidget):
+        def __init(self):
             self.centralWidget.close()
             self.centralWidget = QtGui.QWidget(self)
             self.setCentralWidget(self.centralWidget)
             self.tabs = QtGui.QTabWidget(self.centralWidget)
-            self.tab1 = QtGui.QWidget(self.tabs)
-            self.tab2 = QtGui.QWidget(self.tabs)
-            self.tab3 = QtGui.QWidget(self.tabs)
 
-            layout = QtGui.QVBoxLayout(self.tab1)
-
-            #self.tabs.addTab(self.tab1, "Plots")
-            #self.tabs.addTab(self.tab2, "Model Parameters")
-            #self.tabs.addTab(self.tab3, "Background")
-
+        def drawcanvas(self, tabs):
+            pass
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
         layout = QtGui.QVBoxLayout(self.tab1)
 
-        webview = QtWebKit.QWebView(self.tab3)
+        self.webview = QtWebKit.QWebView(self.tab3)
+
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
-        layout.addWidget(webview)
+        layout.addWidget(self.tab3)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
