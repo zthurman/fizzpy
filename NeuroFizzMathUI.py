@@ -373,6 +373,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
 
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
