@@ -340,19 +340,42 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget = QtGui.QWidget(self)
         self.main_widget.setFocus()
 
-        self.centralWidget = QtGui.QTabWidget(self)
+        self.centralWidget = QtGui.QWidget(self)
+
+        #tab1 = QtGui.QWidget()
+        #tab2 = QtGui.QWidget()
+        #tab3 = QtGui.QWidget()
+
+        #layout = QtGui.QVBoxLayout(tab1)
+
+        #self.centralWidget.addTab(tab1, "Time Plot")
+        #self.centralWidget.addTab(tab2, "Model Parameters")
+        #self.centralWidget.addTab(tab3, "Model Information")
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
-        self.centralWidget = QtGui.QWidget(self)
-        self.tabWidget = QtGui.QTabWidget(self.centralWidget)
+
+        self.tab_widget = QtGui.QTabWidget(self)
+        tab1 = QtGui.QWidget()
+        tab2 = QtGui.QWidget()
+        tab3 = QtGui.QWidget()
+
+        layout = QtGui.QVBoxLayout(tab1)
+
+        self.tab_widget.addTab(tab1, "Time Plot")
+        #self.centralWidget.addTab(tab2, "Model Parameters")
+        #self.centralWidget.addTab(tab3, "Model Information")
+
+        self.tab_widget.addTab(tab1, "Workout Data")
+
+        #self.tabWidget = QtGui.QTabWidget(self.centralWidget)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QGridLayout(self.centralWidget)
-        sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc,1,2)
+        #l = QtGui.QGridLayout(self.centralWidget)
+        #sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=70)
+        #l.addWidget(sc,1,2)
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
