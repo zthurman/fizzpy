@@ -368,13 +368,12 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.tabs.addTab(self.tab1, "Time Plot")
         self.tabs.addTab(self.tab2, "Model Parameters")
-        self.tabs.addTab(self.tab3, "Model Information")
+        self.tabs.addTab(self.tab3, "Background")
 
-        #self.tabWidget = QtGui.QTabWidget(self.centralWidget)
-        #self.setCentralWidget(self.centralWidget)
-        #layout = QtGui.QGridLayout(self.centralWidget)
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_FNcanvas(self):
