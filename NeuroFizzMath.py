@@ -74,7 +74,7 @@ class EPSP(System):
     name = "EPSP"
     x0 = np.array([0,0,0])
 
-    def model(self):
+    def model(self, v_m, I_syn, g_syn):
         c_m = 1
         g_L = 1
         tau_syn = 1

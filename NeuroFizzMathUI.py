@@ -5,7 +5,7 @@
 # Copyright (C) 2015 Zechariah Thurman
 
 from __future__ import unicode_literals
-from NeuroFizzMath import *    #ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
+from NeuroFizzMath import ord2, rk4, VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
 import numpy as np
 import sys
 import os
@@ -60,6 +60,18 @@ class StaticVDPCanvas(MyMplCanvas):
         X = ord2(x0 = np.array([0.01, 0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel('Time')
+        self.axes.set_ylabel('X Dynamical Variable')
+        self.axes.set_title('van der Pol oscillator')
+
+class StaticEPSPCanvas(MyMplCanvas):
+    def compute_initial_figure(self):
+        X = VDP("van der Pol oscillator")
+        X = EPSP(0,0,0)
+        t = np.arange(0, 100, 0.02)
+        self.plt.plot(t, v_m)
+        self.plt.plot(t, (g_syn*5), 'r--')
+        self.plt.plot(t, (I_syn/5), 'k:')
         self.axes.set_xlabel('Time')
         self.axes.set_ylabel('X Dynamical Variable')
         self.axes.set_title('van der Pol oscillator')
@@ -290,17 +302,17 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
-        layout = QtGui.QVBoxLayout()
+        layout = QtGui.QVBoxLayout(self.tab1)
 
         self.tabs.addTab(self.tab1, "Time Plot")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        webview = QtGui.QWebView(self.tabs)
+        #webview = QtGui.QWebView(self.tabs)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
-        layout.addWidget(webview)
+        #layout.addWidget(webview)
 
         self.tabs.setFixedWidth(850)
         self.tabs.setFixedHeight(450)
