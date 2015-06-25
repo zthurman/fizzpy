@@ -21,15 +21,16 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as Naviga
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
 import itertools
+from PyQt4 import QtGui, QtCore
 
 #   Choose PyQt4 or PySide, be aware of the licensing cost of building a PyQt application. Compare
 # that to the lack of licensing fee for commercial applications with PySide.
 
-use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
+"""use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
 if use_pyside:
     from PySide import QtGui, QtCore
 else:
-    from PyQt4 import QtGui, QtCore
+    from PyQt4 import QtGui, QtCore"""
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.12"
@@ -199,7 +200,7 @@ class MultiTabNavTool(NavigationToolbar):
 class MplMultiTab(QtGui.QMainWindow):
     #====================================================================================================
     def __init__(self, parent=None, figures=None, labels=None):
-        qt.QMainWindow.__init__(self, parent)
+        QtGui.QMainWindow.__init__(self, parent)
 
         self.main_frame = QtGui.QWidget()
         self.tabWidget = QtGui.QTabWidget( self.main_frame )
@@ -237,7 +238,7 @@ class MplMultiTab(QtGui.QMainWindow):
         canvas.setParent(self.tabWidget)
         canvas.setFocusPolicy( QtCore.Qt.ClickFocus )
 
-        #self.tabs.append( tab )
+        self.tabs.append( tab )
         name = 'Tab %i'%(self.tabWidget.count()+1) if name is None else name
         self.tabWidget.addTab(canvas, name)
 
@@ -358,21 +359,17 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_VDPcanvas(self):
         self.centralWidget.close()
 
-        self.tab_widget = QtGui.QTabWidget(self)
-        tab1 = QtGui.QWidget()
-        tab2 = QtGui.QWidget()
-        tab3 = QtGui.QWidget()
+        self.tabs = QtGui.QTabWidget()
+        self.tab1 = QtGui.QWidget()
 
-        layout = QtGui.QVBoxLayout(tab1)
+        layout = QtGui.QVBoxLayout(self.tab1)
 
-        self.tab_widget.addTab(tab1, "Time Plot")
+        self.tabs.addTab(self.tab1, "Time Plot")
         #self.centralWidget.addTab(tab2, "Model Parameters")
         #self.centralWidget.addTab(tab3, "Model Information")
 
-        self.tab_widget.addTab(tab1, "Workout Data")
-
         #self.tabWidget = QtGui.QTabWidget(self.centralWidget)
-        self.setCentralWidget(self.centralWidget)
+        #self.setCentralWidget(self.centralWidget)
         #l = QtGui.QGridLayout(self.centralWidget)
         #sc = StaticVDPCanvas(self.centralWidget, width=7, height=7, dpi=70)
         #l.addWidget(sc,1,2)
