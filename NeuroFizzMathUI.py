@@ -65,15 +65,15 @@ class StaticVDPCanvas(MyMplCanvas):
 
 class StaticEPSPCanvas(MyMplCanvas):
     def compute_initial_figure(self):
-        X = VDP("van der Pol oscillator")
-        X = EPSP(0,0,0)
-        t = np.arange(0, 100, 0.02)
-        self.plt.plot(t, v_m)
-        self.plt.plot(t, (g_syn*5), 'r--')
-        self.plt.plot(t, (I_syn/5), 'k:')
+        #X = EPSP("EPSP")
+        X = EPSP(x0 = np.array([0,0,0]), X.model)
+        t = np.arange(0, 10, 0.01)
+        self.plt.plot(t, X[:,0])
+        self.plt.plot(t, X[:,1]*5, 'r--')
+        self.plt.plot(t, X[:,2]/5, 'k:')
         self.axes.set_xlabel('Time')
-        self.axes.set_ylabel('X Dynamical Variable')
-        self.axes.set_title('van der Pol oscillator')
+        self.axes.set_ylabel('Membrane Potential')
+        self.axes.set_title('EPSP')
 
 class StaticFNCanvas(MyMplCanvas):
     def compute_initial_figure(self):
@@ -330,7 +330,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=70)
+        sc = StaticEPSPCanvas(self.centralWidget, width=7, height=7, dpi=70)
         l.addWidget(sc)
         self.statusBar().showMessage("An Excitatory Post-synaptic Potential!", 2000)
 
