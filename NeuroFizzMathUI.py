@@ -289,19 +289,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
-        self.tabs = QtGui.QTabWidget(self.centralWidget)
-        self.tab1 = QtGui.QWidget(self.tabs)
-        self.tab2 = QtGui.QWidget(self.tabs)
-        self.tab3 = QtGui.QWidget(self.tabs)
-
-        layout = QtGui.QVBoxLayout(self.tab1)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
 
     # general class for tabbed interface for plotting canvas and other model options
 
-    def draw_Modelcanvas(ApplicationWindow):
+    def draw_Modelcanvas(self,centralWidget):
         def __init__(self):
             self.centralWidget.close()
             self.centralWidget = QtGui.QWidget(self)
@@ -313,34 +307,30 @@ class ApplicationWindow(QtGui.QMainWindow):
 
             layout = QtGui.QVBoxLayout(self.tab1)
 
-            self.tabs.addTab(self.tab1, "Plots")
-            self.tabs.addTab(self.tab2, "Model Parameters")
-            self.tabs.addTab(self.tab3, "Background")
+            #self.tabs.addTab(self.tab1, "Plots")
+            #self.tabs.addTab(self.tab2, "Model Parameters")
+            #self.tabs.addTab(self.tab3, "Background")
 
 
-    def draw_VDPcanvas(self, drawModelcanvas):
-        def __init__(self, drawModelcanvas):
-            self.centralWidget.close()
-            """self.centralWidget.close()
-            self.centralWidget = QtGui.QWidget(self)
-            self.setCentralWidget(self.centralWidget)
-            self.tabs = QtGui.QTabWidget(self.centralWidget)
-            self.tab1 = QtGui.QWidget(self.tabs)
-            self.tab2 = QtGui.QWidget(self.tabs)
-            self.tab3 = QtGui.QWidget(self.tabs)"""
-            layout = QtGui.QVBoxLayout(self.tab1)
-            sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-            layout.addWidget(sc)
+    def draw_VDPcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
 
-        """
+
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        #webview = QtGui.QWebView(self.tabs)"""
+        #webview = QtGui.QWebView(self.tab3)"""
 
-        #sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        #layout.addWidget(sc)
         #layout.addWidget(webview)
 
         self.tabs.setFixedWidth(850)
@@ -353,81 +343,209 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticEPSPCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticEPSPCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        #webview = QtGui.QWebView(self.tab3)"""
+
+        #layout.addWidget(webview)
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("An Excitatory Post-synaptic Potential!", 2000)
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticFNCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
     def draw_MLcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticMLCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticMLCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
     def draw_IZcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticIZCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticIZCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Izhikevich model!", 2000)
 
     def draw_HRcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticHRCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticHRCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Hindmarsh-Rose model!", 2000)
 
     def draw_HHcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticHHCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticHHCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
     def draw_RDcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticRDCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticRDCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
     def draw_Lcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticLCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticLCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Lorenz equations!", 2000)
 
     def draw_Rcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
-        l = QtGui.QVBoxLayout(self.centralWidget)
-        sc = StaticRCanvas(self.centralWidget, width=7, height=7, dpi=70)
-        l.addWidget(sc)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)
+        layout = QtGui.QVBoxLayout(self.tab1)
+        sc = StaticRCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(sc)
+
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        #webview = QtGui.QWebView(self.tab3)"""
+
+        #layout.addWidget(webview)
+
+        self.tabs.setFixedWidth(850)
+        self.tabs.setFixedHeight(450)
+
+        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Robbins Dynamo!", 2000)
 
     def buttonClicked(self):
