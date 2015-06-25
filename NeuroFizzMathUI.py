@@ -14,7 +14,6 @@ from matplotlib import pyplot as plt
 import matplotlib.animation as animation
 from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
 import itertools
@@ -212,6 +211,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
         VDPAction.triggered.connect(self.draw_VDPcanvas)
 
+        EPSPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'EPSP', self)
+        EPSPAction.triggered.connect(self.draw_EPSPcanvas)
+
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.triggered.connect(self.draw_FNcanvas)
 
@@ -247,6 +249,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
+
+        self.toolbar = self.addToolBar('EPSP')
+        self.toolbar.addAction(EPSPAction)
 
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
@@ -304,7 +309,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         layout = QtGui.QVBoxLayout(self.tab1)
 
-        self.tabs.addTab(self.tab1, "Time Plot")
+        self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
@@ -319,6 +324,15 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
+
+    def draw_EPSPcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
+        self.setCentralWidget(self.centralWidget)
+        l = QtGui.QVBoxLayout(self.centralWidget)
+        sc = StaticFNCanvas(self.centralWidget, width=7, height=7, dpi=70)
+        l.addWidget(sc)
+        self.statusBar().showMessage("An Excitatory Post-synaptic Potential!", 2000)
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
