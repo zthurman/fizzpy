@@ -74,7 +74,7 @@ class EPSP(System):
     name = "EPSP"
     x0 = np.array([0,0,0])
 
-    def model(self, x):
+    def model(self, x, t):
         c_m = 1
         g_L = 1
         tau_syn = 1
@@ -99,6 +99,7 @@ class EPSP(System):
             I_syn[int(i)-1] = np.dot(g_syn[int(i)-1], v_m[int((i-1))-1]-E_syn)
             v_m[int(i)-1] = v_m[int((i-1))-1]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i-1))-1]) \
                             -np.dot((delta_t/c_m), I_syn[int(i)-1])
+            return g_syn, I_syn, v_m
 
 # FN neuron model
 
