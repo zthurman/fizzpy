@@ -355,6 +355,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
 
+    # general class for tabbed interface for plotting canvas and other model options
+
+    def draw_Modelcanvas(self):
+        pass
+
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -369,6 +374,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tabs.addTab(self.tab1, "Time Plot")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
+
+
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
