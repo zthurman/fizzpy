@@ -4,9 +4,6 @@
 
 # Copyright (C) 2015 Zechariah Thurman
 
-# User interface for NeuroFizzMath Toolkit with help from:
-# http://matplotlib.org/examples/user_interfaces/embedding_in_qt4.html
-
 from __future__ import unicode_literals
 from NeuroFizzMath import *    #ord2, rk4, VDP, FN, ML, IZ, HR, HH, RD, L, R
 import numpy as np
@@ -275,16 +272,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
-
-        #tab1 = QtGui.QWidget()
-        #tab2 = QtGui.QWidget()
-        #tab3 = QtGui.QWidget()
-
-        #layout = QtGui.QVBoxLayout(tab1)
-
-        #self.centralWidget.addTab(tab1, "Time Plot")
-        #self.centralWidget.addTab(tab2, "Model Parameters")
-        #self.centralWidget.addTab(tab3, "Model Information")
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
