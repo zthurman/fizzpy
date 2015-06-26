@@ -165,6 +165,7 @@ class StaticMplCanvas(MyMplCanvas):
         self.axes.set_ylabel('X Dynamical Variable')
         self.axes.set_title('Lorenz Equations')
 
+
 # dynamic canvas method
 
 class DynamicMplCanvas(MyMplCanvas):
@@ -310,15 +311,20 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget = QtGui.QWidget(self)
         self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
-        self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
         self.tab2 = QtGui.QWidget(self.tabs)
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        layout = QtGui.QGridLayout(self.tab1)
 
         self.webview = QtWebKit.QWebView(self.tab3)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        layout.addWidget(self.tpbutton, 0, 0)
+        layout.addWidget(self.ppbutton, 0, 1)
+        layout.addWidget(self.fftbutton, 0, 2)
         layout.addWidget(sc)
         layout.addWidget(self.tab3)
 
