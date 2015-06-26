@@ -192,7 +192,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
-        self.layout = QtGui.QGridLayout()
+        #self.layout = QtGui.QGridLayout()
 
         self.setGeometry(350, 350, 850, 550)
 
@@ -317,16 +317,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        layout = QtGui.QGridLayout(self.tab1)
+        self.layout = QtGui.QGridLayout(self.tab1)
 
         self.webview = QtWebKit.QWebView(self.tab3)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(self.tpbutton, 0, 0)
-        layout.addWidget(self.ppbutton, 0, 1)
-        layout.addWidget(self.fftbutton, 0, 2)
-        layout.addWidget(sc)
-        layout.addWidget(self.tab3)
+        self.layout.addWidget(self.tpbutton, 0, 0)
+        self.layout.addWidget(self.ppbutton, 0, 1)
+        self.layout.addWidget(self.fftbutton, 0, 2)
+        self.layout.addWidget(sc, 1, 1)
+        self.layout.addWidget(self.tab3)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
