@@ -29,7 +29,7 @@ else:
     from PyQt4 import QtGui, QtCore"""
 
 progname = os.path.basename(sys.argv[0])
-progversion = "0.12"
+progversion = "0.13"
 
 
 class MyMplCanvas(FigureCanvas):
@@ -319,7 +319,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
         self.layout = QtGui.QGridLayout(self.tab1)
 
-        self.webview = QtWebKit.QWebView(self.tab3)
+        #self.webview = QtWebKit.QWebView(self.tab3)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.layout.addWidget(self.tpbutton, 0, 0)
