@@ -52,6 +52,11 @@ def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
         X[i+1] = X[i] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
 
+# delay differential equation solver
+
+def dde():
+    pass
+
 # System, super class for all models
 
 class System():

@@ -39,8 +39,6 @@ class MyMplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
         self.axes.hold(False)
         self.compute_initial_figure()
-        #self.axes.set_xlabel(self.xlabel)
-        #self.axes.set_ylabel(self.ylabel)
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
@@ -56,15 +54,15 @@ class MyMplCanvas(FigureCanvas):
 # static canvas methods
 
 class StaticVDPCanvas(MyMplCanvas):
-    system=VDP
-    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable'):
+    system = VDP
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
         X = self.system()
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
-        self.axes.set_title('van der Pol oscillator')
+        self.axes.set_title(title)
 
 class StaticEPSPCanvas(MyMplCanvas):
     ylabel='Membrane Potential'
@@ -78,31 +76,37 @@ class StaticEPSPCanvas(MyMplCanvas):
         self.axes.set_title('EPSP')
 
 class StaticFNCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = FN("Fitzhugh-Nagumo")
-        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.01, ng = X.model)
-        t = np.arange(0, 100, 0.01)
+    system = FN
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Fitzhugh-Nagumo'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Fitzhugh-Nagumo')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticMLCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = ML("Morris-Lecar")
+    system = ML
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Morris-Lecar'):
+        X = self.system()
         X = rk4(x0 = np.array([0,0]), t1 = 1000,dt = 0.30, ng = X.model)
         t = np.arange(0, 1000, 0.30)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Morris-Lecar')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticIZCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = IZ("Izhikevich")
+    system = IZ
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Izhikevich'):
+        X = self.system()
         X = rk4(x0 = np.array([0,0]), t1 = 300,dt = 0.1, ng = X.model)
         t = np.arange(0, 300, 0.1)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Izhikevich')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticHRCanvas(MyMplCanvas):
     ylabel='Membrane Potential'
@@ -161,7 +165,7 @@ class StaticMplCanvas(MyMplCanvas):
         self.axes.set_title('Lorenz Equations')
 
 
-# dynamic canvas method
+# dynamic canvas methods
 
 class DynamicMplCanvas(MyMplCanvas):
     """A canvas that updates itself every second with a new plot."""
