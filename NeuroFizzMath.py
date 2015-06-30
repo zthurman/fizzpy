@@ -2,7 +2,7 @@
 # NeuroFizzMath
 # Copyright (C) 2015 Zechariah Thurman
 
-#  Classes for different differential eqn models. All the math
+#  Classes for various differential eqn models. All the math
 # resides within this library. Math snarfers, snarf away.
 
 from __future__ import division
