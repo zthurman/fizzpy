@@ -109,61 +109,59 @@ class StaticIZCanvas(MyMplCanvas):
         self.axes.set_title(title)
 
 class StaticHRCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = HR("Hindmarsh-Rose")
+    system = HR
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Hindmarsh-Rose'):
+        X = self.system()
         X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 800,dt = 0.1, ng = X.model)
         t = np.arange(0, 800, 0.1)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Hindmarsh-Rose')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticHHCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = HH("Hodgkins-Huxley")
+    system = HH
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Hodgkins-Huxley'):
+        X = self.system()
         X = rk4(x0 = np.array([0.01,0.01,0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, -X[:,0])
-        self.axes.set_title('Hodgkins-Huxley')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticRDCanvas(MyMplCanvas):
-    ylabel='Geomagnetic Polarity'
-    def compute_initial_figure(self):
-        X = RD("Rikitake Dynamo")
+    system = RD
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Geomagnetic Polarity', title = 'Rikitake Dynamo'):
+        X = self.system()
         X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Rikitake Dynamo')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticLCanvas(MyMplCanvas):
-    ylabel='X Dynamical Variable'
-    def compute_initial_figure(self):
-        X = L("Lorenz Equations")
+    system = L
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'Lorenz Equations'):
+        X = self.system()
         X = rk4(x0 = np.array([1.0, 2.0, 1.0]), t1 = 100,dt = 0.01, ng = X.model)
         t = np.arange(0, 100, 0.01)
         self.axes.plot(t, X[:,0])
-        self.axes.set_title('Lorenz Equations')
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticRCanvas(MyMplCanvas):
-    ylabel='Geomagnetic Polarity'
-    def compute_initial_figure(self):
-        X = R("Robbins Equations")
+    system = R
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Geomagnetic Polarity', title = 'Robbins Equations'):
+        X = self.system()
         X = rk4(x0 = np.array([0.00032,0.23,0.51]), t1 = 200,dt = 0.1, ng = X.model)
         t = np.arange(0, 200, 0.1)
         self.axes.plot(t, X[:,2])
-        self.axes.set_title('Robbins Equations')
-
-class StaticMplCanvas(MyMplCanvas):
-    ylabel='X Dynamical Variable'
-    def compute_initial_figure(self):
-        X = L("Lorenz Eqns")
-        X = rk4(x0 = np.array([1.0, 2.0, 1.0]) , t1 = 100,dt = 0.01, ng = X.model)
-        t = np.arange(0, 100, 0.01)
-        self.axes.plot(t, X[:,0])
-        self.axes.set_xlabel('Time')
-        self.axes.set_ylabel('X Dynamical Variable')
-        self.axes.set_title('Lorenz Equations')
-
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 # dynamic canvas methods
 
