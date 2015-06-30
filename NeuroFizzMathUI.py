@@ -64,12 +64,12 @@ class StaticVDPCanvas(MyMplCanvas):
     system = VDP
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
         X = self.system()
-        #X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
-        #self.axes.set_xlabel(xlabel)
-        #self.axes.set_ylabel(ylabel)
-        #self.axes.set_title(title)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 class StaticEPSPCanvas(MyMplCanvas):
     ylabel='Membrane Potential'
@@ -321,23 +321,25 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout = QtGui.QGridLayout(self.tab1)
+        self.layout.addLayout(self.hbox, 0, 0)
 
         #self.webview = QtWebKit.QWebView(self.tab3)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        self.layout.addWidget(self.tpbutton, 0, 0)
-        self.layout.addWidget(self.ppbutton, 0, 1)
-        self.layout.addWidget(self.fftbutton, 0, 2)
-        self.layout.addWidget(sc, 1, 1)
-        self.layout.addWidget(self.tab3)
+        self.hbox.addWidget(self.tpbutton) #, 0, 0)
+        self.hbox.addWidget(self.ppbutton) #, 0, 1)
+        self.hbox.addWidget(self.fftbutton) #, 0, 2)
+        self.hbox.addWidget(sc) #, 1, 1)
+        #self.hbox.addWidget(self.tab3)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
+        #self.tabs.setFixedWidth(850)
+        #self.tabs.setFixedHeight(450)
 
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
