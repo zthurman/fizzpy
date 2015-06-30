@@ -34,15 +34,13 @@ progversion = "0.13"
 
 class MyMplCanvas(FigureCanvas):
     """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
-    xlabel='Time'
-    ylabel='Y'
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
         self.axes.hold(False)
-        self.axes.set_xlabel(self.xlabel)
-        self.axes.set_ylabel(self.ylabel)
         self.compute_initial_figure()
+        #self.axes.set_xlabel(self.xlabel)
+        #self.axes.set_ylabel(self.ylabel)
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
@@ -52,19 +50,20 @@ class MyMplCanvas(FigureCanvas):
                                    QtGui.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
-    def compute_initial_figure(self, X):
+    def compute_initial_figure(self):
         pass
 
 # static canvas methods
 
 class StaticVDPCanvas(MyMplCanvas):
     system=VDP
-    ylabel='X Dynamical Variable'
-    def compute_initial_figure(self):
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable'):
         X = self.system()
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
         self.axes.set_title('van der Pol oscillator')
 
 class StaticEPSPCanvas(MyMplCanvas):
