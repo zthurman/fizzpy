@@ -196,7 +196,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
-        #self.layout = QtGui.QGridLayout()
+        self.layout = QtGui.QGridLayout()
 
         self.setGeometry(350, 350, 850, 550)
 
@@ -363,7 +363,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+        self.frame = QtGui.QFrame(self.tabs)
+        layout = QtGui.QVBoxLayout(self.frame)
+
         sc = StaticEPSPCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
 
