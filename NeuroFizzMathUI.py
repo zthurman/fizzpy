@@ -212,36 +212,47 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         exitAction = QtGui.QAction(QtGui.QIcon.fromTheme('exit'), 'Exit', self)
         exitAction.triggered.connect(QtGui.qApp.quit)
+        exitAction.setToolTip('Exit the program')
 
         VDPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'VDP', self)
         VDPAction.triggered.connect(self.draw_VDPcanvas)
+        VDPAction.setToolTip('van der Pol oscillator')
 
         EPSPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'EPSP', self)
         EPSPAction.triggered.connect(self.draw_EPSPcanvas)
+        EPSPAction.setToolTip('Excitatory Post-synaptic potential')
 
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.triggered.connect(self.draw_FNcanvas)
+        FNAction.setToolTip('Fitzhugh-Nagumo model')
 
         MLAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'ML', self)
         MLAction.triggered.connect(self.draw_MLcanvas)
+        MLAction.setToolTip('Morris-Lecar model')
 
         IZAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'IZ', self)
         IZAction.triggered.connect(self.draw_IZcanvas)
+        IZAction.setToolTip('Izhikevich model')
 
         HRAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HR', self)
         HRAction.triggered.connect(self.draw_HRcanvas)
+        HRAction.setToolTip('Hindmarsh-Rose model')
 
         HHAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'HH', self)
         HHAction.triggered.connect(self.draw_HHcanvas)
+        HHAction.setToolTip('Hodgkins-Huxley model')
 
         RDAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'RD', self)
         RDAction.triggered.connect(self.draw_RDcanvas)
+        RDAction.setToolTip('Rikitake dynamo')
 
         LAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'L', self)
         LAction.triggered.connect(self.draw_Lcanvas)
+        LAction.setToolTip('Lorenz equations')
 
         RAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'R', self)
         RAction.triggered.connect(self.draw_Rcanvas)
+        RAction.setToolTip('Robbins model')
 
         aboutAction = QtGui.QAction(QtGui.QIcon.fromTheme('about'), 'About', self)
         aboutAction.triggered.connect(self.about)
