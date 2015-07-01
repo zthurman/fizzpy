@@ -332,16 +332,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.layout = QtGui.QHBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.layout)
 
         #self.webview = QtWebKit.QWebView(self.tab3)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        self.hbox.addWidget(self.tpbutton) #, 0, 0)
-        self.hbox.addWidget(self.ppbutton) #, 0, 1)
-        self.hbox.addWidget(self.fftbutton) #, 0, 2)
+        self.layout.addWidget(self.tpbutton) #, 0, 0)
+        self.layout.addWidget(self.ppbutton) #, 0, 1)
+        self.layout.addWidget(self.fftbutton) #, 0, 2)
         self.layout.addWidget(sc) #, 1, 1)
         #self.hbox.addWidget(self.tab3)
 
