@@ -346,13 +346,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc) #, 1, 1)
+        self.layout.addWidget(sc)
         #self.hbox.addWidget(self.tab3)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
+        self.setMaximumSize(2000, 2000)
         #self.tabs.setFixedWidth(850)
         #self.tabs.setFixedHeight(450)
 
