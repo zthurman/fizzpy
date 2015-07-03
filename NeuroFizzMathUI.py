@@ -336,11 +336,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
-        self.vbox = QtGui.QVBoxLayout(self.tab1)
+        self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
-        self.grid = QtGui.QGridLayout(self.vbox)
-        self.vbox.addLayout(self.hbox)
-        self.vbox.addLayout(self.vbox)
+        self.layout.addLayout(self.hbox)
+        self.layout.addLayout(self.layout)
 
         #self.webview = QtWebKit.QWebView(self.tab3)
 
@@ -348,13 +347,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.vbox.addWidget(sc)
+        self.layout.addWidget(sc)
         #self.hbox.addWidget(self.tab3)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
-
 
         #self.tabs.setFixedWidth(850)
         #self.tabs.setFixedHeight(450)
