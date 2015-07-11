@@ -416,7 +416,6 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_MLcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -428,17 +427,21 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
-        layout = QtGui.QVBoxLayout(self.tab1)
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticMLCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
