@@ -54,9 +54,9 @@ class MyMplCanvas(FigureCanvas):
         X = rk4(x0, t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
-        self.axes.set_xlabel(xlabel)
-        self.axes.set_ylabel(ylabel)
-        self.axes.set_title(title)
+        #self.axes.set_xlabel(xlabel)
+        #self.axes.set_ylabel(ylabel)
+        #self.axes.set_title(title)
 
 # static canvas methods
 
@@ -338,7 +338,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
-        #self.layout.addLayout(self.layout)
 
         #self.webview = QtWebKit.QWebView(self.tab3)
 
@@ -353,8 +352,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        #self.tabs.setFixedWidth(850)
-        #self.tabs.setFixedHeight(450)
         self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
@@ -386,22 +383,33 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_FNcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticFNCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Fitzhugh-Nagumo model!", 2000)
 
@@ -411,8 +419,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
+
         layout = QtGui.QVBoxLayout(self.tab1)
         sc = StaticMLCanvas(self.tab1, width=7, height=7, dpi=70)
         layout.addWidget(sc)
