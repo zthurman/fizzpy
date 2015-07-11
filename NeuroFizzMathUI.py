@@ -324,7 +324,6 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -339,7 +338,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
-        self.layout.addLayout(self.layout)
+        #self.layout.addLayout(self.layout)
 
         #self.webview = QtWebKit.QWebView(self.tab3)
 
@@ -356,7 +355,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         #self.tabs.setFixedWidth(850)
         #self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
