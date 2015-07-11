@@ -29,7 +29,7 @@ else:
     from PyQt4 import QtGui, QtCore"""
 
 progname = os.path.basename(sys.argv[0])
-progversion = "0.13"
+progversion = "0.14"
 
 
 class MyMplCanvas(FigureCanvas):
@@ -480,110 +480,160 @@ class ApplicationWindow(QtGui.QMainWindow):
     def draw_HRcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticHRCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Hindmarsh-Rose model!", 2000)
 
     def draw_HHcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticHHCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
     def draw_RDcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticRDCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
     def draw_Lcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticLCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Lorenz equations!", 2000)
 
     def draw_Rcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the membrane potential over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the system')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
-        layout = QtGui.QVBoxLayout(self.tab1)
+
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
+
         sc = StaticRCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
+        self.layout.addWidget(sc)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
+        self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Robbins Dynamo!", 2000)
 
