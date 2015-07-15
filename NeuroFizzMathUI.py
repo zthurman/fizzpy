@@ -48,15 +48,15 @@ class MyMplCanvas(FigureCanvas):
                                    QtGui.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
-    def compute_initial_figure(self, xlabel, ylabel, title):
+    def compute_initial_figure(self, xlabel = '', ylabel = '', title = ''):
         X = self.system()
         x0 = X.x0
         X = rk4(x0, t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
-        #self.axes.set_xlabel(xlabel)
-        #self.axes.set_ylabel(ylabel)
-        #self.axes.set_title(title)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
 
 # static canvas methods
 
@@ -130,7 +130,7 @@ class StaticHHCanvas(MyMplCanvas):
     system = HH
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Hodgkins-Huxley'):
         X = self.system()
-        X = rk4(x0 = np.array([0.01,0.01,0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        X = ord2(x0 = np.array([0.01,0.01,0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, -X[:,0])
         self.axes.set_xlabel(xlabel)
@@ -311,12 +311,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     # general class for tabbed interface for plotting canvas and other model options
 
-    def draw_Modelcanvas(centralWidget):
+    def draw_Modelcanvas(self):
         def __init(self):
-            self.centralWidget.close()
-            self.centralWidget = QtGui.QWidget(self)
-            self.setCentralWidget(self.centralWidget)
-            self.tabs = QtGui.QTabWidget(self.centralWidget)
+            pass
 
         def drawcanvas(self, tabs):
             pass
@@ -335,18 +332,21 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
-        self.layout = QtGui.QVBoxLayout(self.tab1)
-        self.hbox = QtGui.QHBoxLayout(self.tab1)
-        self.layout.addLayout(self.hbox)
-
-        #self.webview = QtWebKit.QWebView(self.tab3)
+        self.layout1 = QtGui.QVBoxLayout(self.tab1)
+        self.hbox1 = QtGui.QHBoxLayout(self.tab1)
+        self.layout1.addLayout(self.hbox1)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        self.hbox.addWidget(self.tpbutton)
-        self.hbox.addWidget(self.ppbutton)
-        self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
-        #self.hbox.addWidget(self.tab3)
+        self.hbox1.addWidget(self.tpbutton)
+        self.hbox1.addWidget(self.ppbutton)
+        self.hbox1.addWidget(self.fftbutton)
+        self.layout1.addWidget(sc)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+
+        self.layout3.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
