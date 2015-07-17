@@ -345,7 +345,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
 
         self.layout3.addWidget(self.webview)
 
@@ -406,6 +406,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
 
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("http://goo.gl/X9ISh"))
+
+        self.layout3.addWidget(self.webview)
+
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
@@ -437,6 +444,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("http://goo.gl/F2dDcl"))
+
+        self.layout3.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
@@ -470,6 +484,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
 
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("http://goo.gl/FcWxh"))
+
+        self.layout3.addWidget(self.webview)
+
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
@@ -501,6 +522,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+
+        self.layout3.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
@@ -534,6 +562,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
 
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+
+        self.layout3.addWidget(self.webview)
+
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
@@ -565,6 +600,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+
+        self.layout3.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
@@ -598,6 +640,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
 
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+
+        self.layout3.addWidget(self.webview)
+
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
@@ -629,6 +678,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+
+        self.layout3.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
