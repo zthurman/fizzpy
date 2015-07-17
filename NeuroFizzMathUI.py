@@ -345,6 +345,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
 
         self.layout3.addWidget(self.webview)
 
