@@ -29,7 +29,7 @@ else:
     from PyQt4 import QtGui, QtCore"""
 
 progname = os.path.basename(sys.argv[0])
-progversion = "0.14"
+progversion = "0.15"
 
 
 class MyMplCanvas(FigureCanvas):
