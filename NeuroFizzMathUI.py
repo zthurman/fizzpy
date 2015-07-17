@@ -526,7 +526,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("https://goo.gl/M0x7lH"))
 
         self.layout3.addWidget(self.webview)
 
@@ -565,7 +565,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("https://goo.gl/mE88Oi"))
 
         self.layout3.addWidget(self.webview)
 
@@ -604,7 +604,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("https://goo.gl/sYOlZ"))
 
         self.layout3.addWidget(self.webview)
 
@@ -643,7 +643,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("https://goo.gl/V3Yb77"))
 
         self.layout3.addWidget(self.webview)
 
@@ -682,7 +682,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("https://goo.gl/O25BgY"))
+        self.webview.load(QtCore.QUrl("https://goo.gl/L99Uha"))
 
         self.layout3.addWidget(self.webview)
 
