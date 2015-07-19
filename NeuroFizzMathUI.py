@@ -217,6 +217,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.subLabel = QtGui.QMenu('Neuroscience | Physics | Mathematics Toolkit', self)
         self.statusBar().showMessage("Click some buttons!!!", 2000)
         self.menuBar().addMenu(self.subLabel)
+        self.menuBar().setToolTip('Troll button!')
         self.menuBar().addSeparator()
 
         # tool bar action list
