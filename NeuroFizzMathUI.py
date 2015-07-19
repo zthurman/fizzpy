@@ -349,9 +349,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout1.addLayout(self.hbox1)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        self.tpbutton.addAction(sc)
         self.hbox1.addWidget(self.tpbutton)
         self.layout1.addWidget(sc)
+        self.tpbutton.addAction(self.layout1)
         self.tpbutton.clicked.connect(self.tpbutton)
 
         sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
