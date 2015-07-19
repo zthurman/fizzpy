@@ -71,6 +71,17 @@ class StaticVDPCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticPplotVDPCanvas(MyMplCanvas):
+    system = VDP
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
+        self.axes.plot(X[:,1], X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticEPSPCanvas(MyMplCanvas):
     ylabel='Membrane Potential'
     def compute_initial_figure(self):
@@ -337,8 +348,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout1.addLayout(self.hbox1)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.tpbutton.addAction(sc)
         self.hbox1.addWidget(self.tpbutton)
+        self.layout1.addWidget(sc)
+        self.tpbutton.clicked.connect(self.tpbutton)
+
+        sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.ppbutton)
+        self.ppbutton.addAction(sc1)
+        self.ppbutton.clicked.connect(self.ppbutton)
+
         self.hbox1.addWidget(self.fftbutton)
         self.layout1.addWidget(sc)
 
@@ -755,6 +774,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
     aw = ApplicationWindow()
-    aw.setWindowTitle("NeuroFizzMath" + ' - ' + progversion)
+    aw.setWindowTitle('NeuroFizzMath' + ' - ' + progversion )
     aw.show()
     sys.exit(qApp.exec_())
