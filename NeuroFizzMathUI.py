@@ -328,6 +328,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
+        self.centralWidget.close()
 
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
@@ -345,7 +346,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout.addLayout(self.hbox1)
 
         sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
-        #self.layout1.addWidget(sc)
+        #self.layout.addWidget(sc)
 
         self.hbox1.addWidget(self.tpbutton)
         self.hbox1.addWidget(self.ppbutton)
@@ -356,16 +357,18 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
+        self.webview.load(QtCore.QUrl("http://google.com"))
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
+        self.layout2.addWidget(self.webview)
+
         self.setCentralWidget(self.tabs)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         self.centralWidget.setFocus()
-        #self.layout.removeWidget(self.centralWidget)
 
 
     def draw_VDPcanvas(self):
@@ -382,12 +385,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)"""
 
-        #self.layout1 = QtGui.QVBoxLayout(self.tab1)
-        #self.hbox1 = QtGui.QHBoxLayout(self.tab1)
-        #self.layout1.addLayout(self.hbox1)
+        self.layout = QtGui.QVBoxLayout(self.tab1)
+        self.hbox1 = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox1)
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        #self.hbox1.addWidget(self.tpbutton)
+        self.hbox1.addWidget(self.tpbutton)
         self.layout.addWidget(sc)
         #self.tpbutton.addAction(self.layout1)
         #self.tpbutton.clicked.connect(self.tpbutton)
