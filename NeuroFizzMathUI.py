@@ -331,6 +331,10 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
+    def tpbutton_refresh(self, sc):
+        self.centralWidget.close()
+        self.layout.addWidget(sc)
+
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
@@ -352,9 +356,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.tpbutton)
-        self.layout.addWidget(sc)
-        #self.tpbutton.addAction(self.centralWidget.close())
-        #self.tpbutton.clicked.connect(self.layout.addWidget(sc))
+
+        self.tpbutton.clicked.connect(self.tpbutton_refresh(sc))
+
 
         #sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.ppbutton)
