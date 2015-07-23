@@ -218,7 +218,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
-        self.layout = QtGui.QGridLayout()
+        self.layout = QtGui.QVBoxLayout()
 
         self.setGeometry(350, 350, 850, 550)
 
@@ -329,9 +329,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.centralWidget = QtGui.QWidget(self)
 
-        self.centralWidget.close()
-
-        self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -342,11 +339,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
+
         self.setCentralWidget(self.tabs)
 
-        self.layout1 = QtGui.QVBoxLayout(self.tab1)
+        self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox1 = QtGui.QHBoxLayout(self.tab1)
-        self.layout1.addLayout(self.hbox1)
+        self.layout.addLayout(self.hbox1)
 
         sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
         #self.layout1.addWidget(sc)
@@ -355,9 +353,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox1.addWidget(self.ppbutton)
         self.hbox1.addWidget(self.fftbutton)
 
-        self.layout1.addWidget(sc)
+        self.layout.addWidget(sc)
 
-        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+        self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
 
@@ -367,12 +365,11 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
         #self.centralWidget.setFocus()
+        self.layout.removeWidget(self.centralWidget)
 
 
     def draw_VDPcanvas(self):
-        self.layout1.removeWidget(self.centralWidget)
-        self.centralWidget.deleteLater()
-        self.centralWidget = None
+        self.centralWidget.close()
         """self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
@@ -391,7 +388,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         #self.hbox1.addWidget(self.tpbutton)
-        self.layout1.addWidget(sc)
+        self.layout.addWidget(sc)
         #self.tpbutton.addAction(self.layout1)
         #self.tpbutton.clicked.connect(self.tpbutton)
 
@@ -403,12 +400,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.hbox1.addWidget(self.fftbutton)
         #self.layout1.addWidget(sc)
 
-        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+        self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
 
-        self.layout3.addWidget(self.webview)
+        self.layout2.addWidget(self.webview)
 
         #self.tabs.addTab(self.tab1, "Plots")
         #self.tabs.addTab(self.tab2, "Model Parameters")
@@ -471,12 +468,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.fftbutton)
         self.layout.addWidget(sc)
 
-        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+        self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/X9ISh"))
 
-        self.layout3.addWidget(self.webview)
+        self.layout2.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
