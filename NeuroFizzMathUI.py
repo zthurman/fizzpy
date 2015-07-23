@@ -62,11 +62,11 @@ class MyMplCanvas(FigureCanvas):
 
 class StaticNullCanvas(MyMplCanvas):
     system = VDP
-    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
+    def compute_initial_figure(self, xlabel = '', ylabel = '', title = ''):
         X = self.system()
         X = np.arange(0, 100, 0.02)
         t = np.arange(0, 100, 0.02)
-        self.axes.plot(t, X[:,0])
+        self.axes.plot()
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
@@ -348,9 +348,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox1 = QtGui.QHBoxLayout(self.tab1)
         self.layout1.addLayout(self.hbox1)
 
+        sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        #self.layout1.addWidget(sc)
+
         self.hbox1.addWidget(self.tpbutton)
         self.hbox1.addWidget(self.ppbutton)
         self.hbox1.addWidget(self.fftbutton)
+
+        self.layout1.addWidget(sc)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
@@ -360,13 +365,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
-        self.centralWidget.setFocus()
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
-        self.centralWidget.setFocus()
+        #self.centralWidget.setFocus()
 
 
     def draw_VDPcanvas(self):
-        self.centralWidget.close()
+        self.layout1.removeWidget(self.centralWidget)
+        self.centralWidget.deleteLater()
+        self.centralWidget = None
         """self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
@@ -395,14 +401,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.ppbutton.clicked.connect(self.ppbutton)
 
         #self.hbox1.addWidget(self.fftbutton)
-        self.layout1.addWidget(sc)
+        #self.layout1.addWidget(sc)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
-
-        self.layout3.addWidget(self.webview)
 
         self.layout3.addWidget(self.webview)
 
