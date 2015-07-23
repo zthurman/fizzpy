@@ -60,6 +60,17 @@ class MyMplCanvas(FigureCanvas):
 
 # static canvas methods
 
+class StaticNullCanvas(MyMplCanvas):
+    system = VDP
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
+        X = self.system()
+        X = np.arange(0, 100, 0.02)
+        t = np.arange(0, 100, 0.02)
+        self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticVDPCanvas(MyMplCanvas):
     system = VDP
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
@@ -311,27 +322,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.toolbar = self.addToolBar('Copyright')
         self.toolbar.addAction(copyrightAction)
 
-        # final focus setting and other shiznats for main window
+        # final focus setting and other shiznats for the rest of main window
 
         self.main_widget = QtGui.QWidget(self)
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
 
-        self.statusBar().showMessage("The Diff EQ playground!", 2000)
-        self.centralWidget.setFocus()
-
-    # general class for tabbed interface for plotting canvas and other model options
-
-    def draw_Modelcanvas(self):
-        def __init(self):
-            pass
-
-        def drawcanvas(self, tabs):
-            pass
-
-    def draw_VDPcanvas(self):
         self.centralWidget.close()
+
         self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
@@ -343,23 +342,59 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
+        self.setCentralWidget(self.tabs)
 
         self.layout1 = QtGui.QVBoxLayout(self.tab1)
         self.hbox1 = QtGui.QHBoxLayout(self.tab1)
         self.layout1.addLayout(self.hbox1)
 
-        sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.tpbutton)
-        self.layout1.addWidget(sc)
-        self.tpbutton.addAction(self.layout1)
-        self.tpbutton.clicked.connect(self.tpbutton)
-
-        sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.ppbutton)
-        self.ppbutton.addAction(sc1)
-        self.ppbutton.clicked.connect(self.ppbutton)
-
         self.hbox1.addWidget(self.fftbutton)
+
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
+
+        self.centralWidget.setFocus()
+        self.statusBar().showMessage("The Diff EQ playground!", 2000)
+        self.centralWidget.setFocus()
+
+
+    def draw_VDPcanvas(self):
+        self.centralWidget.close()
+        """self.centralWidget = QtGui.QWidget(self)
+        self.tabs = QtGui.QTabWidget(self.centralWidget)
+        self.tab1 = QtGui.QWidget(self.tabs)
+        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
+        self.tpbutton.setToolTip('Generate a plot of the x dynamical variable over time')
+        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
+        self.ppbutton.setToolTip('Generate a phase plot for the oscillator')
+        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
+        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.tab2 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)"""
+
+        #self.layout1 = QtGui.QVBoxLayout(self.tab1)
+        #self.hbox1 = QtGui.QHBoxLayout(self.tab1)
+        #self.layout1.addLayout(self.hbox1)
+
+        sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        #self.hbox1.addWidget(self.tpbutton)
+        self.layout1.addWidget(sc)
+        #self.tpbutton.addAction(self.layout1)
+        #self.tpbutton.clicked.connect(self.tpbutton)
+
+        #sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        #self.hbox1.addWidget(self.ppbutton)
+        #self.ppbutton.addAction(sc1)
+        #self.ppbutton.clicked.connect(self.ppbutton)
+
+        #self.hbox1.addWidget(self.fftbutton)
         self.layout1.addWidget(sc)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
@@ -369,9 +404,11 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.layout3.addWidget(self.webview)
 
-        self.tabs.addTab(self.tab1, "Plots")
-        self.tabs.addTab(self.tab2, "Model Parameters")
-        self.tabs.addTab(self.tab3, "Background")
+        self.layout3.addWidget(self.webview)
+
+        #self.tabs.addTab(self.tab1, "Plots")
+        #self.tabs.addTab(self.tab2, "Model Parameters")
+        #self.tabs.addTab(self.tab3, "Background")
 
         self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
@@ -395,6 +432,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
+        self.layout3 = QtGui.QVBoxLayout(self.tab3)
+
+        self.webview = QtWebKit.QWebView(self.tab3)
+
         self.tabs.setFixedWidth(850)
         self.tabs.setFixedHeight(450)
 
@@ -403,7 +444,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
-        self.centralWidget = QtGui.QWidget(self)
+        """self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -413,7 +454,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
         self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
-        self.tab3 = QtGui.QWidget(self.tabs)
+        self.tab3 = QtGui.QWidget(self.tabs)"""
 
         self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
