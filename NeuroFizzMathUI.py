@@ -340,8 +340,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
-        self.setCentralWidget(self.tabs)
-
         self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox1 = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox1)
@@ -363,9 +361,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.tabs.addTab(self.tab2, "Model Parameters")
         self.tabs.addTab(self.tab3, "Background")
 
+        self.setCentralWidget(self.tabs)
+
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
-        #self.centralWidget.setFocus()
-        self.layout.removeWidget(self.centralWidget)
+        self.centralWidget.setFocus()
+        #self.layout.removeWidget(self.centralWidget)
 
 
     def draw_VDPcanvas(self):
