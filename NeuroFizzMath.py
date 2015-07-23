@@ -3,7 +3,7 @@
 # Copyright (C) 2015 Zechariah Thurman
 
 #  Classes for various differential eqn models. All the math
-# resides within this library. Math snarfers, snarf away.
+# resides within this library.
 
 from __future__ import division
 from scipy import *
