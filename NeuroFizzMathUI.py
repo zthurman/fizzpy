@@ -328,8 +328,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
-        self.centralWidget.close()
 
+        self.statusBar().showMessage("The Diff EQ playground!", 2000)
+
+
+    def draw_VDPcanvas(self):
+        self.centralWidget.close()
+        self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -345,50 +350,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox1 = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox1)
 
-        sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
-        #self.layout.addWidget(sc)
-
-        self.hbox1.addWidget(self.tpbutton)
-        self.hbox1.addWidget(self.ppbutton)
-        self.hbox1.addWidget(self.fftbutton)
-
-        self.layout.addWidget(sc)
-
-        self.layout2 = QtGui.QVBoxLayout(self.tab3)
-
-        self.webview = QtWebKit.QWebView(self.tab3)
-        self.webview.load(QtCore.QUrl("http://google.com"))
-
-        self.tabs.addTab(self.tab1, "Plots")
-        self.tabs.addTab(self.tab2, "Model Parameters")
-        self.tabs.addTab(self.tab3, "Background")
-
-        self.layout2.addWidget(self.webview)
-
-        self.setCentralWidget(self.tabs)
-
-        self.statusBar().showMessage("The Diff EQ playground!", 2000)
-        self.centralWidget.setFocus()
-
-
-    def draw_VDPcanvas(self):
-        self.centralWidget.close()
-        """self.centralWidget = QtGui.QWidget(self)
-        self.tabs = QtGui.QTabWidget(self.centralWidget)
-        self.tab1 = QtGui.QWidget(self.tabs)
-        self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
-        self.tpbutton.setToolTip('Generate a plot of the x dynamical variable over time')
-        self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
-        self.ppbutton.setToolTip('Generate a phase plot for the oscillator')
-        self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
-        self.tab2 = QtGui.QWidget(self.tabs)
-        self.tab3 = QtGui.QWidget(self.tabs)"""
-
-        self.layout = QtGui.QVBoxLayout(self.tab1)
-        self.hbox1 = QtGui.QHBoxLayout(self.tab1)
-        self.layout.addLayout(self.hbox1)
-
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.hbox1.addWidget(self.tpbutton)
         self.layout.addWidget(sc)
@@ -396,11 +357,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         #self.tpbutton.clicked.connect(self.tpbutton)
 
         #sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        #self.hbox1.addWidget(self.ppbutton)
+        self.hbox1.addWidget(self.ppbutton)
         #self.ppbutton.addAction(sc1)
         #self.ppbutton.clicked.connect(self.ppbutton)
 
-        #self.hbox1.addWidget(self.fftbutton)
+        self.hbox1.addWidget(self.fftbutton)
         #self.layout1.addWidget(sc)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
@@ -410,9 +371,9 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.layout2.addWidget(self.webview)
 
-        #self.tabs.addTab(self.tab1, "Plots")
-        #self.tabs.addTab(self.tab2, "Model Parameters")
-        #self.tabs.addTab(self.tab3, "Background")
+        self.tabs.addTab(self.tab1, "Plots")
+        self.tabs.addTab(self.tab2, "Model Parameters")
+        self.tabs.addTab(self.tab3, "Background")
 
         self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
@@ -448,7 +409,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
     def draw_FNcanvas(self):
         self.centralWidget.close()
-        """self.centralWidget = QtGui.QWidget(self)
+        self.centralWidget = QtGui.QWidget(self)
         self.tabs = QtGui.QTabWidget(self.centralWidget)
         self.tab1 = QtGui.QWidget(self.tabs)
         self.tpbutton = QtGui.QPushButton('Time Plot', self.tabs)
@@ -458,7 +419,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
         self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
-        self.tab3 = QtGui.QWidget(self.tabs)"""
+        self.tab3 = QtGui.QWidget(self.tabs)
 
         self.layout = QtGui.QVBoxLayout(self.tab1)
         self.hbox = QtGui.QHBoxLayout(self.tab1)
