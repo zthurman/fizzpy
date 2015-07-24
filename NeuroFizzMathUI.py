@@ -328,16 +328,17 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.main_widget.setFocus()
 
         self.centralWidget = QtGui.QWidget(self)
-        #self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
+    # centralWidget assignment functions, called by toolbar actions
+
     def vdptpbutton_refresh(self):
+        self.centralWidget.close()
         self.layout.removeWidget(self.sc)
         self.sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.layout.addWidget(self.sc)
         self.centralWidget.close()
-
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
