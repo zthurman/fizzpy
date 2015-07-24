@@ -84,7 +84,7 @@ class StaticVDPCanvas(MyMplCanvas):
 
 class StaticPplotVDPCanvas(MyMplCanvas):
     system = VDP
-    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
+    def compute_initial_figure(self, xlabel = 'Y Dynamical Variable', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
         X = self.system()
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
@@ -340,6 +340,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout.addWidget(self.sc)
         self.centralWidget.close()
 
+    def vdpppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -361,11 +368,12 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
         self.layout.addWidget(self.sc)
         self.hbox1.addWidget(self.tpbutton)
+        self.hbox1.addWidget(self.ppbutton)
+        self.hbox1.addWidget(self.fftbutton)
 
         self.tpbutton.clicked.connect(self.vdptpbutton_refresh)
 
-        #sc1 = StaticPplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
-        self.hbox1.addWidget(self.ppbutton)
+        self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
         #self.ppbutton.addAction(sc1)
         #self.ppbutton.clicked.connect(self.ppbutton)
 
