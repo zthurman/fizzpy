@@ -331,7 +331,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-    def vdptpbutton_refresh(self, sc):
+    def vdptpbutton_refresh(self):
         self.centralWidget.close()
         sc = StaticVDPCanvas(self.tab1, width=7, height=7, dpi=70)
         self.layout.addWidget(sc)
@@ -383,6 +383,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.setCentralWidget(self.tabs)
         self.centralWidget.setFocus()
+        self.centralWidget.close()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
 
     def draw_EPSPcanvas(self):
