@@ -3,7 +3,7 @@ NeuroFizzMath
 
 Generalized Differential Equation Solver
 
-This is a functioning desktop application. Bringing an ODE solver to life.
+This is a functioning cross platform desktop application. Bringing an ODE solver to life.
 
 Physics is the language of the universe expressed in the form of mathematics. Explore it and discover the elegance and beauty underlying that which we experience every day as reality.
 
