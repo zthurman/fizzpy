@@ -12,7 +12,6 @@ import os
 import random
 from matplotlib import pyplot as plt
 import matplotlib.animation as animation
-from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
@@ -89,6 +88,22 @@ class StaticPplotVDPCanvas(MyMplCanvas):
         X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(X[:,1], X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotVDPCanvas(MyMplCanvas):
+    system = VDP
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'van der Pol oscillator'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int(len(X[:,0])/2 - 1), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
@@ -347,6 +362,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout.addWidget(self.sc)
         self.centralWidget.close()
 
+    def vdpfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotVDPCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -372,12 +394,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox1.addWidget(self.fftbutton)
 
         self.tpbutton.clicked.connect(self.vdptpbutton_refresh)
-
         self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
-        #self.ppbutton.addAction(sc1)
-        #self.ppbutton.clicked.connect(self.ppbutton)
+        self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
-        self.hbox1.addWidget(self.fftbutton)
         #self.layout1.addWidget(sc)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
