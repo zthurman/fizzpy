@@ -19,15 +19,6 @@ from matplotlib.backends import qt_compat
 import itertools
 from PyQt4 import QtGui, QtCore, QtWebKit
 
-#   Choose PyQt4 or PySide, be aware of the licensing cost of building a PyQt application. Compare
-# that to the lack of licensing fee for commercial applications with PySide.
-
-"""use_pyside = qt_compat.QT_API == qt_compat.QT_API_PYSIDE
-if use_pyside:
-    from PySide import QtGui, QtCore
-else:
-    from PyQt4 import QtGui, QtCore"""
-
 progname = os.path.basename(sys.argv[0])
 progversion = "0.16"
 
@@ -554,7 +545,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.statusBar().showMessage("The Diff EQ playground!", 2000)
 
-    # centralWidget assignment functions, called by toolbar actions
+    # centralWidget drawcanvas methods, called by toolbar actions
 
     def vdptpbutton_refresh(self):
         self.centralWidget.close()
@@ -605,8 +596,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
         self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
-        self.layout2 = QtGui.QVBoxLayout(self.tab3)
+        self.layout1 = QtGui.QGridLayout(self.tab2)
+        self.param1 = QtGui.QLineEdit(self.tab2)
+        self.param1.setText('Parameter')
 
+        self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
 
@@ -670,8 +664,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton.clicked.connect(self.fnppbutton_refresh)
         self.fftbutton.clicked.connect(self.fnfftbutton_refresh)
 
-        self.layout2 = QtGui.QVBoxLayout(self.tab3)
+        self.layout1 = QtGui.QVBoxLayout(self.tab2)
 
+        self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/X9ISh"))
 
@@ -1188,6 +1183,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
     aw = ApplicationWindow()
-    aw.setWindowTitle('NeuroFizzMath' + ' - ' + progversion )
+    aw.setWindowTitle('NeuroFizzMath' + ' ' + progversion)
     aw.show()
     sys.exit(qApp.exec_())
