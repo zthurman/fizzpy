@@ -2,6 +2,8 @@
 # NeuroFizzMath
 # Neuroscience | Physics | Mathematics Toolkit
 
+# This is an implementation of the matplotlib pyqt4
+
 # Copyright (C) 2015 Zechariah Thurman
 # GNU GPLv2
 
@@ -316,6 +318,34 @@ class StaticRDCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticPplotRDCanvas(MyMplCanvas):
+    system = RD
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Geomagnetic Polarity', title = 'Rikitake Dynamo'):
+        X = self.system()
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.01, ng = X.model)
+        t = np.arange(0, 100, 0.01)
+        self.axes.plot(X[:,3], X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotRDCanvas(MyMplCanvas):
+    system = RD
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Rikitake Dynamo'):
+        X = self.system()
+        X = rk4(x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1 = 100,dt = 0.02, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,2)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticLCanvas(MyMplCanvas):
     system = L
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'Lorenz Equations'):
@@ -362,7 +392,7 @@ class DynamicMplCanvas(MyMplCanvas):
 class ApplicationWindow(QtGui.QMainWindow):
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
-        #self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
         self.layout = QtGui.QVBoxLayout()
 
@@ -857,6 +887,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Hodgkins-Huxley model!", 2000)
 
+    def rdtpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticRDCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def rdppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotRDCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def rdfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotRDCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_RDcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -875,11 +926,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticRDCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
+
+        self.tpbutton.clicked.connect(self.rdtpbutton_refresh)
+        self.ppbutton.clicked.connect(self.rdppbutton_refresh)
+        self.fftbutton.clicked.connect(self.rdfftbutton_refresh)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
@@ -1013,13 +1068,15 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         This program is distributed in the hope that it will be
         useful, but WITHOUT ANY WARRANTY; without even the
-        implied warranty of MERCHANTABILITY or FITNESS FOR A
-        PARTICULAR PURPOSE. See the GNU General Public License
-        for more details.
+        implied warranty of MERCHANTABILITY or FITNESS FOR
+        A PARTICULAR PURPOSE. See the GNU General Public
+        License for more details.
 
-        You should have received a copy of the GNU General Public
-        License along with this program; if not, write to the Free
-        Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+        You should have received a copy of the GNU General
+        Public License along with this program; if not, write
+        to the
+        Free Software Foundation, Inc.,
+        51 Franklin Street, Fifth Floor,
         Boston, MA  02110-1301, USA.
         """
         )
