@@ -607,7 +607,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.param1Edit = QtGui.QLineEdit(self.tab2)
         self.param1Edit.setPlaceholderText('Periodic Forcing Parameter, defaults to 0')
         self.hbox1.addWidget(self.title)
-        self.hbox1.addStretch(0.75)
         self.hbox1.addWidget(self.param1)
         self.hbox1.addWidget(self.param1Edit)
         self.hbox1.addStretch(1)
