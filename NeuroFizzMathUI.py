@@ -173,7 +173,7 @@ class StaticPplotMLCanvas(MyMplCanvas):
 
 class StaticFFTplotMLCanvas(MyMplCanvas):
     system = ML
-    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Fitzhugh-Nagumo'):
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Morris-Lecar'):
         X = self.system()
         X = rk4(x0 = np.array([0,0]), t1 = 1000, dt = 0.3, ng = X.model)
         Y = np.mean(X)    # determine DC component of signal
