@@ -210,6 +210,23 @@ class StaticPplotIZCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticFFTplotIZCanvas(MyMplCanvas):
+    system = IZ
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Izhikevich'):
+        X = self.system()
+        X = rk4(x0 = np.array([0,0]), t1 = 1000, dt = 0.3, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,0.75)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticHRCanvas(MyMplCanvas):
     system = HR
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Hindmarsh-Rose'):
@@ -636,6 +653,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
+
+        self.tpbutton.clicked.connect(self.iztpbutton_refresh)
+        self.ppbutton.clicked.connect(self.izppbutton_refresh)
+        self.fftbutton.clicked.connect(self.izfftbutton_refresh)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
