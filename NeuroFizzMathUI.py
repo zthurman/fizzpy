@@ -238,6 +238,34 @@ class StaticHRCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticPplotHRCanvas(MyMplCanvas):
+    system = HR
+    def compute_initial_figure(self, xlabel = 'Recovery Variable', ylabel = 'Membrane Potential', title = 'Hindmarsh-Rose'):
+        X = self.system()
+        X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 800,dt = 0.1, ng = X.model)
+        t = np.arange(0, 800, 0.1)
+        self.axes.plot(X[:,1], X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotHRCanvas(MyMplCanvas):
+    system = HR
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Hindmarsh-Rose'):
+        X = self.system()
+        X = rk4(x0 = np.array([3, 0, -1.2]), t1 = 800,dt = 0.1, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,1)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticHHCanvas(MyMplCanvas):
     system = HH
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Hodgkins-Huxley'):
@@ -673,6 +701,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Izhikevich model!", 2000)
 
+    def hrtpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticHRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def hrppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotHRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def hrfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotHRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_HRcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -691,11 +740,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticHRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
+
+        self.tpbutton.clicked.connect(self.hrtpbutton_refresh)
+        self.ppbutton.clicked.connect(self.hrppbutton_refresh)
+        self.fftbutton.clicked.connect(self.hrfftbutton_refresh)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
