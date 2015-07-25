@@ -4,7 +4,7 @@
 # GNU GPLv2
 
 #  Classes for various differential eqn models. All the math
-# resides within this library.
+# resides here.
 
 from __future__ import division
 from scipy import *
