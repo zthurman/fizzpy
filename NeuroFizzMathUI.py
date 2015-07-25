@@ -131,6 +131,34 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticPplotFNCanvas(MyMplCanvas):
+    system = FN
+    def compute_initial_figure(self, xlabel = 'Membrane Recovery Variable', ylabel = 'Membrane Potential', title = 'Fitzhugh-Nagumo'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100,dt = 0.02, ng = X.model)
+        t = np.arange(0, 100, 0.02)
+        self.axes.plot(X[:,1], X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotFNCanvas(MyMplCanvas):
+    system = FN
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Fitzhugh-Nagumo'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.01,0.01]), t1 = 100, dt = 0.02, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,1)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticMLCanvas(MyMplCanvas):
     system = ML
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Morris-Lecar'):
@@ -398,8 +426,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
         self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
-        #self.layout1.addWidget(sc)
-
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
         self.webview = QtWebKit.QWebView(self.tab3)
@@ -444,6 +470,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("An Excitatory Post-synaptic Potential!", 2000)
 
+    def fntpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFNCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def fnppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotFNCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def fnfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotFNCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_FNcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -462,12 +509,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticFNCanvas(self.tab1, width=7, height=7, dpi=70)
-
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
+
+        self.tpbutton.clicked.connect(self.fntpbutton_refresh)
+        self.ppbutton.clicked.connect(self.fnppbutton_refresh)
+        self.fftbutton.clicked.connect(self.fnfftbutton_refresh)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
 
@@ -776,10 +826,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         user to get a feel for how the different sys-
         tems behave.
 
-        Supported models are Fitzhugh-Nagumo, Morris-
-        Lecar, Izikevich, Hindmarsh-Rose and Hodgkins-
-        Huxley, the Rikitake Dynamo, the Lorenz Equa-
-        tions and the Robbins Model.
+        Supported models are the van der Pol oscillator,
+        Fitzhugh-Nagumo, Morris-Lecar, Izikevich,
+        Hindmarsh-Rose and Hodgkins-Huxley, the Rikitake
+        Dynamo, the Lorenz Equations and the Robbins
+        Model.
         """)
 
     def copyright(self):
