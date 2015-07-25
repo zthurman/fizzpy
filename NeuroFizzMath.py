@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # NeuroFizzMath
 # Copyright (C) 2015 Zechariah Thurman
+# GNU GPLv2
 
 #  Classes for various differential eqn models. All the math
 # resides within this library.
