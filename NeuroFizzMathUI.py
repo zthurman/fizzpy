@@ -3,6 +3,7 @@
 # Neuroscience | Physics | Mathematics Toolkit
 
 # Copyright (C) 2015 Zechariah Thurman
+# GNU GPLv2
 
 from __future__ import unicode_literals, division
 from NeuroFizzMath import ord2, rk4, VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
