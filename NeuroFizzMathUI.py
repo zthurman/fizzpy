@@ -578,27 +578,32 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the oscillator')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
         self.layout = QtGui.QVBoxLayout(self.tab1)
-        self.hbox1 = QtGui.QHBoxLayout(self.tab1)
-        self.layout.addLayout(self.hbox1)
+        self.hbox = QtGui.QHBoxLayout(self.tab1)
+        self.layout.addLayout(self.hbox)
 
         self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
         self.layout.addWidget(self.sc)
-        self.hbox1.addWidget(self.tpbutton)
-        self.hbox1.addWidget(self.ppbutton)
-        self.hbox1.addWidget(self.fftbutton)
+        self.hbox.addWidget(self.tpbutton)
+        self.hbox.addWidget(self.ppbutton)
+        self.hbox.addWidget(self.fftbutton)
 
         self.tpbutton.clicked.connect(self.vdptpbutton_refresh)
         self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
         self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
-        self.layout1 = QtGui.QGridLayout(self.tab2)
-        self.param1 = QtGui.QLineEdit(self.tab2)
-        self.param1.setText('Parameter')
+        self.layout1 = QtGui.QVBoxLayout(self.tab2)
+        self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
+        self.param1 = QtGui.QLabel('Rando Param')
+        self.param1Edit = QtGui.QLineEdit(self.tab2)
+        self.param1Edit.setText('Parameter')
+        self.layout1.addWidget(self.title)
+        self.layout1.addWidget(self.param1)
+        self.layout1.addWidget(self.param1Edit)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
@@ -646,7 +651,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -711,7 +716,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -775,7 +780,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -839,7 +844,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -903,7 +908,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -967,7 +972,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -1031,7 +1036,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
@@ -1095,7 +1100,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton = QtGui.QPushButton('Phase Plot', self.tabs)
         self.ppbutton.setToolTip('Generate a phase plot for the system')
         self.fftbutton = QtGui.QPushButton('FFT Plot', self.tabs)
-        self.fftbutton.setToolTip('Generate a fast Fourier transform for the signal')
+        self.fftbutton.setToolTip('Generate the power spectrum for the signal')
         self.tab2 = QtGui.QWidget(self.tabs)
         self.tab3 = QtGui.QWidget(self.tabs)
 
