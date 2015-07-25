@@ -604,8 +604,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.param1Edit = QtGui.QLineEdit(self.tab2)
         self.param1Edit.setPlaceholderText('Periodic Forcing Parameter, defaults to 0')
         self.layout1.addWidget(self.title)
+        self.layout1.addStretch(1)
         self.hbox1.addWidget(self.param1)
         self.hbox1.addWidget(self.param1Edit)
+        self.hbox1.addStretch(1)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
