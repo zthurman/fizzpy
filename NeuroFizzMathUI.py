@@ -4,7 +4,7 @@
 
 # Copyright (C) 2015 Zechariah Thurman
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, division
 from NeuroFizzMath import ord2, rk4, VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
 import numpy as np
 import sys
@@ -101,9 +101,10 @@ class StaticFFTplotVDPCanvas(MyMplCanvas):
         X = X - Y      # subtract DC component from signal to get rid of peak at 0
         ps = np.abs(np.fft.fft(X[:,0]))**2
         time_step = 1 / 30
-        freqs = np.fft.fftfreq(int(len(X[:,0])/2 - 1), time_step)
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
         idx = np.argsort(freqs)
         self.axes.plot(freqs[idx], ps[idx])
+        self.axes.xlim(0,1)
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
