@@ -19,7 +19,7 @@ Things to Note:
 While eventually the plan is to package this into an executable that's able to be launched on all platforms without a hassle, from the standpoint of usefulness the reality is that
 the application will probably find the most love when run from either command line or IDE and making modifications to the code and re-running.
 
-Eventually the plan is to solve more than just ODEs by including DDEs and PDEs and have a much larger spread of models within the scope of the application. Also animated plots are
+Eventually the plan is to solve more than just ODEs by including DDEs and PDEs and have a much larger spread of models within the scope of the application. Animated plots are
 in the works as well.
 
 The application is licensed under the GNU GPLv2. As such it is copylefted and meant for free use, modification and re-distribution subject to the terms of the Free Software Foundation,
