@@ -1,9 +1,9 @@
 NeuroFizzMath
 =============
 
-Generalized Differential Equation Solver Application
+Generalized Differential Equation Solver
 
-This is a working program. Bringing an ODE solver library to life.
+This is a functioning desktop application. Bringing an ODE solver to life.
 
 Physics is the language of the universe expressed in the form of mathematics. Explore it and discover the elegance and beauty underlying that which we experience every day as reality.
 
