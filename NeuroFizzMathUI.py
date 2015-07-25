@@ -2,7 +2,7 @@
 # NeuroFizzMath
 # Neuroscience | Physics | Mathematics Toolkit
 
-# This is an implementation of the matplotlib pyqt4
+# This is an implementation of matplotlib's pyqt4 backend
 
 # Copyright (C) 2015 Zechariah Thurman
 # GNU GPLv2
@@ -13,8 +13,6 @@ import numpy as np
 import sys
 import os
 import random
-from matplotlib import pyplot as plt
-import matplotlib.animation as animation
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
@@ -392,6 +390,34 @@ class StaticRCanvas(MyMplCanvas):
         X = rk4(x0 = np.array([0.00032,0.23,0.51]), t1 = 200,dt = 0.1, ng = X.model)
         t = np.arange(0, 200, 0.1)
         self.axes.plot(t, X[:,2])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticPplotRCanvas(MyMplCanvas):
+    system = R
+    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Geomagnetic Polarity', title = 'Robbins Equations'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.00032,0.23,0.51]), t1 = 200,dt = 0.1, ng = X.model)
+        t = np.arange(0, 200, 0.1)
+        self.axes.plot(X[:,0], X[:,2])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotRCanvas(MyMplCanvas):
+    system = R
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Robbins Equations'):
+        X = self.system()
+        X = rk4(x0 = np.array([0.00032,0.23,0.51]), t1 = 100,dt = 0.02, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,2)
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
@@ -1043,6 +1069,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Lorenz equations!", 2000)
 
+    def rtpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def rppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def rfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_Rcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -1061,11 +1108,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticRCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
+
+        self.tpbutton.clicked.connect(self.rtpbutton_refresh)
+        self.ppbutton.clicked.connect(self.rppbutton_refresh)
+        self.fftbutton.clicked.connect(self.rfftbutton_refresh)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
