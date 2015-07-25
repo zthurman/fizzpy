@@ -357,6 +357,34 @@ class StaticLCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+class StaticPplotLCanvas(MyMplCanvas):
+    system = L
+    def compute_initial_figure(self, xlabel = 'X Dynamical Variable', ylabel = 'Z Dynamical Variable', title = 'Lorenz Equations'):
+        X = self.system()
+        X = rk4(x0 = np.array([1.0, 2.0, 1.0]), t1 = 100,dt = 0.01, ng = X.model)
+        t = np.arange(0, 100, 0.01)
+        self.axes.plot(X[:,0], X[:,2])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticFFTplotLCanvas(MyMplCanvas):
+    system = L
+    def compute_initial_figure(self, xlabel = 'Frequency', ylabel = 'Power', title = 'Lorenz Equations'):
+        X = self.system()
+        X = rk4(x0 = np.array([1.0, 2.0, 1.0]), t1 = 100,dt = 0.02, ng = X.model)
+        Y = np.mean(X)    # determine DC component of signal
+        X = X - Y      # subtract DC component from signal to get rid of peak at 0
+        ps = np.abs(np.fft.fft(X[:,0]))**2
+        time_step = 1 / 30
+        freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
+        idx = np.argsort(freqs)
+        self.axes.plot(freqs[idx], ps[idx])
+        self.axes.set_xlim(0,2)
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
 class StaticRCanvas(MyMplCanvas):
     system = R
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Geomagnetic Polarity', title = 'Robbins Equations'):
@@ -951,6 +979,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Rikitake Dynamo!", 2000)
 
+    def ltpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticLCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def lppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotLCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def lfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotLCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_Lcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -969,11 +1018,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticLCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
+
+        self.tpbutton.clicked.connect(self.ltpbutton_refresh)
+        self.ppbutton.clicked.connect(self.lppbutton_refresh)
+        self.fftbutton.clicked.connect(self.lfftbutton_refresh)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
