@@ -597,13 +597,15 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
         self.layout1 = QtGui.QVBoxLayout(self.tab2)
+        self.hbox1 = QtGui.QHBoxLayout(self.tab2)
+        self.layout1.addLayout(self.hbox1)
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
         self.param1 = QtGui.QLabel('Rando Param')
         self.param1Edit = QtGui.QLineEdit(self.tab2)
         self.param1Edit.setText('Parameter')
         self.layout1.addWidget(self.title)
-        self.layout1.addWidget(self.param1)
-        self.layout1.addWidget(self.param1Edit)
+        self.hbox1.addWidget(self.param1)
+        self.hbox1.addWidget(self.param1Edit)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
@@ -1178,8 +1180,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         You should have received a copy of the GNU General
         Public License along with this program; if not, write
-        to the
-        Free Software Foundation, Inc.,
+        to the Free Software Foundation, Inc.,
+
         51 Franklin Street, Fifth Floor,
         Boston, MA  02110-1301, USA.
         """
