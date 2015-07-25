@@ -110,17 +110,6 @@ class StaticFFTplotVDPCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
-class StaticEPSPCanvas(MyMplCanvas):
-    ylabel='Membrane Potential'
-    def compute_initial_figure(self):
-        X = EPSP("EPSP")
-        X = X.model
-        t = np.arange(0, 10, 0.01)
-        self.plt.plot(t, X[0,:])
-        #self.plt.plot(t, X[:,1]*5, 'r--')
-        #self.plt.plot(t, X[:,2]/5, 'k:')
-        self.axes.set_title('EPSP')
-
 class StaticFNCanvas(MyMplCanvas):
     system = FN
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Fitzhugh-Nagumo'):
@@ -173,7 +162,7 @@ class StaticMLCanvas(MyMplCanvas):
 
 class StaticPplotMLCanvas(MyMplCanvas):
     system = ML
-    def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Morris-Lecar'):
+    def compute_initial_figure(self, xlabel = 'Membrane Recovery Variable', ylabel = 'Membrane Potential', title = 'Morris-Lecar'):
         X = self.system()
         X = rk4(x0 = np.array([0,0]), t1 = 1000,dt = 0.30, ng = X.model)
         t = np.arange(0, 1000, 0.30)
@@ -206,6 +195,17 @@ class StaticIZCanvas(MyMplCanvas):
         X = rk4(x0 = np.array([0,0]), t1 = 300,dt = 0.1, ng = X.model)
         t = np.arange(0, 300, 0.1)
         self.axes.plot(t, X[:,0])
+        self.axes.set_xlabel(xlabel)
+        self.axes.set_ylabel(ylabel)
+        self.axes.set_title(title)
+
+class StaticPplotIZCanvas(MyMplCanvas):
+    system = IZ
+    def compute_initial_figure(self, xlabel = 'Recovery Variable', ylabel = 'Membrane Potential', title = 'Izhikevich'):
+        X = self.system()
+        X = rk4(x0 = np.array([0,0]), t1 = 300,dt = 0.1, ng = X.model)
+        t = np.arange(0, 300, 0.1)
+        self.axes.plot(X[:,1], X[:,0])
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
@@ -314,10 +314,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         VDPAction.triggered.connect(self.draw_VDPcanvas)
         VDPAction.setToolTip('van der Pol oscillator')
 
-        EPSPAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'EPSP', self)
-        EPSPAction.triggered.connect(self.draw_EPSPcanvas)
-        EPSPAction.setToolTip('Excitatory Post-synaptic potential')
-
         FNAction = QtGui.QAction(QtGui.QIcon.fromTheme('dude'), 'FN', self)
         FNAction.triggered.connect(self.draw_FNcanvas)
         FNAction.setToolTip('Fitzhugh-Nagumo model')
@@ -361,9 +357,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.toolbar = self.addToolBar('van der Pol')
         self.toolbar.addAction(VDPAction)
-
-        self.toolbar = self.addToolBar('EPSP')
-        self.toolbar.addAction(EPSPAction)
 
         self.toolbar = self.addToolBar('Fitzhugh-Nagumo')
         self.toolbar.addAction(FNAction)
@@ -470,34 +463,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.centralWidget.close()
         self.statusBar().showMessage("The van der Pol oscillator!", 2000)
-
-    def draw_EPSPcanvas(self):
-        self.centralWidget.close()
-        self.centralWidget = QtGui.QWidget(self)
-        self.setCentralWidget(self.centralWidget)
-        self.tabs = QtGui.QTabWidget(self.centralWidget)
-        self.tab1 = QtGui.QWidget(self.tabs)
-        self.tab2 = QtGui.QWidget(self.tabs)
-        self.tab3 = QtGui.QWidget(self.tabs)
-        self.frame = QtGui.QFrame(self.tabs)
-        layout = QtGui.QVBoxLayout(self.frame)
-
-        sc = StaticEPSPCanvas(self.tab1, width=7, height=7, dpi=70)
-        layout.addWidget(sc)
-
-        self.tabs.addTab(self.tab1, "Plots")
-        self.tabs.addTab(self.tab2, "Model Parameters")
-        self.tabs.addTab(self.tab3, "Background")
-
-        self.layout3 = QtGui.QVBoxLayout(self.tab3)
-
-        self.webview = QtWebKit.QWebView(self.tab3)
-
-        self.tabs.setFixedWidth(850)
-        self.tabs.setFixedHeight(450)
-
-        self.centralWidget.setFocus()
-        self.statusBar().showMessage("An Excitatory Post-synaptic Potential!", 2000)
 
     def fntpbutton_refresh(self):
         self.centralWidget.close()
@@ -627,6 +592,27 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.setFocus()
         self.statusBar().showMessage("The Morris-Lecar model!", 2000)
 
+    def iztpbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticIZCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def izppbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticPplotIZCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
+    def izfftbutton_refresh(self):
+        self.centralWidget.close()
+        self.layout.removeWidget(self.sc)
+        self.sc = StaticFFTplotIZCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
+        self.centralWidget.close()
+
     def draw_IZcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -645,11 +631,11 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.hbox = QtGui.QHBoxLayout(self.tab1)
         self.layout.addLayout(self.hbox)
 
-        sc = StaticIZCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.sc = StaticNullCanvas(self.tab1, width=7, height=7, dpi=70)
+        self.layout.addWidget(self.sc)
         self.hbox.addWidget(self.tpbutton)
         self.hbox.addWidget(self.ppbutton)
         self.hbox.addWidget(self.fftbutton)
-        self.layout.addWidget(sc)
 
         self.layout3 = QtGui.QVBoxLayout(self.tab3)
 
