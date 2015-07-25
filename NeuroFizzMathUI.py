@@ -24,7 +24,7 @@ progversion = "0.16"
 
 
 class MyMplCanvas(FigureCanvas):
-    """Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.)."""
+    # Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.).
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
