@@ -104,7 +104,7 @@ class StaticFFTplotVDPCanvas(MyMplCanvas):
         freqs = np.fft.fftfreq(int((len(X[:, 0])/2 - 1)), time_step)
         idx = np.argsort(freqs)
         self.axes.plot(freqs[idx], ps[idx])
-        self.axes.plot.xlim(0,1)
+        self.axes.set_xlim(0,1)
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
