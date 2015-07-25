@@ -441,7 +441,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
 
         self.layout = QtGui.QVBoxLayout()
-
         self.setGeometry(350, 350, 850, 550)
 
         # Sub-label bar
@@ -603,7 +602,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
         self.param1 = QtGui.QLabel('Periodic Forcing')
         self.param1Edit = QtGui.QLineEdit(self.tab2)
-        self.param1Edit.setText('Parameter')
+        self.param1Edit.setPlaceholderText('Periodic Forcing Parameter, defaults to 0')
         self.layout1.addWidget(self.title)
         self.hbox1.addWidget(self.param1)
         self.hbox1.addWidget(self.param1Edit)
