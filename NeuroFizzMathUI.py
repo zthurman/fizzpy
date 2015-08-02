@@ -568,6 +568,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout.addWidget(self.sc)
         self.centralWidget.close()
 
+    def Back(self):
+        self.web.back()
+
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -614,8 +617,13 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
+        self.back = QtGui.QPushButton("Back",self)
+        self.back.setMinimumSize(35,30)
+        self.back.setStyleSheet("font-size:23px;")
+        self.back.clicked.connect(self.Back)
 
         self.layout2.addWidget(self.webview)
+        self.layout2.addWidget(self.back)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
