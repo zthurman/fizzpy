@@ -599,20 +599,32 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.ppbutton.clicked.connect(self.vdpppbutton_refresh)
         self.fftbutton.clicked.connect(self.vdpfftbutton_refresh)
 
-        self.layout1 = QtGui.QHBoxLayout(self.tab2)
-        self.hbox1 = QtGui.QVBoxLayout(self.tab2)
-        self.layout1.addLayout(self.hbox1)
-        self.font = QtGui.QFont()
-        self.font.setBold(True)
-        self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
-        self.title.setFont(self.font)
-        self.param1 = QtGui.QLabel('Periodic Forcing')
-        self.param1Edit = QtGui.QLineEdit(self.tab2)
-        self.param1Edit.setPlaceholderText('Periodic forcing value, defaults to 0')
-        self.hbox1.addWidget(self.title)
-        self.hbox1.addWidget(self.param1)
-        self.hbox1.addWidget(self.param1Edit)
-        self.hbox1.addStretch(1)
+        self.layout1 = QtGui.QGridLayout(self.tab2)
+        self.setLayout(self.layout1)
+        #.font = QtGui.QFont()
+        #self.font.setBold(True)
+        #self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
+        #self.title.setFont(self.font)
+        #self.param1 = QtGui.QLabel('Periodic Forcing')
+        #self.param1Edit = QtGui.QLineEdit(self.tab2)
+        #self.param1Edit.setPlaceholderText('Periodic forcing value, defaults to 0')
+        #self.layout1.addWidget(self.title, 0, 0, 0, 0)
+        #self.layout1.addWidget(self.param1, 1, 1, 1, 1)
+        #self.layout1.addWidget(self.param1Edit, 2, 2, 2, 2)
+        self.names = ['Modify the parameters below and go back to plotting', ' ', ' ', ' ',
+                     '7', '8', '9', '/',
+                    '4', '5', '6', '*',
+                     '1', '2', '3', '-',
+                    '0', '.', '=', '+']
+
+        positions = [(i,j) for i in range(5) for j in range(4)]
+
+        for position, name in zip(positions, self.names):
+
+            if name == '':
+                continue
+            button = QtGui.QLabel(name)
+            self.layout1.addWidget(button, *position)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
