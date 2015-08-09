@@ -79,7 +79,8 @@ class EPSP(System):
     name = "EPSP"
     x0 = np.array([0,0,0])
 
-    def model(self, x, t):
+    def model(self,x,t):
+        # inits and contants
         c_m = 1
         g_L = 1
         tau_syn = 1
@@ -95,16 +96,15 @@ class EPSP(System):
         t[0] = 0
 
         # Numerical integration with Euler's method
-        for i in np.arange(1, (10/delta_t)+1):
-            t[int(i)-1] = t[int((i-1))-1]+delta_t
-            if np.abs((t[int(i)-1]-1))<0.001:
-                g_syn[int((i-1))-1] = 1
+        for i in np.arange(0, (10/delta_t)):
+            t[int(i+1)] = t[int((i))]+delta_t
+            if np.abs((t[int(i+1)-1]))<0.001:
+                g_syn[int((i))] = 1
 
-            g_syn[int(i)-1] = g_syn[int((i-1))-1]-np.dot((delta_t/tau_syn), g_syn[int((i-1))-1])
-            I_syn[int(i)-1] = np.dot(g_syn[int(i)-1], v_m[int((i-1))-1]-E_syn)
-            v_m[int(i)-1] = v_m[int((i-1))-1]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i-1))-1]) \
-                            -np.dot((delta_t/c_m), I_syn[int(i)-1])
-            return g_syn, I_syn, v_m
+            g_syn[int(i+1)] = g_syn[int((i))]-np.dot((delta_t/tau_syn), g_syn[int((i))])
+            I_syn[int(i+1)] = np.dot(g_syn[int(i+1)], v_m[int((i))]-E_syn)
+            v_m[int(i+1)] = v_m[int((i))]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i))]) \
+                            -np.dot((delta_t/c_m), I_syn[int(i+1)])
 
 # FN neuron model
 
