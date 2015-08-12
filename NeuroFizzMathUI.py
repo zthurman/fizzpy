@@ -601,6 +601,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.layout1 = QtGui.QGridLayout(self.tab2)
         self.setLayout(self.layout1)
+        self.layout1.rowStretch(0)
+        self.layout1.columnStretch(0)
 
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
 
@@ -610,11 +612,16 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.param1 = QtGui.QLabel('Circularly Coupled Oscillators')
         self.param1Edit = QtGui.QLineEdit(self.tab2)
         self.param1Edit.setPlaceholderText('Number of circularly coupled oscillators, defaults to 0')
-        self.layout1.addWidget(self.title, 1, 1, 0, 0)
-        self.layout1.addWidget(self.param, 1, 1, 2, 1)
-        self.layout1.addWidget(self.paramEdit, 1, 2, 2, 1)
-        self.layout1.addWidget(self.param1, 2, 1, 2, 1)
-        self.layout1.addWidget(self.param1Edit, 2, 2, 2, 1)
+        self.param2 = QtGui.QLabel('Linearly Coupled Oscillators')
+        self.param2Edit = QtGui.QLineEdit(self.tab2)
+        self.param2Edit.setPlaceholderText('Number of linearly coupled oscillators, defaults to 0')
+        self.layout1.addWidget(self.title, 1, 1, 1, 1)
+        self.layout1.addWidget(self.param, 2, 1, 2, 1)
+        self.layout1.addWidget(self.paramEdit, 2, 2, 2, 1)
+        self.layout1.addWidget(self.param1, 3, 1, 2, 1)
+        self.layout1.addWidget(self.param1Edit, 3, 2, 2, 1)
+        self.layout1.addWidget(self.param2, 4, 1, 2, 1)
+        self.layout1.addWidget(self.param2Edit, 4, 2, 2, 1)
 
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
