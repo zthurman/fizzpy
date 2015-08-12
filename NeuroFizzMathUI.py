@@ -610,7 +610,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.param1 = QtGui.QLabel('Circularly Coupled Oscillators')
         self.param1Edit = QtGui.QLineEdit(self.tab2)
         self.param1Edit.setPlaceholderText('Number of circularly coupled oscillators, defaults to 0')
-        self.layout1.addWidget(self.title, 0, 1, 0, 0)
+        self.layout1.addWidget(self.title, 1, 1, 0, 0)
         self.layout1.addWidget(self.param, 1, 1, 2, 1)
         self.layout1.addWidget(self.paramEdit, 1, 2, 2, 1)
         self.layout1.addWidget(self.param1, 2, 1, 2, 1)
