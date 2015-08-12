@@ -543,8 +543,6 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.centralWidget = QtGui.QWidget(self)
 
-        self.statusBar().showMessage("The Diff EQ playground!", 2000)
-
     # centralWidget drawcanvas methods, called by toolbar actions
 
     def vdptpbutton_refresh(self):
@@ -602,7 +600,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout1 = QtGui.QGridLayout(self.tab2)
         self.setLayout(self.layout1)
         self.layout1.spacing()
-        #self.layout1.setContentsMargins(0,0,0,0)
 
         self.font = QtGui.QFont()
         self.font.setBold(True)
