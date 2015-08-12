@@ -569,7 +569,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.close()
 
     def Back(self):
-        self.web.back()
+        self.webview.back()
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
@@ -601,10 +601,14 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.layout1 = QtGui.QGridLayout(self.tab2)
         self.setLayout(self.layout1)
-        self.layout1.rowStretch(0)
-        self.layout1.columnStretch(0)
+        self.layout1.spacing()
+        self.layout1.setContentsMargins(0,0,0,0)
+
+        self.font = QtGui.QFont()
+        self.font.setBold(True)
 
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
+
 
         self.param = QtGui.QLabel('Periodic Forcing')
         self.paramEdit = QtGui.QLineEdit(self.tab2)
