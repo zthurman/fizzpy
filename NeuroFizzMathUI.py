@@ -625,7 +625,6 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout1.addWidget(self.param2, 4, 1, 2, 1)
         self.layout1.addWidget(self.param2Edit, 4, 2, 2, 1)
 
-
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
@@ -634,8 +633,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.back.setStyleSheet("font-size:23px;")
         self.back.clicked.connect(self.Back)
 
-        self.layout2.addWidget(self.webview)
         self.layout2.addWidget(self.back)
+        self.layout2.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
         self.tabs.addTab(self.tab2, "Model Parameters")
