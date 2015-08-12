@@ -604,12 +604,18 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
 
-        self.param1 = QtGui.QLabel('Periodic Forcing')
+        self.param = QtGui.QLabel('Periodic Forcing')
+        self.paramEdit = QtGui.QLineEdit(self.tab2)
+        self.paramEdit.setPlaceholderText('Periodic forcing value, defaults to 0')
+        self.param1 = QtGui.QLabel('Circularly Coupled Oscillators')
         self.param1Edit = QtGui.QLineEdit(self.tab2)
-        self.param1Edit.setPlaceholderText('Periodic forcing value, defaults to 0')
-        self.layout1.addWidget(self.title, 1, 0, 1, 0)
-        self.layout1.addWidget(self.param1, 2, 0, 2, 1)
+        self.param1Edit.setPlaceholderText('Number of circularly coupled oscillators, defaults to 0')
+        self.layout1.addWidget(self.title, 0, 1, 0, 0)
+        self.layout1.addWidget(self.param, 1, 1, 2, 1)
+        self.layout1.addWidget(self.paramEdit, 1, 2, 2, 1)
+        self.layout1.addWidget(self.param1, 2, 1, 2, 1)
         self.layout1.addWidget(self.param1Edit, 2, 2, 2, 1)
+
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
