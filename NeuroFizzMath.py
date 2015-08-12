@@ -69,9 +69,9 @@ class VDP(System):
     name = "van der Pol oscillator"
     x0 = np.array([0.01,0.01])
 
-    def model(self,x,t):
-        return np.array([x[1],
-                        -x[0] + x[1]*(1-x[0]**2)])
+    def model(self,x,t, mu = 1):
+        return np.array([x[1]/mu,
+                         (-x[0] + x[1]*(1-x[0]**2))*mu])
 
 # EPSP - excitatory post-synaptic potential
 
