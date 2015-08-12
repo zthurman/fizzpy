@@ -606,10 +606,8 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.font = QtGui.QFont()
         self.font.setBold(True)
-
         self.title = QtGui.QLabel('Modify the parameters below and go back to plotting')
-
-
+        self.title.setFont(self.font)
         self.param = QtGui.QLabel('Periodic Forcing')
         self.paramEdit = QtGui.QLineEdit(self.tab2)
         self.paramEdit.setPlaceholderText('Periodic forcing value, defaults to 0')
