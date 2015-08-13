@@ -576,7 +576,7 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.webview.back()
 
     def Foreward(self):
-        self.webview.foreward()
+        self.webview.ahead()
 
     def draw_VDPcanvas(self):
         self.centralWidget.close()
@@ -652,6 +652,7 @@ class ApplicationWindow(QtGui.QMainWindow):
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.hbox1 = QtGui.QHBoxLayout(self.tab3)
+        self.layout2.addLayout(self.hbox1)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
         self.back = QtGui.QPushButton(self)
