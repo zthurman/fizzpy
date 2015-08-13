@@ -566,6 +566,9 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout.addWidget(self.sc)
         self.centralWidget.close()
 
+    def vdpparam3_update(self):
+        VDP.model(self, mu = self.param2Edit)
+
     def Back(self):
         self.webview.back()
 
@@ -638,6 +641,8 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.layout1.addWidget(self.param3, 5, 1, 2, 1)
         self.layout1.addWidget(self.param3Edit, 5, 2, 2, 1)
         self.layout1.addWidget(self.param3button, 5, 3, 2, 1)
+
+        self.param3button.clicked.connect(self.vdpparam3_update)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
