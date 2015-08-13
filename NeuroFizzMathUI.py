@@ -575,6 +575,9 @@ class ApplicationWindow(QtGui.QMainWindow):
     def Back(self):
         self.webview.back()
 
+    def Foreward(self):
+        self.webview.foreward()
+
     def draw_VDPcanvas(self):
         self.centralWidget.close()
         self.centralWidget = QtGui.QWidget(self)
@@ -656,8 +659,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.back.setStyleSheet("font-size:23px;")
         self.back.clicked.connect(self.Back)
         self.back.setIcon(QtGui.QIcon().fromTheme("go-previous"))
+        self.foreward = QtGui.QPushButton(self)
+        self.foreward.setMinimumSize(35,30)
+        self.foreward.setStyleSheet("font-size:23px;")
+        self.foreward.clicked.connect(self.Foreward)
+        self.foreward.setIcon(QtGui.QIcon().fromTheme("go-next"))
 
-        self.layout2.addWidget(self.back)
+        self.hbox1.addWidget(self.back)
+        self.hbox1.addWidget(self.foreward)
         self.layout2.addWidget(self.webview)
 
         self.tabs.addTab(self.tab1, "Plots")
