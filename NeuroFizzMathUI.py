@@ -648,12 +648,14 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.param3button.clicked.connect(self.vdpparam3_update)
 
         self.layout2 = QtGui.QVBoxLayout(self.tab3)
+        self.hbox1 = QtGui.QHBoxLayout(self.tab3)
         self.webview = QtWebKit.QWebView(self.tab3)
         self.webview.load(QtCore.QUrl("http://goo.gl/0KXNw"))
-        self.back = QtGui.QPushButton("Back",self)
+        self.back = QtGui.QPushButton(self)
         self.back.setMinimumSize(35,30)
         self.back.setStyleSheet("font-size:23px;")
         self.back.clicked.connect(self.Back)
+        self.back.setIcon(QtGui.QIcon().fromTheme("go-previous"))
 
         self.layout2.addWidget(self.back)
         self.layout2.addWidget(self.webview)
