@@ -567,7 +567,10 @@ class ApplicationWindow(QtGui.QMainWindow):
         self.centralWidget.close()
 
     def vdpparam3_update(self):
-        VDP.model(self, mu = self.param2Edit)
+        @VDP
+        def model(self, x, t, mu = self.param3Edit):
+            return np.array([x[1]/mu,
+                             (-x[0] + x[1]*(1-x[0]**2))*mu])
 
     def Back(self):
         self.webview.back()
