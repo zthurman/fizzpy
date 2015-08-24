@@ -66,8 +66,9 @@ class System():
 # van der Pol oscillator
 
 class VDP(System):
-    name = "van der Pol oscillator"
-    x0 = np.array([0.01,0.01])
+    def __init__(self):
+        self.name = "van der Pol oscillator"
+        self.x0 = np.array([0.01,0.01])
 
     def model(self,x,t, mu = 1):
         return np.array([x[1]/mu,
