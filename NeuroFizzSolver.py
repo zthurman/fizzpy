@@ -4,12 +4,14 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzmath import euler, ord2, rk4
+from NeuroFizzModel import euler, ord2, rk4
 from scipy import *
 import numpy as np
 import math as mt
 
-# global solver methods:
+# global solver methods
+
+#
 
 # Euler solver (first order Runge-Kutta)
 
