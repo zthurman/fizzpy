@@ -24,3 +24,9 @@ in the works as well.
 
 The application is licensed under the GNU GPLv2. As such it is copylefted and meant for free use, modification and re-distribution subject to the terms of the Free Software Foundation,
 Inc.
+
+Requirements:
+=============
+*Python3.4
+*scipy
+*numpy
