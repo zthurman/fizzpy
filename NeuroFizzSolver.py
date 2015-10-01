@@ -11,7 +11,7 @@ import math as mt
 
 # global solver class
 
-class Solver():
+class Solver(ng = None):
     # Euler solver (first order Runge-Kutta)
 
     def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
