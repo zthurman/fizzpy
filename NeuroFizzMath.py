@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # NeuroFizzMath
 # Neuroscience | Physics | Mathematics Toolkit
-
-# This is an implementation of matplotlib's pyqt4 backend
-
 # Copyright (C) 2015 Zechariah Thurman
 # GNU GPLv2
+
+# This is an implementation of matplotlib's pyqt5 backend
 
 from __future__ import unicode_literals, division
 from NeuroFizzModel import euler, ord2, rk4, VDP
@@ -17,7 +16,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
 import itertools
-from PyQt4 import QtGui, QtCore, QtWebKit
+from PyQt5 import QtGui, QtCore, QtWebKit
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.16"
