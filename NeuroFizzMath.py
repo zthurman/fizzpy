@@ -8,7 +8,7 @@
 # GNU GPLv2
 
 from __future__ import unicode_literals, division
-from NeuroFizzModel import ord2, rk4, VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
+from NeuroFizzModel import euler, ord2, rk4, VDP
 import numpy as np
 import sys
 import os

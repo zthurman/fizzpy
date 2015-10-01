@@ -4,7 +4,7 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import euler, ord2, rk4
+from NeuroFizzModel import VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
 from scipy import *
 import numpy as np
 import math as mt
