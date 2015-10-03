@@ -58,8 +58,9 @@ class System():
     # FN neuron model
 
     def FN(System):
-        name = "Fitzhugh-Nagumo"
-        x0 = np.array([0.01,0.01])
+        def __init__(self):
+            self.name = "Fitzhugh-Nagumo"
+            self.inits = np.array([0.01,0.01])
 
         def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
             return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),

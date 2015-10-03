@@ -15,7 +15,7 @@ from matplotlib.backends import qt_compat
 import itertools
 from PyQt4 import QtGui, QtCore, QtWebKit
 
-class MyMplCanvas(FigureCanvas):
+class MyMplCanvas(FigureCanvas, solver = None):
     # Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.).
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
@@ -31,10 +31,10 @@ class MyMplCanvas(FigureCanvas):
                                    QtGui.QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
 
-    def compute_initial_figure(self, xlabel = '', ylabel = '', title = ''):
+    def compute_initial_figure(self, solver, xlabel = '', ylabel = '', title = ''):
         X = self.system()
-        x0 = X.x0
-        X = rk4(x0, t1 = 100,dt = 0.02, ng = X.model)
+        x0 = X.inits()
+        X = solver(x0, t1 = 100,dt = 0.02, ng = X.model)
         t = np.arange(0, 100, 0.02)
         self.axes.plot(t, X[:,0])
         self.axes.set_xlabel(xlabel)
