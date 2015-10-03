@@ -11,10 +11,13 @@ import math as mt
 # System, super class for all models
 
 class System():
+
+    # System class variables
+
     def __init__(self, name, x0, t_array):
         self.name = name
-        self.x0 = np.array([0.01,0.01])
-        self.t_array = np.arange(0, 100, 0.02)
+        self.x0 = x0
+        self.t_array = t_array
 
     # van der Pol oscillator
 

@@ -11,10 +11,19 @@ import math as mt
 
 # global solver class
 
-class Solver(ng = None):
+class Solver(Model= None):
+
+    # Solver class variables
+
+    def __init__(self, t0, t1, dt, x0):
+        self.tsp = np.arange(t0, t1, dt)
+        self.Nsize = np.size(self.tsp)
+        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.X[0] = x0
+
     # Euler solver (first order Runge-Kutta)
 
-    def euler(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    def euler(Solver, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
@@ -26,7 +35,7 @@ class Solver(ng = None):
 
     # second order solver (second order Runge-Kutta)
 
-    def ord2(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    def ord2(Solver, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
@@ -39,7 +48,7 @@ class Solver(ng = None):
 
     # fourth order Runge-Kutte solver
 
-    def rk4(t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, ng = None):
+    def rk4(Solver, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
@@ -54,5 +63,5 @@ class Solver(ng = None):
 
     # delay differential equation solver
 
-    def dde():
+    def dde(Solver):
         pass
