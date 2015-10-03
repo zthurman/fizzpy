@@ -10,7 +10,7 @@ import math as mt
 
 # System, super class for all models
 
-class Model(object):
+class Model():
 
     # System class variables
 
@@ -18,13 +18,6 @@ class Model(object):
         self.name = name
         self.x0 = x0
         self.t_array = t_array
-
-    # van der Pol oscillator
-
-    def VDP(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
-        def model(self,x,t, mu = 1):
-            return np.array([x[1]/mu,
-                             (-x[0] + x[1]*(1-x[0]**2))*mu])
 
     # EPSP - excitatory post-synaptic potential
 
@@ -58,20 +51,6 @@ class Model(object):
                 I_syn[int(i+1)] = np.dot(g_syn[int(i+1)], v_m[int((i))]-E_syn)
                 v_m[int(i+1)] = v_m[int((i))]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i))]) \
                                 -np.dot((delta_t/c_m), I_syn[int(i+1)])
-
-    # Fitzhugh-Nagumo neuron model
-
-    def FN(System, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
-        def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
-            return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
-                             -1/c*(x[0]- a + b*x[1])])
-
-    # Morris-Lecar neuron model
-
-    def ML(System, name = 'Morris-Lecar', x0 = np.array([0,0]), t_array = (0, 1000, 0.30)):
-        def model(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 80):
-            return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
-                            (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
     # Izhikevich neuron model
 
@@ -156,13 +135,46 @@ class Model(object):
 
 # van der Pol oscillator
 
-class VDP(object):
-    def __init__(self):
-        self.model = Model(name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02))
+class VDP(Model):
+    def __init__(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+        self.name = name
+        self.x0 = x0
+        self.t_array = t_array
 
     def eqns(self,x,t, mu = 1):
         return np.array([x[1]/mu,
                          (-x[0] + x[1]*(1-x[0]**2))*mu])
 
+# debug
 test = VDP()
-test.name
+# debug
+print(test.name)
+# debug
+print(test.x0)
+# debug
+print(test.t_array)
+
+# Fitzhugh-Nagumo neuron model
+
+class FN(Model):
+    def __init__(self, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+        self.name = name
+        self.x0 = x0
+        self.t_array = t_array
+
+    def eqns(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
+        return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
+                         -1/c*(x[0]- a + b*x[1])])
+
+# Morris-Lecar neuron model
+
+class ML(Model):
+    def __init__(self, name = 'Morris-Lecar', x0 = np.array([0,0]), t_array = np.arange(0, 1000, 0.30)):
+        self.name = name
+        self.x0 = x0
+        self.t_array = t_array
+
+    def eqns(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 80):
+        return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
+                        (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
+
