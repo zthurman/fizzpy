@@ -27,7 +27,7 @@ Inc.
 
 Requirements:
 =============
--Python3.4
+-Python 3.4
 
 -scipy
 
