@@ -4,14 +4,14 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import VDP, EPSP, FN, ML, IZ, HR, HH, RD, L, R
+from NeuroFizzModel import System
 from scipy import *
 import numpy as np
 import math as mt
 
 # global solver class
 
-class Solver(Model= None):
+class Solver(Model = None):
 
     # Solver class variables
 
@@ -23,7 +23,7 @@ class Solver(Model= None):
 
     # Euler solver (first order Runge-Kutta)
 
-    def euler(Solver, t0 = 0, x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
+    def euler(Solver, t0 = 0, t1 = len(System.model.t_array), dt = , x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
