@@ -10,7 +10,7 @@ import math as mt
 
 # System, super class for all models
 
-class System(name = None, x0 = None, t_array = None):
+class Model(object):
 
     # System class variables
 
@@ -19,16 +19,19 @@ class System(name = None, x0 = None, t_array = None):
         self.x0 = x0
         self.t_array = t_array
 
+    def eqns(self):
+        pass
+
     # van der Pol oscillator
 
-    def VDP(System, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+ """   def VDP(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
         def model(self,x,t, mu = 1):
             return np.array([x[1]/mu,
                              (-x[0] + x[1]*(1-x[0]**2))*mu])
 
     # EPSP - excitatory post-synaptic potential
 
-"""    def EPSP(System):
+   def EPSP(System):
         name = "EPSP"
         x0 = np.array([0,0,0])
 
@@ -57,7 +60,7 @@ class System(name = None, x0 = None, t_array = None):
                 g_syn[int(i+1)] = g_syn[int((i))]-np.dot((delta_t/tau_syn), g_syn[int((i))])
                 I_syn[int(i+1)] = np.dot(g_syn[int(i+1)], v_m[int((i))]-E_syn)
                 v_m[int(i+1)] = v_m[int((i))]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i))]) \
-                                -np.dot((delta_t/c_m), I_syn[int(i+1)])"""
+                                -np.dot((delta_t/c_m), I_syn[int(i+1)])
 
     # Fitzhugh-Nagumo neuron model
 
@@ -119,7 +122,7 @@ class System(name = None, x0 = None, t_array = None):
 
     # Hugh Wilson neuron model
 
-"""    def W(System):
+    def W(System):
         name = 'Wilson Model'
         x0 = []
 
@@ -136,7 +139,7 @@ class System(name = None, x0 = None, t_array = None):
                 return np.array([(-G_Na*(x[0]-(E_Na/100)) - G_K*(x[0]-(E_K/100)) - G_Ca*(x[0]-(E_Ca/100)) - G_H*(x[0]-(E_H/100)) + I)*(C),
                                   -(x[1] - Rnot)*(1/tau_R),
                                   -(x[2] - Tnot)*(1/tau_T),
-                                  -(x[3] - 3*x[2])*(1/tau_H)])"""
+                                  -(x[3] - 3*x[2])*(1/tau_H)])
 
     # Lorenz atmospheric model, strange attractor
 
@@ -152,7 +155,20 @@ class System(name = None, x0 = None, t_array = None):
         def model(self,x,t, V = 1, sigma = 5, R = 13):
             return np.array([R - x[1]*x[2] - V*x[0],
                              x[0]*x[2] - x[1],
-                             sigma*(x[1] - x[2])])
+                             sigma*(x[1] - x[2])])"""
 
-test = System
-test.VDP.t_array
+# van der Pol oscillator
+
+class VDP(object):
+    def __init__(self):
+        self.system = Model()
+        self.name = 'van der Pol oscillator'
+        self.x0 = np.array([0.01,0.01])
+        self.t_array = np.arange(0, 100, 0.02)
+
+    def eqns(self,x,t, mu = 1):
+        return np.array([x[1]/mu,
+                         (-x[0] + x[1]*(1-x[0]**2))*mu])
+
+test = VDP()
+test.name
