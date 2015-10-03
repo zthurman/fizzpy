@@ -11,26 +11,27 @@ import math as mt
 
 # global solver class
 
-class Solver(Model = None):
+class Solver(System = None):
 
     # Solver class variables
 
-    def __init__(self, t0, t1, dt, x0):
+    def __init__(self, t0, t1, dt, x0, System = None):
         self.tsp = np.arange(t0, t1, dt)
         self.Nsize = np.size(self.tsp)
         self.X = np.empty((self.Nsize, np.size(x0)))
         self.X[0] = x0
+        self.System = System
 
     # Euler solver (first order Runge-Kutta)
 
-    def euler(Solver, t0 = 0, t1 = len(System.model.t_array), dt = , x0 = np.array([1]), t1 = 5 , dt = 0.01, Model= None):
+    def euler(Solver, t0 = 0, t1 = len(System.t_array), dt = 0.01, x0 = np.array([1]), System = None):
         tsp = np.arange(t0, t1, dt)
         Nsize = np.size(tsp)
         X = np.empty((Nsize, np.size(x0)))
         X[0] = x0
-        for i in range(0, Nsize-1):
-            k1 = ng(X[i],tsp[i])
-            X[i+1] = X[i] + k1*dt
+        for i in range(0, Solver.Nsize-1):
+            k1 = System(Solver.X[i],tsp[i])
+            Solver.X[i+1] = Solver.X[i] + k1*dt
         return X
 
     # second order solver (second order Runge-Kutta)
