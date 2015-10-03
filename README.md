@@ -32,3 +32,5 @@ Requirements:
 -scipy
 
 -numpy
+
+-PyQt5
