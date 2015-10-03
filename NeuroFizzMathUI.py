@@ -1261,5 +1261,6 @@ if __name__ == "__main__":
     qApp = QtGui.QApplication(sys.argv)
     aw = ApplicationWindow()
     aw.setWindowTitle('NeuroFizzMath' + ' ' + progversion)
+    aw.setWindowSubtitle('Neuroscience | Physics | Mathematics Toolkit')
     aw.show()
     sys.exit(qApp.exec_())
