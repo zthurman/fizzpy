@@ -11,14 +11,14 @@ import math as mt
 # System, super class for all models
 
 class System():
+    def __init__(self, name, x0, t_array):
+        self.name = name
+        self.x0 = np.array([0.01,0.01])
+        self.t_array = np.arange(0, 100, 0.02)
+
     # van der Pol oscillator
 
-    def VDP(System):
-        def __init__(self):
-            self.name = "van der Pol oscillator"
-            self.x0 = np.array([0.01,0.01])
-            self.t_array = np.arange(0, 100, 0.02)
-
+    def VDP(System, name="van der Pol oscillator", x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
         def model(self,x,t, mu = 1):
             return np.array([x[1]/mu,
                              (-x[0] + x[1]*(1-x[0]**2))*mu])
