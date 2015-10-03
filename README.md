@@ -33,4 +33,4 @@ Requirements:
 
 -numpy
 
--PyQt5
+-PyQt4

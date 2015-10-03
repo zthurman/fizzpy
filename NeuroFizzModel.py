@@ -17,6 +17,7 @@ class System():
         def __init__(self):
             self.name = "van der Pol oscillator"
             self.x0 = np.array([0.01,0.01])
+            self.t_array = np.arange(0, 100, 0.02)
 
         def model(self,x,t, mu = 1):
             return np.array([x[1]/mu,

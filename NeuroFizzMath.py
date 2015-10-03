@@ -17,7 +17,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.backends import qt_compat
 import itertools
-from PyQt5 import QtGui, QtCore, QtWebKit
+from PyQt4 import QtGui, QtCore, QtWebKit
 
 progname = os.path.basename(sys.argv[0])
 progversion = "0.16"

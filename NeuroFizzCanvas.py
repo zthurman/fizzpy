@@ -41,7 +41,9 @@ class MyMplCanvas(FigureCanvas, solver = None):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
-# static canvas methods
+# Static canvas methods
+
+# Null canvas for opening app
 
 class StaticNullCanvas(MyMplCanvas):
     system = VDP
@@ -54,6 +56,8 @@ class StaticNullCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+# Van der Pol oscillator dynamical variable over time canvas
+
 class StaticVDPCanvas(MyMplCanvas):
     system = VDP
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
@@ -65,6 +69,8 @@ class StaticVDPCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+# Van der Pol oscillator phase plot canvas
+
 class StaticPplotVDPCanvas(MyMplCanvas):
     system = VDP
     def compute_initial_figure(self, xlabel = 'Y Dynamical Variable', ylabel = 'X Dynamical Variable', title = 'van der Pol oscillator'):
@@ -75,6 +81,8 @@ class StaticPplotVDPCanvas(MyMplCanvas):
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
+
+# Van der Pol oscillator FFT canvas
 
 class StaticFFTplotVDPCanvas(MyMplCanvas):
     system = VDP
@@ -93,6 +101,8 @@ class StaticFFTplotVDPCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+# Fitzhugh-Nagumo membrane potential over time canvas
+
 class StaticFNCanvas(MyMplCanvas):
     system = FN
     def compute_initial_figure(self, xlabel = 'Time', ylabel = 'Membrane Potential', title = 'Fitzhugh-Nagumo'):
@@ -104,6 +114,8 @@ class StaticFNCanvas(MyMplCanvas):
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
 
+# Fitzhugh-Nagumo model phase plot canvas
+
 class StaticPplotFNCanvas(MyMplCanvas):
     system = FN
     def compute_initial_figure(self, xlabel = 'Membrane Recovery Variable', ylabel = 'Membrane Potential', title = 'Fitzhugh-Nagumo'):
@@ -114,6 +126,8 @@ class StaticPplotFNCanvas(MyMplCanvas):
         self.axes.set_xlabel(xlabel)
         self.axes.set_ylabel(ylabel)
         self.axes.set_title(title)
+
+# Fitzhugh-Nagumo model FFT canvas
 
 class StaticFFTplotFNCanvas(MyMplCanvas):
     system = FN
