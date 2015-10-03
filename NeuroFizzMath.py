@@ -5,10 +5,11 @@
 # Copyright (C) 2015 Zechariah Thurman
 # GNU GPLv2
 
-# This is an implementation of matplotlib's pyqt5 backend
+# This is an implementation of matplotlib's pyqt4 backend
 
 from __future__ import unicode_literals, division
 from NeuroFizzModel import euler, ord2, rk4, VDP
+#from NeuroFizzCanvas import
 import numpy as np
 import sys
 import os

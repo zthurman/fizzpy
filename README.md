@@ -34,3 +34,5 @@ Requirements:
 -numpy
 
 -PyQt4
+
+-matplotlib
