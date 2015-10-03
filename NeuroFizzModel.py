@@ -10,7 +10,7 @@ import math as mt
 
 # System, super class for all models
 
-class System():
+class System(name = None, x0 = None, t_array = None):
 
     # System class variables
 
@@ -59,21 +59,21 @@ class System():
                 v_m[int(i+1)] = v_m[int((i))]-np.dot(np.dot((delta_t/c_m),g_L), v_m[int((i))]) \
                                 -np.dot((delta_t/c_m), I_syn[int(i+1)])"""
 
-    # FN neuron model
+    # Fitzhugh-Nagumo neuron model
 
     def FN(System, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
         def model(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
             return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                              -1/c*(x[0]- a + b*x[1])])
 
-    # ML neuron model
+    # Morris-Lecar neuron model
 
     def ML(System, name = 'Morris-Lecar', x0 = np.array([0,0]), t_array = (0, 1000, 0.30)):
         def model(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 80):
             return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
                             (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
-    # IZ neuron model
+    # Izhikevich neuron model
 
     def IZ(System, name = 'Izhikevich', x0 = np.array([0,0]), t_array = np.arange(0, 300, 0.1)):
         def model(self,x,t, a = 0.02, b = 0.2, c = -55, d = 2, i = 10):
@@ -83,7 +83,7 @@ class System():
             return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
                             a*(b*x[0] - x[1])])
 
-    # HR neuron model
+    # Hindmarsh-Rose neuron model
 
     def HR(System, name = 'Hindmarsh-Rose', x0 = np.array([3, 0, -1.2]), t_array = np.arange(0, 800, 0.1)):
         def model(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1, xnot = -1.5):
@@ -153,3 +153,6 @@ class System():
             return np.array([R - x[1]*x[2] - V*x[0],
                              x[0]*x[2] - x[1],
                              sigma*(x[1] - x[2])])
+
+test = System
+test.VDP.t_array
