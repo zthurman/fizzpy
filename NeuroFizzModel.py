@@ -19,19 +19,16 @@ class Model(object):
         self.x0 = x0
         self.t_array = t_array
 
-    def eqns(self):
-        pass
-
     # van der Pol oscillator
 
- """   def VDP(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+    def VDP(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
         def model(self,x,t, mu = 1):
             return np.array([x[1]/mu,
                              (-x[0] + x[1]*(1-x[0]**2))*mu])
 
     # EPSP - excitatory post-synaptic potential
 
-   def EPSP(System):
+"""   def EPSP(System):
         name = "EPSP"
         x0 = np.array([0,0,0])
 
@@ -161,10 +158,7 @@ class Model(object):
 
 class VDP(object):
     def __init__(self):
-        self.system = Model()
-        self.name = 'van der Pol oscillator'
-        self.x0 = np.array([0.01,0.01])
-        self.t_array = np.arange(0, 100, 0.02)
+        self.model = Model(name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02))
 
     def eqns(self,x,t, mu = 1):
         return np.array([x[1]/mu,
