@@ -4,7 +4,6 @@
 # GNU GPLv2
 
 from __future__ import division
-from scipy import *
 import numpy as np
 import math as mt
 
@@ -14,10 +13,13 @@ class Model():
 
     # System class variables
 
-    def __init__(self, name, x0, t_array):
+    def __init__(self, name, x0, t0, t1, dt):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
     def eqns(self):
         pass
@@ -79,10 +81,13 @@ class Model():
 # van der Pol oscillator
 
 class VDP(Model):
-    def __init__(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+    def __init__(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t0 = 0, t1 = 100, dt = 0.02):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
     def eqns(self,x,t, mu = 1):
         return np.array([x[1]/mu,
@@ -91,10 +96,13 @@ class VDP(Model):
 # Fitzhugh-Nagumo neuron model
 
 class FN(Model):
-    def __init__(self, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+    def __init__(self, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t0 = 0, t1 = 100, dt = 0.02):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
     def eqns(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
@@ -203,12 +211,18 @@ class R(Model):
                          sigma*(x[1] - x[2])])
 
 # debug
-#test = R()
+test = VDP()
 # debug
-#print(test.name)
+print(test.name)
 # debug
-#print(test.x0)
+print(test.x0)
 # debug
-#print(test.t_array)
+print(test.t0)
 # debug
-#print(test.eqns)
+print(test.t1)
+# debug
+print(test.dt)
+# debug
+print(test.t_array)
+# debug
+print(test.eqns)
