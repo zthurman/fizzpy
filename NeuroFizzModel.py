@@ -81,7 +81,7 @@ class Model():
 # van der Pol oscillator
 
 class VDP(Model):
-    def __init__(self, name = 'van der Pol oscillator', x0 = np.array([0.01,0.01]), t0 = 0, t1 = 100, dt = 0.02):
+    def __init__(self, name='van der Pol oscillator', x0=np.array([0.01,0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
         self.x0 = x0
         self.t0 = t0
@@ -89,14 +89,14 @@ class VDP(Model):
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t, mu = 1):
+    def eqns(self, x, t, mu=1):
         return np.array([x[1]/mu,
                          (-x[0] + x[1]*(1-x[0]**2))*mu])
 
 # Fitzhugh-Nagumo neuron model
 
 class FN(Model):
-    def __init__(self, name = 'Fitzhugh-Nagumo', x0 = np.array([0.01,0.01]), t0 = 0, t1 = 100, dt = 0.02):
+    def __init__(self, name='Fitzhugh-Nagumo', x0=np.array([0.01, 0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
         self.x0 = x0
         self.t0 = t0
@@ -104,31 +104,37 @@ class FN(Model):
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t, a = 0.75, b = 0.8, c = 3,  i = -0.40):
+    def eqns(self, x, t, a=0.75, b=0.8, c=3,  i=-0.40):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 
 # Morris-Lecar neuron model
 
 class ML(Model):
-    def __init__(self, name = 'Morris-Lecar', x0 = np.array([0,0]), t_array = np.arange(0, 1000, 0.30)):
+    def __init__(self, name='Morris-Lecar', x0=np.array([0, 0]), t0=0, t1=1000, dt=0.30):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t,c = 20,vk=-84,gk = 8,vca = 130,gca = 4.4,vl = -60,gl = 2,phi = 0.04,v1 = -1.2,v2 = 18,v3 = 2,v4 = 30,i = 80):
+    def eqns(self, x, t, c=20, vk=-84, gk=8, vca=130, gca=4.4, vl=-60, gl=2, phi=0.04, v1=-1.2, v2=18, v3=2, v4=30, i=80):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
                         (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
 # Izhikevich neuron model
 
 class IZ(Model):
-    def __init__(self, name = 'Izhikevich', x0 = np.array([0,0]), t_array = np.arange(0, 300, 0.1)):
+    def __init__(self, name='Izhikevich', x0=np.array([0,0]), t0=0, t1=300, dt=0.1):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t, a = 0.02, b = 0.2, c = -55, d = 2, i = 10):
+    def eqns(self, x, t, a=0.02, b=0.2, c=-55, d=2, i=10):
         if x[0] >= 30:
             x[0] = c
             x[1] = x[1] + d
@@ -138,12 +144,15 @@ class IZ(Model):
 # Hindmarsh-Rose neuron model
 
 class HR(Model):
-    def __init__(self, name = 'Hindmarsh-Rose', x0 = np.array([3, 0, -1.2]), t_array = np.arange(0, 800, 0.1)):
+    def __init__(self, name='Hindmarsh-Rose', x0=np.array([3, 0, -1.2]), t0=0, t1=800, dt=0.1):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t, a = 1.0, b = 3.0, c = 1.0, d = 5.0, r = 0.006, s = 4.0, I = 1, xnot = -1.5):
+    def eqns(self, x, t, a=1.0, b=3.0, c=1.0, d=5.0, r=0.006, s=4.0, I=1, xnot=-1.5):
         return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + I,
                         c - d*(x[0]**2) - x[1],
                         r*(s*(x[0] - xnot) - x[2])])
@@ -151,10 +160,13 @@ class HR(Model):
 # Hodgkins-Huxley neuron model
 
 class HH(Model):
-    def __init__(self, name = 'Hodgkins-Huxley', x0 = np.array([0.01,0.01,0.01,0.01]), t_array = np.arange(0, 100, 0.02)):
+    def __init__(self, name='Hodgkins-Huxley', x0=np.array([0.01,0.01,0.01,0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
         self.x0 = x0
-        self.t_array = t_array
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
 
     def eqns(self,x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
         alpha_n = (0.01*(x[0]+10))/(mt.exp((x[0]+10)/10)-1)
@@ -171,7 +183,7 @@ class HH(Model):
 # Rikitake dynamo model for geomagnetic reversal
 
 class RD(Model):
-    def __init__(self, name = 'Rikitake Dynamo', x0 = np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t_array = np.arange(0, 100, 0.01)):
+    def __init__(self, name = 'Rikitake Dynamo', x0=np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t_array = np.arange(0, 100, 0.01)):
         self.name = name
         self.x0 = x0
         self.t_array = t_array
@@ -210,19 +222,11 @@ class R(Model):
                          x[0]*x[2] - x[1],
                          sigma*(x[1] - x[2])])
 
-# debug
-test = VDP()
-# debug
-print(test.name)
-# debug
-print(test.x0)
-# debug
-print(test.t0)
-# debug
-print(test.t1)
-# debug
-print(test.dt)
-# debug
-print(test.t_array)
-# debug
-print(test.eqns)
+# Unit Test
+
+def ModelTest():
+    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+        test = i
+        print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+
+modeltester = ModelTest()
