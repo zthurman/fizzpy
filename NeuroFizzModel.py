@@ -93,7 +93,7 @@ class VDP(Model):
         return np.array([x[1]/mu,
                          (-x[0] + x[1]*(1-x[0]**2))*mu])
 
-# Fitzhugh-Nagumo neuron model
+# Fitzhugh-Nagumo neuron model, supercritical Hopf bifurcation
 
 class FN(Model):
     def __init__(self, name='Fitzhugh-Nagumo', x0=np.array([0.01, 0.01]), t0=0, t1=100, dt=0.02):
@@ -108,7 +108,7 @@ class FN(Model):
         return np.array([c*(x[0]+ x[1]- x[0]**3/3 + i),
                          -1/c*(x[0]- a + b*x[1])])
 
-# Morris-Lecar neuron model
+# Morris-Lecar neuron model, supercritical Hopf bifurcation
 
 class ML(Model):
     def __init__(self, name='Morris-Lecar', x0=np.array([0, 0]), t0=0, t1=1000, dt=0.30):
@@ -123,7 +123,7 @@ class ML(Model):
         return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + i),
                         (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
-# Izhikevich neuron model
+# Izhikevich neuron model, supercritical Hopf bifurcation
 
 class IZ(Model):
     def __init__(self, name='Izhikevich', x0=np.array([0,0]), t0=0, t1=300, dt=0.1):
@@ -141,7 +141,7 @@ class IZ(Model):
         return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
                         a*(b*x[0] - x[1])])
 
-# Hindmarsh-Rose neuron model
+# Hindmarsh-Rose neuron model, supercritical Hopf bifurcation
 
 class HR(Model):
     def __init__(self, name='Hindmarsh-Rose', x0=np.array([3, 0, -1.2]), t0=0, t1=800, dt=0.1):
@@ -180,7 +180,7 @@ class HH(Model):
                         alpha_m*(1-x[2]) - beta_m*x[2],
                         alpha_h*(1-x[3]) - beta_h*x[3]])
 
-# Rikitake dynamo model for geomagnetic reversal
+# Rikitake dynamo model for geomagnetic reversal, strange attractor
 
 class RD(Model):
     def __init__(self, name = 'Rikitake Dynamo', x0=np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t_array = np.arange(0, 100, 0.01)):
