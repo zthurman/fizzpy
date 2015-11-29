@@ -4,7 +4,7 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import VDP, FN, IZ, HR, HH, RD, L, R
+from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
 from scipy import *
 import numpy as np
 import math as mt
@@ -110,17 +110,25 @@ class ord2(Solver):
             self.X[i+1] = self.X[i] + k2*self.dt
         return self.X
 
-# debug
+
 test = VDP()
 
-soln = euler(test.name, test.x0, test.dt, test.t_array, test.eqns)
-# debug
-print(soln.tsp)
-# debug
-print(soln.Nsize)
-# debug
-print(soln.X)
-# debug
-print(soln.X[0])
-# debug
+soln = ord2(test.name, test.x0, test.dt, test.t_array, test.eqns)
+
 print(soln.X[:,0])
+print(soln.tsp)
+print(soln.modelname)
+
+
+# Unit Test
+
+def SolverTest():
+    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+        test = i
+        print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+        for j in [euler(test.name, test.x0, test.dt, test.t_array, test.eqns),
+                  ord2(test.name, test.x0, test.dt, test.t_array, test.eqns)]:
+            soln = j
+            print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0])
+
+solvertester = SolverTest()
