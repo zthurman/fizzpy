@@ -103,3 +103,13 @@ def SolverTest():
 starttime = tm.time()
 solvertester = SolverTest()
 print(" %s seconds" % (tm.time() - starttime))
+
+# Test functionality
+
+neuron = VDP()
+
+solvedneuron = euler(neuron.name, neuron.x0, neuron.dt, neuron.t_array, neuron.eqns)
+
+membranepotential = solvedneuron.evaluate()
+
+print(membranepotential[:,0])
