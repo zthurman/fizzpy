@@ -4,23 +4,25 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import Model, VDP, FN, IZ, HR, HH, RD, L, R
+from NeuroFizzModel import VDP, FN, IZ, HR, HH, RD, L, R
 from scipy import *
 import numpy as np
 import math as mt
 
 # global solver class
 
-class Solver(Model):
+class Solver():
 
     # Solver class variables
 
-    def __init__(self, t0, t1, dt, x0, Model = None):
-        self.tsp = np.arange(t0, t1, dt)
+    def __init__(self, name, x0, dt, t_array, eqns):
+        self.modelname = name
+        self.tsp = t_array
+        self.dt = dt
         self.Nsize = np.size(self.tsp)
         self.X = np.empty((self.Nsize, np.size(x0)))
         self.X[0] = x0
-        self.eqns = Model
+        self.model = eqns
 
     def evaluate(self):
         pass
@@ -73,12 +75,14 @@ class Solver(Model):
 # Euler solver (first order Runge-Kutta)
 
 class euler(Solver):
-    def __init__(self, t0 = Model.t0, t1 = Model.t1, dt = Model.dt, x0 = Model.x0, Model = Model.eqns):
-        self.tsp = np.arange(t0, t1, dt)
+    def __init__(self, name, x0, dt, t_array, eqns):
+        self.modelname = name
+        self.dt = dt
+        self.tsp = t_array
         self.Nsize = np.size(self.tsp)
         self.X = np.empty((self.Nsize, np.size(x0)))
         self.X[0] = x0
-        self.eqns = Model
+        self.model = eqns
 
     def evaluate(self):
         for i in range(0, self.Nsize-1):
@@ -86,15 +90,37 @@ class euler(Solver):
             self.X[i+1] = self.X[i] + k1*self.dt
         return self.X
 
+# second order solver (second order Runge-Kutta)
+
+class ord2(Solver):
+
+    def __init__(self, name, x0, dt, t_array, eqns):
+        self.modelname = name
+        self.dt = dt
+        self.tsp = t_array
+        self.Nsize = np.size(self.tsp)
+        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.X[0] = x0
+        self.model = eqns
+
+    def evaluate(self):
+        for i in range(0, self.Nsize-1):
+            k1 = self.eqns(self.X[i], self.tsp[i])
+            k2 = self.eqns(self.X[i], self.tsp[i]) + k1*(self.dt/2)
+            self.X[i+1] = self.X[i] + k2*self.dt
+        return self.X
+
 # debug
-test = euler(VDP)
+test = VDP()
+
+soln = euler(test.name, test.x0, test.dt, test.t_array, test.eqns)
 # debug
-print(test.tsp)
+print(soln.tsp)
 # debug
-print(test.Nsize)
+print(soln.Nsize)
 # debug
-print(test.X)
+print(soln.X)
 # debug
-print(test.X[0])
+print(soln.X[0])
 # debug
-print(test.eqns)
+print(soln.X[:,0])
