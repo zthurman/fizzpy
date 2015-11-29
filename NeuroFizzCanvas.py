@@ -15,7 +15,7 @@ from matplotlib.backends import qt_compat
 import itertools
 from PyQt4 import QtGui, QtCore, QtWebKit
 
-class MyMplCanvas(FigureCanvas, solver = None):
+class MyMplCanvas(FigureCanvas):
     # Ultimately, this is a QWidget (as well as a FigureCanvasAgg, etc.).
     def __init__(self, parent=None, width=5, height=5, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
