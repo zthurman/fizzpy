@@ -6,6 +6,7 @@
 from __future__ import division
 from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
 import numpy as np
+import time as tm
 
 # global solver class
 
@@ -97,4 +98,8 @@ def SolverTest():
             soln = j
             print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
 
+# Time execution of the solvertest
+
+starttime = tm.time()
 solvertester = SolverTest()
+print(" %s seconds" % (tm.time() - starttime))
