@@ -47,6 +47,10 @@ Pseudocode example:
     soln = soln[:,0]
     t = solved.tsp
 
+    figure()
+    plot(t, soln)
+    title(soln.modelname)
+
 Requirements:
 =============
 -Refer to requirements.txt for the venv dependencies
