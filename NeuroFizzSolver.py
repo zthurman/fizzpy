@@ -6,7 +6,6 @@
 from __future__ import division
 from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
 import numpy as np
-import time as tm
 
 # global solver class
 
@@ -29,8 +28,10 @@ class Solver():
 # Euler solver (first order Runge-Kutta)
 
 class euler(Solver):
-    def __init__(self, name, x0, dt, t_array, eqns):
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
         self.modelname = name
+        self.xaxis = xaxis
+        self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
         self.Nsize = np.size(self.tsp)
@@ -48,8 +49,10 @@ class euler(Solver):
 
 class ord2(Solver):
 
-    def __init__(self, name, x0, dt, t_array, eqns):
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
         self.modelname = name
+        self.xaxis = xaxis
+        self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
         self.Nsize = np.size(self.tsp)
@@ -68,8 +71,10 @@ class ord2(Solver):
 
 class rk4(Solver):
 
-    def __init__(self, name, x0, dt, t_array, eqns):
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
         self.modelname = name
+        self.xaxis = xaxis
+        self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
         self.Nsize = np.size(self.tsp)
@@ -88,28 +93,14 @@ class rk4(Solver):
 
 # Unit Test
 
-def SolverTest():
-    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
-        test = i
-        print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
-        for j in [euler(test.name, test.x0, test.dt, test.t_array, test.eqns),
-                  ord2(test.name, test.x0, test.dt, test.t_array, test.eqns),
-                  rk4(test.name, test.x0, test.dt, test.t_array, test.eqns)]:
-            soln = j
-            print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
-
-# Time execution of the solvertest
-
-starttime = tm.time()
-solvertester = SolverTest()
-print(" %s seconds" % (tm.time() - starttime))
-
-# Test functionality
-
-neuron = VDP()
-
-solvedneuron = euler(neuron.name, neuron.x0, neuron.dt, neuron.t_array, neuron.eqns)
-
-membranepotential = solvedneuron.evaluate()
-
-print(membranepotential[:,0])
+# def SolverTest():
+#     for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+#         test = i
+#         print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+#         for j in [euler(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns),
+#                   ord2(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns),
+#                   rk4(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns)]:
+#             soln = j
+#             print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
+#
+# solvertester = SolverTest()

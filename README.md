@@ -27,29 +27,7 @@ arrays and want to do your own thing with the raw data all that you need are Neu
 NeuroFizzModel is made up of different systems of differential equations all packaged up into classes, in and of themselves these aren't particularly useful but when you invoke one of the
 solvers within NeuroFizzSolver and plug one of the models in from NeuroFizzModel an array of numerically integrated data is generated.
 
-Pseudocode example:
-
-    from __future__ import division
-    from NeuroFizzModel import VDP
-    from NeuroFizzSolver import euler
-
-    # instantiate VDP model
-
-    test = VDP()
-
-    # instantiate euler solver
-
-    solved = euler(test.name, test.x0, test.dt, test.t_array, test.eqns)
-
-    # for plotting we care about solved.tsp and the array returned by solved.evaluate
-
-    soln = solved.evaluate()
-    soln = soln[:,0]
-    t = solved.tsp
-
-    figure()
-    plot(t, soln)
-    title(soln.modelname)
+Reference NeuroFizzPlot for a simple example of how to use NeuroFizzModel and NeuroFizzSolver.
 
 Requirements:
 =============

@@ -15,6 +15,8 @@ class Model():
 
     def __init__(self, name, x0, t0, t1, dt):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'X Dynamical Variable'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -83,6 +85,8 @@ class Model():
 class VDP(Model):
     def __init__(self, name='van der Pol oscillator', x0=np.array([0.01,0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'X Dynamical Variable'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -98,6 +102,8 @@ class VDP(Model):
 class FN(Model):
     def __init__(self, name='Fitzhugh-Nagumo', x0=np.array([0.01, 0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -113,6 +119,8 @@ class FN(Model):
 class ML(Model):
     def __init__(self, name='Morris-Lecar', x0=np.array([0, 0]), t0=0, t1=1000, dt=0.30):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -128,6 +136,8 @@ class ML(Model):
 class IZ(Model):
     def __init__(self, name='Izhikevich', x0=np.array([0,0]), t0=0, t1=300, dt=0.1):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -146,6 +156,8 @@ class IZ(Model):
 class HR(Model):
     def __init__(self, name='Hindmarsh-Rose', x0=np.array([3, 0, -1.2]), t0=0, t1=800, dt=0.1):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -162,6 +174,8 @@ class HR(Model):
 class HH(Model):
     def __init__(self, name='Hodgkins-Huxley', x0=np.array([0.01,0.01,0.01,0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
@@ -224,9 +238,9 @@ class R(Model):
 
 # Unit Test
 
-def ModelTest():
-    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
-        test = i
-        print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
-
-modeltester = ModelTest()
+# def ModelTest():
+#     for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+#         test = i
+#         print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+#
+# modeltester = ModelTest()
