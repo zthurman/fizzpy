@@ -9,9 +9,6 @@ import numpy as np
 # global solver class
 
 class Solver():
-
-    # Solver class variables
-
     def __init__(self, name, x0, dt, t_array, eqns):
         self.modelname = name
         self.tsp = t_array
@@ -47,7 +44,6 @@ class euler(Solver):
 # second order solver (second order Runge-Kutta)
 
 class ord2(Solver):
-
     def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
         self.modelname = name
         self.xaxis = xaxis
@@ -69,7 +65,6 @@ class ord2(Solver):
 # fourth order Runge-Kutte solver
 
 class rk4(Solver):
-
     def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
         self.modelname = name
         self.xaxis = xaxis

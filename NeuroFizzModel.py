@@ -10,9 +10,6 @@ import math as mt
 # Model, super class for all other model classes
 
 class Model():
-
-    # System class variables
-
     def __init__(self, name, x0, t0, t1, dt):
         self.name = name
         self.xaxis = 'Time'
@@ -139,5 +136,4 @@ class HH(Model):
                         alpha_n*(1-x[1]) - beta_n*x[1],
                         alpha_m*(1-x[2]) - beta_m*x[2],
                         alpha_h*(1-x[3]) - beta_h*x[3]])
-
 
