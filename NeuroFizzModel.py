@@ -182,7 +182,7 @@ class HH(Model):
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self,x,t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
+    def eqns(self, x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
         alpha_n = (0.01*(x[0]+10))/(mt.exp((x[0]+10)/10)-1)
         beta_n = 0.125*mt.exp(x[0]/80)
         alpha_m = (0.1*(x[0]+25))/(mt.exp((x[0]+25)/10)-1)

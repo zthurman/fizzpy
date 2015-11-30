@@ -14,7 +14,7 @@ import time as tm
 # Euler Solver
 
 starttime = tm.time()
-eqns = VDP()
+eqns = HH()
 solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
 membranepotential = solvedmodel.evaluate()
 print(" %s seconds" % (tm.time() - starttime))
@@ -37,11 +37,11 @@ print(" %s seconds" % (tm.time() - starttime))
 # Do a test plot and save it as a png in the working directory
 
 def do_tplot():
-    neuron = VDP()
-    solvedneuron = euler(neuron.name, neuron.xaxis, neuron.yaxis, neuron.x0, neuron.dt, neuron.t_array, neuron.eqns)
+    neuron = HH()
+    solvedneuron = ord2(neuron.name, neuron.xaxis, neuron.yaxis, neuron.x0, neuron.dt, neuron.t_array, neuron.eqns)
     membranepotential = solvedneuron.evaluate()
     plt.figure()
-    plt.plot(solvedneuron.tsp, membranepotential[:, 0])
+    plt.plot(solvedneuron.tsp, -membranepotential[:, 0])
     plt.title(solvedneuron.modelname)
     plt.xlabel(solvedneuron.xaxis)
     plt.ylabel(solvedneuron.yaxis)

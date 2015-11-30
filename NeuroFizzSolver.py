@@ -4,7 +4,6 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
 import numpy as np
 
 # global solver class
@@ -43,7 +42,7 @@ class euler(Solver):
         for i in range(0, self.Nsize-1):
             k1 = self.model(self.X[i], self.tsp[i])
             self.X[i+1] = self.X[i] + k1*self.dt
-        return self.X
+            return self.X
 
 # second order solver (second order Runge-Kutta)
 
