@@ -6,8 +6,8 @@ Computational neuroscience and AI simulation toolkit.
 Goal
 =============
 
-The goal of developing this application is to provide an open source reference for computational neuroscience and artificial intelligence frameworks. Primarily how we can use one to
-make efficiency assessments and optimizations to the other.
+The goal of developing this application is to provide an open source reference for computational neuroscience and artificial intelligence frameworks. Primarily how we can use the one to
+help make inspire realistic efficiency assessments and optimizations to the other.
 
 Things to Note:
 =============
