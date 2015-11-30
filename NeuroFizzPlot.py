@@ -11,18 +11,22 @@ import time as tm
 
 # Time execution of the VDP evaluate with different solvers
 
+# Euler Solver
+
 starttime = tm.time()
 eqns = VDP()
 solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
 membranepotential = solvedmodel.evaluate()
 print(" %s seconds" % (tm.time() - starttime))
 
+# Second Order Runge-Kutte Solver
 
 starttime = tm.time()
 solvedmodel = ord2(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
 membranepotential = solvedmodel.evaluate()
 print(" %s seconds" % (tm.time() - starttime))
 
+# Fourth Order Runge-Kutte
 
 starttime = tm.time()
 solvedmodel = rk4(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
