@@ -6,6 +6,7 @@
 from __future__ import division
 from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
 from NeuroFizzSolver import euler, ord2, rk4
+import time as tm
 
 # Model Test
 
@@ -14,7 +15,9 @@ def ModelTest():
         test = i
         print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
 
+starttime = tm.time()
 modeltester = ModelTest()
+print(" %s seconds" % (tm.time() - starttime))
 
 # Solver Test
 
@@ -28,4 +31,6 @@ def SolverTest():
             soln = j
             print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
 
+starttime = tm.time()
 solvertester = SolverTest()
+print(" %s seconds" % (tm.time() - starttime))
