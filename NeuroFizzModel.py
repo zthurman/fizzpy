@@ -235,12 +235,3 @@ class R(Model):
         return np.array([R - x[1]*x[2] - V*x[0],
                          x[0]*x[2] - x[1],
                          sigma*(x[1] - x[2])])
-
-# Unit Test
-
-# def ModelTest():
-#     for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
-#         test = i
-#         print(test.name, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
-#
-# modeltester = ModelTest()
