@@ -52,7 +52,22 @@ def SolverTest():
                   ord2(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns),
                   rk4(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns)]:
             soln = j
-            print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
+            if isinstance(soln.tsp, list):
+                print 'Tsp attribute is not a list!'
+            if isinstance(soln.Nsize, float):
+                if isinstance(soln.Nsize, int):
+                    print 'Nsize is not a float or an integer!'
+            if isinstance(soln.X, list):
+                print 'X is not a list!'
+            if isinstance(soln.X[0], float):
+                if isinstance(soln.X[0], int):
+                    print 'X[0] is not a float or an integer!'
+            if isinstance(soln.X[:,0], list):
+                print 'X[:,0] is not a list!'
+            if isinstance(soln.evaluate(), list):
+                print 'Solution array is not a list!'
+            else:
+                print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
 
 starttime1 = tm.time()
 solvertester = SolverTest()
