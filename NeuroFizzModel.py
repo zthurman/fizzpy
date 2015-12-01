@@ -7,7 +7,7 @@ from __future__ import division
 import numpy as np
 import math as mt
 
-# Model, super class for all other model classes
+# Super class for all other model classes
 
 class Model():
     def __init__(self, name, x0, t0, t1, dt):
@@ -39,6 +39,22 @@ class VDP(Model):
     def eqns(self, x, t, mu=1):
         return np.array([x[1]/mu,
                          (-x[0] + x[1]*(1-x[0]**2))*mu])
+
+# Leaky Integrate and Fire neuron model
+
+class IF(Model):
+    def __init__(self, name='Leaky integrate-and-fire', x0=np.array([-65]), t0=0, t1=100, dt=0.1):
+        self.name = name
+        self.xaxis = 'Time'
+        self.yaxis = 'X Dynamical Variable'
+        self.x0 = x0
+        self.t0 = t0
+        self.t1 = t1
+        self.dt = dt
+        self.t_array = np.arange(t0, t1, dt)
+
+    def eqns(self):
+        pass
 
 # Fitzhugh-Nagumo neuron model, supercritical Hopf bifurcation
 

@@ -6,7 +6,7 @@
 from __future__ import division
 import numpy as np
 
-# global solver class
+# Super class for all other solver classes
 
 class Solver():
     def __init__(self, name, x0, dt, t_array, eqns):
