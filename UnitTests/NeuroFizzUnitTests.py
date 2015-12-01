@@ -13,7 +13,29 @@ import time as tm
 def ModelTest():
     for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
         test = i
-        print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+        if type(test.name) != str:
+            print 'Name attribute is not a string!'
+        elif type(test.xaxis) != str:
+            print 'Xaxis attribute is not a string!'
+        elif type(test.yaxis) != str:
+            print 'Yaxis attribute is not a string!'
+        elif isinstance(test.x0, list):
+            if isinstance(test.x0, float):
+                if isinstance(test.x0, int):
+                    print 'Initial conditions are not a list, float or integer!'
+        elif isinstance(test.t0, float):
+            if isinstance(test.t0, int):
+                print 'Initial time is not a float or an integer!'
+        elif isinstance(test.t1, float):
+            if isinstance(test.t1, int):
+                print 'Final time is not an float or an integer!'
+        elif isinstance(test.dt, float):
+            if isinstance(test.dt, int):
+                print 'The timestep is not an integer or a float!'
+        elif isinstance(test.t_array, list):
+            print 'The time array is not a list!'
+        else:
+            print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
 
 starttime = tm.time()
 modeltester = ModelTest()
