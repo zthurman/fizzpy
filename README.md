@@ -6,13 +6,13 @@ Computational neuroscience and AI simulation toolkit.
 Goal
 =============
 
-The goal of developing this application is to provide an open source reference for computational neuroscience and artificial intelligence frameworks. Primarily how we can use the one to
+The goal of developing this library is to provide an open source reference for computational neuroscience and artificial intelligence frameworks. Primarily how we can use the one to
 help make inspire realistic efficiency assessments and optimizations to the other.
 
 Things to Note:
 =============
 
-This is a work in progress, the primary focus is computational neuroscience in a referential context for AI research.
+This is a work in progress, as such it is not finished yet.
 
 The application is licensed under the GNU GPLv2. As such it is copylefted and meant for free use, modification and re-distribution subject to the terms of the Free Software Foundation,
 Inc.
