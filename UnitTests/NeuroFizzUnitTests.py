@@ -40,7 +40,6 @@ def ModelTest():
 starttime = tm.time()
 modeltester = ModelTest()
 elapsedtime = (tm.time() - starttime)
-print(" %s seconds" % elapsedtime)
 
 # Solver Test
 
@@ -72,6 +71,5 @@ def SolverTest():
 starttime1 = tm.time()
 solvertester = SolverTest()
 elapsedtime1 = (tm.time() - starttime1)
-
 
 print("ModelTest took {0} seconds to execute while SolverTest took {1} seconds to execute" .format(elapsedtime, elapsedtime1))
