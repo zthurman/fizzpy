@@ -46,15 +46,15 @@ class IF(Model):
     def __init__(self, name='Leaky integrate-and-fire', x0=np.array([-65]), t0=0, t1=100, dt=0.1):
         self.name = name
         self.xaxis = 'Time'
-        self.yaxis = 'X Dynamical Variable'
+        self.yaxis = 'Membrane Potential'
         self.x0 = x0
         self.t0 = t0
         self.t1 = t1
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def eqns(self):
-        pass
+    def eqns(self, x, t, rm=1, cm=10, tau_m=10, I = 1.5):
+        return np.array([x[0] + (-x[0] + I*rm)/tau_m])
 
 # Fitzhugh-Nagumo neuron model, supercritical Hopf bifurcation
 
