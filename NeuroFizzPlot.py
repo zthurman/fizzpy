@@ -14,10 +14,40 @@ import time as tm
 # Euler Solver
 
 starttime = tm.time()
+eqns = VDP()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for VDP" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = FN()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for FN" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = ML()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for ML" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = IZ()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for IZ" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = HR()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for HR" % (tm.time() - starttime))
+
+starttime = tm.time()
 eqns = HH()
 solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.eqns)
 membranepotential = solvedmodel.evaluate()
-print(" %s seconds" % (tm.time() - starttime))
+print(" %s seconds for HH" % (tm.time() - starttime))
 
 # Second Order Runge-Kutte Solver
 
