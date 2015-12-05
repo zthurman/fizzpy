@@ -10,14 +10,14 @@ import numpy as np
 
 
 class Solver:
-    def __init__(self, name, x0, dt, t_array, eqns):
-        self.modelname = name
+    def __init__(self, name, x0, dt, t_array, equations):
+        self.model_name = name
         self.tsp = t_array
         self.dt = dt
-        self.Nsize = np.size(self.tsp)
-        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.N_size = np.size(self.tsp)
+        self.X = np.empty((self.N_size, np.size(x0)))
         self.X[0] = x0
-        self.model = eqns
+        self.model = equations
 
     def evaluate(self):
         pass
@@ -26,19 +26,19 @@ class Solver:
 
 
 class euler(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
-        self.modelname = name
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.model_name = name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
-        self.Nsize = np.size(self.tsp)
-        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.N_size = np.size(self.tsp)
+        self.X = np.empty((self.N_size, np.size(x0)))
         self.X[0] = x0
-        self.model = eqns
+        self.model = equations
 
     def evaluate(self):
-        for i in range(0, self.Nsize-1):
+        for i in range(0, self.N_size-1):
             k1 = self.model(self.X[i], self.tsp[i])
             self.X[i+1] = self.X[i] + k1*self.dt
             return self.X
@@ -47,19 +47,19 @@ class euler(Solver):
 
 
 class ord2(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
-        self.modelname = name
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.model_name = name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
-        self.Nsize = np.size(self.tsp)
-        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.N_size = np.size(self.tsp)
+        self.X = np.empty((self.N_size, np.size(x0)))
         self.X[0] = x0
-        self.model = eqns
+        self.model = equations
 
     def evaluate(self):
-        for i in range(0, self.Nsize-1):
+        for i in range(0, self.N_size-1):
             k1 = self.model(self.X[i], self.tsp[i])
             k2 = self.model(self.X[i], self.tsp[i]) + k1*(self.dt/2)
             self.X[i+1] = self.X[i] + k2*self.dt
@@ -67,20 +67,21 @@ class ord2(Solver):
 
 # fourth order Runge-Kutte solver
 
+
 class rk4(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
-        self.modelname = name
+    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.model_name = name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
         self.tsp = t_array
-        self.Nsize = np.size(self.tsp)
-        self.X = np.empty((self.Nsize, np.size(x0)))
+        self.N_size = np.size(self.tsp)
+        self.X = np.empty((self.N_size, np.size(x0)))
         self.X[0] = x0
-        self.model = eqns
+        self.model = equations
 
     def evaluate(self):
-        for i in range(0, self.Nsize-1):
+        for i in range(0, self.N_size-1):
             k1 = self.model(self.X[i], self.tsp[i])
             k2 = self.model(self.X[i] + self.dt/2*k1, self.tsp[i] + self.dt/2)
             k3 = self.model(self.X[i] + self.dt/2*k2, self.tsp[i] + self.dt/2)

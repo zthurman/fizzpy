@@ -35,7 +35,7 @@ def ModelTest():
         elif isinstance(test.t_array, list):
             print 'The time array is not a list!'
         else:
-            print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
+            print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.equations)
 
 starttime = tm.time()
 modeltester = ModelTest()
@@ -46,15 +46,15 @@ elapsedtime = (tm.time() - starttime)
 def SolverTest():
     for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
         test = i
-        print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.eqns)
-        for j in [euler(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns),
-                  ord2(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns),
-                  rk4(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.eqns)]:
+        print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.equations)
+        for j in [euler(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.equations),
+                  ord2(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.equations),
+                  rk4(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.equations)]:
             soln = j
             if isinstance(soln.tsp, list):
                 print 'Tsp attribute is not a list!'
-            if isinstance(soln.Nsize, float):
-                if isinstance(soln.Nsize, int):
+            if isinstance(soln.N_size, float):
+                if isinstance(soln.N_size, int):
                     print 'Nsize is not a float or an integer!'
             if isinstance(soln.X, list):
                 print 'X is not a list!'
@@ -66,7 +66,7 @@ def SolverTest():
             if isinstance(soln.evaluate(), list):
                 print 'Solution array is not a list!'
             else:
-                print(soln.tsp, soln.Nsize, soln.X, soln.X[0], soln.X[:,0], soln.evaluate())
+                print(soln.tsp, soln.N_size, soln.X, soln.X[0], soln.X[:, 0], soln.evaluate())
 
 starttime1 = tm.time()
 solvertester = SolverTest()
