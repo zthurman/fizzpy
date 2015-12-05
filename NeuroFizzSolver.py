@@ -6,9 +6,10 @@
 from __future__ import division
 import numpy as np
 
-# Super class for all other solver classes
+# Super class for all other solvers
 
-class Solver():
+
+class Solver:
     def __init__(self, name, x0, dt, t_array, eqns):
         self.modelname = name
         self.tsp = t_array
@@ -22,6 +23,7 @@ class Solver():
         pass
 
 # Euler solver (first order Runge-Kutta)
+
 
 class euler(Solver):
     def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):
@@ -42,6 +44,7 @@ class euler(Solver):
             return self.X
 
 # second order solver (second order Runge-Kutta)
+
 
 class ord2(Solver):
     def __init__(self, name, xaxis, yaxis, x0, dt, t_array, eqns):

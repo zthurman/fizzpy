@@ -7,9 +7,10 @@ from __future__ import division
 import numpy as np
 import math as mt
 
-# Super class for all other model classes
+# Super class for all other models
 
-class Model():
+
+class Model:
     def __init__(self, name, x0, t0, t1, dt):
         self.name = name
         self.xaxis = 'Time'
@@ -24,6 +25,7 @@ class Model():
         pass
 
 # van der Pol oscillator
+
 
 class VDP(Model):
     def __init__(self, name='van der Pol oscillator', x0=np.array([0.01,0.01]), t0=0, t1=100, dt=0.02):
@@ -42,7 +44,8 @@ class VDP(Model):
 
 # Leaky Integrate and Fire neuron model
 
-class IF(Model):
+
+class LIF(Model):
     def __init__(self, name='Leaky integrate-and-fire', x0=np.array([-65]), t0=0, t1=100, dt=0.1):
         self.name = name
         self.xaxis = 'Time'
@@ -57,6 +60,7 @@ class IF(Model):
         return np.array([x[0] + (-x[0] + I*rm)/tau_m])
 
 # Fitzhugh-Nagumo neuron model, supercritical Hopf bifurcation
+
 
 class FN(Model):
     def __init__(self, name='Fitzhugh-Nagumo', x0=np.array([0.01, 0.01]), t0=0, t1=100, dt=0.02):
@@ -75,6 +79,7 @@ class FN(Model):
 
 # Morris-Lecar neuron model, supercritical Hopf bifurcation
 
+
 class ML(Model):
     def __init__(self, name='Morris-Lecar', x0=np.array([0, 0]), t0=0, t1=1000, dt=0.30):
         self.name = name
@@ -91,6 +96,7 @@ class ML(Model):
                         (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
 # Izhikevich neuron model, supercritical Hopf bifurcation
+
 
 class IZ(Model):
     def __init__(self, name='Izhikevich', x0=np.array([0,0]), t0=0, t1=300, dt=0.1):
@@ -112,6 +118,7 @@ class IZ(Model):
 
 # Hindmarsh-Rose neuron model, supercritical Hopf bifurcation
 
+
 class HR(Model):
     def __init__(self, name='Hindmarsh-Rose', x0=np.array([3, 0, -1.2]), t0=0, t1=800, dt=0.1):
         self.name = name
@@ -128,10 +135,11 @@ class HR(Model):
                         c - d*(x[0]**2) - x[1],
                         r*(s*(x[0] - xnot) - x[2])])
 
-# Hodgkins-Huxley neuron model
+# Hodgkin-Huxley neuron model
+
 
 class HH(Model):
-    def __init__(self, name='Hodgkins-Huxley', x0=np.array([0.01,0.01,0.01,0.01]), t0=0, t1=100, dt=0.02):
+    def __init__(self, name='Hodgkin-Huxley', x0=np.array([0.01,0.01,0.01,0.01]), t0=0, t1=100, dt=0.02):
         self.name = name
         self.xaxis = 'Time'
         self.yaxis = 'Membrane Potential'

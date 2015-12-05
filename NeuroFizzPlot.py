@@ -10,6 +10,17 @@ import matplotlib.pyplot as plt
 
 # Do some test plots and save outputs as a png in the working directory
 
+
+def plotter():
+    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+        model = i
+        for j in [euler(model.name, model.xaxis, model.yaxis, model.x0, model.dt, model.t_array, model.eqns),
+              ord2(model.name, model.xaxis, model.yaxis, model.x0, model.dt, model.t_array, model.eqns),
+              rk4(model.name, model.xaxis, model.yaxis, model.x0, model.dt, model.t_array, model.eqns)]:
+            solved = j
+            return solved.tsp, solved.Nsize, solved.X, solved.X[0], solved.X[:, 0], solved.evaluate()
+
+
 def do_tplot():
     neuron = VDP()
     solvedneuron = ord2(neuron.name, neuron.xaxis, neuron.yaxis, neuron.x0, neuron.dt, neuron.t_array, neuron.eqns)
