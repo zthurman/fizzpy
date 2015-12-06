@@ -30,4 +30,22 @@ print do_tplot()
 # Now we do ALL OF THE THINGS!
 
 
-for i in [VDP(), LIF()]
+def do_ALLPLOTS():
+    for i in [VDP(), LIF(), FN(), ML(), IZ(), HR(), HH()]:
+        model = i
+        solvedmodel = rk4(model.name, model.xaxis, model.yaxis, model.x0, model.dt, model.t_array, model.equations)
+        dynamicalvariable = solvedmodel.evaluate()
+        plt.figure()
+        if solvedmodel.model_name == 'Hodgkin-Huxley':
+            plt.plot(solvedmodel.tsp, -dynamicalvariable[:, 0])
+        else:
+            plt.plot(solvedmodel.tsp, dynamicalvariable[:, 0])
+        plt.title(solvedmodel.model_name)
+        plt.xlabel(solvedmodel.xaxis)
+        plt.ylabel(solvedmodel.yaxis)
+        plt.savefig('%s_tplot.png' % solvedmodel.model_name)
+        plt.show()
+    return
+
+print do_ALLPLOTS()
+
