@@ -30,11 +30,11 @@ print do_tplot()
 # Now we do ALL OF THE THINGS!
 
 
-# class DataMaker:
-#     def __init__(self, name='alldadatas', models=[VDP(), FN(), ML(), IZ(), HR(), HH()], solved=[]):
-#         self.name = name
-#         self.models = models
-#         self.solved = solved
+class DataMaker:
+    def __init__(self, name='alldadatas', models=[VDP(), FN(), ML(), IZ(), HR(), HH()], solved=[]):
+        self.name = name
+        self.models = models
+        self.solved = solved
 #
 #     def datagenerator(self):
 #         for i in self.models:
