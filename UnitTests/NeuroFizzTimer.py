@@ -25,42 +25,14 @@ def model_timer():
             dynamicalvariable = solvedmodel.evaluate()
             endtime = tm.time()
             delta_t = (endtime - starttime)
-            modelno = []
-            solverno = []
-            if solvedmodel.model_name == 'van der Pol oscillator':
-                modelno = 1
-            elif solvedmodel.model_name == 'Leaky integrate-and-fire':
-                modelno = 2
-            elif solvedmodel.model_name == 'Fitzhugh-Nagumo':
-                modelno = 3
-            elif solvedmodel.model_name == 'Morris-Lecar':
-                modelno = 4
-            elif solvedmodel.model_name == 'Izhikevich':
-                modelno = 5
-            elif solvedmodel.model_name == 'Hindmarsh-Rose':
-                modelno = 6
-            elif solvedmodel.model_name == 'Hodgkin-Huxley':
-                modelno = 7
-            else:
-                modelno = 0
-
-            if solvedmodel.name == 'Euler':
-                solverno = 1
-            elif solvedmodel.name == 'Second Order Runge-Kutta':
-                solverno = 2
-            elif solvedmodel.name == 'Fourth Order Runge-Kutta':
-                solverno = 3
-            else:
-                solverno = 0
-
-            times += [(delta_t, modelno, solverno)]
+            times += [(delta_t, solvedmodel.model_name, solvedmodel.name)]
         time_array = times
     return time_array
 
 timed = model_timer()
 print len(timed)
 # print timed
-print timed[0]
+print timed
 vdp = timed[0]
 print vdp[0]
 
@@ -68,8 +40,19 @@ print vdp[0]
 
 # def do_timeplot():
 #     timed = model_timer()
+#     times = []
 #     for i in np.arange(0, 20):
 #         model = timed[i]
-#         for j in np.arange(0, 2):
-#             plt.figure()
-#             plt.plot()
+#         times = model[0]
+#         print times
+
+timed = model_timer()
+times = []
+for i in np.arange(0, 20):
+    model = timed[i]
+    times += model[0]
+    xaxis = '{0} and {1}' .format(model[1], model[2])
+
+plt.figure()
+plt.plot(times, '.')
+plt.savefig('test.png')
