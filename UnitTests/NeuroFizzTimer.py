@@ -6,6 +6,7 @@
 from __future__ import division
 from NeuroFizzModel import VDP, LIF, FN, ML, IZ, HR, HH
 from NeuroFizzSolver import euler, ord2, rk4
+import matplotlib.pyplot as plt
 import time as tm
 
 # Time execution of the different models evaluated against different solvers
@@ -24,4 +25,5 @@ def model_timer():
             # return starttime, endtime
 
 timed = model_timer()
+print timed
 print timed
