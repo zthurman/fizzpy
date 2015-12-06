@@ -49,7 +49,7 @@ class euler(Solver):
 
 class ord2(Solver):
     def __init__(self, model_name, xaxis, yaxis, x0, dt, t_array, equations):
-        self.name = 'Second Order Runge-Kutte'
+        self.name = 'Second Order Runge-Kutta'
         self.model_name = model_name
         self.xaxis = xaxis
         self.yaxis = yaxis
@@ -67,7 +67,7 @@ class ord2(Solver):
             self.X[i+1] = self.X[i] + k2*self.dt
         return self.X
 
-# fourth order Runge-Kutte solver
+# fourth order Runge-Kutta solver
 
 
 class rk4(Solver):
