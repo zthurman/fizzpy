@@ -7,7 +7,7 @@ Goal
 =============
 
 The goal of developing this library is to provide an open source reference for computational neuroscience and artificial intelligence frameworks. Primarily how we can use the one to
-help make inspire realistic efficiency assessments and optimizations to the other.
+help make realistic efficiency assessments and optimizations to the other.
 
 Things to Note:
 =============
@@ -27,7 +27,7 @@ arrays and want to do your own thing with the raw data all that you need are Neu
 NeuroFizzModel is made up of different systems of differential equations all packaged up into classes, in and of themselves these aren't particularly useful but when you invoke one of the
 solvers within NeuroFizzSolver and plug one of the models in from NeuroFizzModel an array of numerically integrated data is generated.
 
-Reference NeuroFizzPlot for a full example of how to use NeuroFizzModel and NeuroFizzSolver.
+Reference NeuroFizzPlot for a full example of how to use NeuroFizzModel and NeuroFizzSolver to generate plots.
 
 Requirements:
 =============
