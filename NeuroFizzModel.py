@@ -56,8 +56,10 @@ class LIF(Model):
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def equations(self, x, t, rm=1, cm=10, tau_m=10, I = 1.5):
-        return np.array([x[0] + (-x[0] + I*rm)/tau_m])
+    def equations(self, u_th=-55, u_reset=-75, u_eq=-65, R=10, I=1.2):
+        if x[0] >= u_th:
+            x[0] = u_reset
+        return np.array([-(x[0] - u_eq) + R*I])
 
 # Fitzhugh-Nagumo neuron model, supercritical Hopf bifurcation
 
