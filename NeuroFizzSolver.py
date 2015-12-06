@@ -26,8 +26,9 @@ class Solver:
 
 
 class euler(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
-        self.model_name = name
+    def __init__(self, model_name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.name = 'Euler'
+        self.model_name = model_name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
@@ -47,8 +48,9 @@ class euler(Solver):
 
 
 class ord2(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
-        self.model_name = name
+    def __init__(self, model_name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.name = 'Second Order Runge-Kutte'
+        self.model_name = model_name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
@@ -69,8 +71,9 @@ class ord2(Solver):
 
 
 class rk4(Solver):
-    def __init__(self, name, xaxis, yaxis, x0, dt, t_array, equations):
-        self.model_name = name
+    def __init__(self, model_name, xaxis, yaxis, x0, dt, t_array, equations):
+        self.name = 'Fourth Order Runge-Kutta'
+        self.model_name = model_name
         self.xaxis = xaxis
         self.yaxis = yaxis
         self.dt = dt
