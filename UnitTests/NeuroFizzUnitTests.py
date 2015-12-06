@@ -4,14 +4,14 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
+from NeuroFizzModel import VDP, LIF, FN, ML, IZ, HR, HH
 from NeuroFizzSolver import euler, ord2, rk4
 import time as tm
 
 # Model Test
 
 def ModelTest():
-    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+    for i in [VDP(), LIF(), FN(), ML(), IZ(), HR(), HH()]:
         test = i
         if type(test.name) != str:
             print 'Name attribute is not a string!'
@@ -44,7 +44,7 @@ elapsedtime = (tm.time() - starttime)
 # Solver Test
 
 def SolverTest():
-    for i in [VDP(), FN(), ML(), IZ(), HR(), HH()]:
+    for i in [VDP(), LIF(), FN(), ML(), IZ(), HR(), HH()]:
         test = i
         print(test.name, test.xaxis, test.yaxis, test.x0, test.t0, test.t1, test.dt, test.t_array, test.equations)
         for j in [euler(test.name, test.xaxis, test.yaxis, test.x0, test.dt, test.t_array, test.equations),

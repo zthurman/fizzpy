@@ -4,7 +4,7 @@
 # GNU GPLv2
 
 from __future__ import division
-from NeuroFizzModel import VDP, FN, ML, IZ, HR, HH
+from NeuroFizzModel import VDP, LIF, FN, ML, IZ, HR, HH
 from NeuroFizzSolver import euler, ord2, rk4
 import time as tm
 
@@ -17,6 +17,12 @@ eqns = VDP()
 solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
 membranepotential = solvedmodel.evaluate()
 print(" %s seconds for VDP against euler" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = LIF()
+solvedmodel = euler(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for LIF against euler" % (tm.time() - starttime))
 
 starttime = tm.time()
 eqns = FN()
@@ -57,6 +63,12 @@ membranepotential = solvedmodel.evaluate()
 print(" %s seconds for VDP against ord2" % (tm.time() - starttime))
 
 starttime = tm.time()
+eqns = LIF()
+solvedmodel = ord2(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for LIF against euler" % (tm.time() - starttime))
+
+starttime = tm.time()
 eqns = FN()
 solvedmodel = ord2(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
 membranepotential = solvedmodel.evaluate()
@@ -93,6 +105,12 @@ eqns = VDP()
 solvedmodel = rk4(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
 membranepotential = solvedmodel.evaluate()
 print(" %s seconds for VDP against rk4" % (tm.time() - starttime))
+
+starttime = tm.time()
+eqns = LIF()
+solvedmodel = rk4(eqns.name, eqns.xaxis, eqns.yaxis, eqns.x0, eqns.dt, eqns.t_array, eqns.equations)
+membranepotential = solvedmodel.evaluate()
+print(" %s seconds for LIF against euler" % (tm.time() - starttime))
 
 starttime = tm.time()
 eqns = FN()

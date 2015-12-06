@@ -56,7 +56,7 @@ class LIF(Model):
         self.dt = dt
         self.t_array = np.arange(t0, t1, dt)
 
-    def equations(self, u_th=-55, u_reset=-75, u_eq=-65, R=10, I=1.2):
+    def equations(self, x, t, u_th=-55, u_reset=-75, u_eq=-65, R=10, I=1.2):
         if x[0] >= u_th:
             x[0] = u_reset
         return np.array([-(x[0] - u_eq) + R*I])
