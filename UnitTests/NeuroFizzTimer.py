@@ -19,7 +19,9 @@ def model_timer():
             starttime = tm.time()
             solvedmodel = j
             dynamicalvariable = solvedmodel.evaluate()
+            endtime = tm.time()
             print "{0} seconds for {1} against {2}" .format((tm.time() - starttime), solvedmodel.model_name, solvedmodel.name)
+            # return starttime, endtime
 
 timed = model_timer()
 print timed

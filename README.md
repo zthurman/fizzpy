@@ -15,7 +15,7 @@ Things to Note:
 This is a work in progress. Every attempt will be made to make sure that master is always in a usable state.
 
 This library is licensed under the GNU GPLv2. As such it is copylefted and meant for free use, modification and re-distribution subject to the terms of the Free Software Foundation,
-Inc.
+Inc. Reference full copyright in Copyright section below.
 
 User Manual:
 =============
@@ -32,3 +32,24 @@ Reference NeuroFizzPlot for a full example of how to use NeuroFizzModel and Neur
 Requirements:
 =============
 -Refer to requirements.txt for the library dependencies
+
+Copyright:
+=============
+
+NeuroFizzMath - Computational Neuroscience Toolkit
+
+Copyright (C) 2015  Zechariah Thurman
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
