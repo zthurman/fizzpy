@@ -38,48 +38,38 @@ print vdp[0]
 
 # Create a plot for the time to evaluate each model-solver combination
 
-# def do_timeplot():
-#     timed = model_timer()
-#     times = []
-#     for i in np.arange(0, 20):
-#         model = timed[i]
-#         times = model[0]
-#         print times
+def do_timeplots():
+    timed = model_timer()
+    times = []
+    my_xticks = []
+    for i in np.arange(0, 20, 3):
+        model = timed[i]
+        times += [(model[0])]
 
-# Euler plots
+    plt.figure()
+    plt.plot(times, '.')
+    plt.savefig('euler.png')
 
-timed = model_timer()
-times = []
-my_xticks = []
-for i in np.arange(0, 20, 3):
-    model = timed[i]
-    times += [(model[0])]
-    # my_xticks += [model[1]]
+    times = []
+    for i in np.arange(1, 20, 3):
+        model = timed[i]
+        times += [(model[0])]
 
-plt.figure()
-# plt.xticks(my_xticks)
-plt.plot(times, '.')
-plt.savefig('euler.png')
+    plt.figure()
+    plt.plot(times, '.')
+    plt.savefig('ord2.png')
 
-# Second Order Plots
+    times = []
+    for i in np.arange(2, 21, 3):
+        model = timed[i]
+        times += [(model[0])]
 
-times = []
-for i in np.arange(1, 20, 3):
-    model = timed[i]
-    times += [(model[0])]
+    plt.figure()
+    plt.plot(times, '.')
+    plt.savefig('rk4.png')
+    return
 
-plt.figure()
-plt.plot(times, '.')
-plt.savefig('ord2.png')
+print do_timeplots()
 
-# Fourth Order Plots
 
-times = []
-for i in np.arange(2, 21, 3):
-    model = timed[i]
-    times += [(model[0])]
-
-plt.figure()
-plt.plot(times, '.')
-plt.savefig('rk4.png')
 
