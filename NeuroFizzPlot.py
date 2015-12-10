@@ -73,7 +73,7 @@ print do_fftplot()
 # Now we do ALL OF THE THINGS! (With the rk4 model to make sure ML doesn't look funky)
 
 
-def do_ALLPLOTS():
+def do_ALLTPLOTS():
     for i in [VDP(), LIF(), FN(), ML(), IZ(), HR(), HH()]:
         model = i
         solvedmodel = rk4(model.name, model.xaxis, model.yaxis, model.x0, model.dt, model.t_array, model.equations)
@@ -90,5 +90,5 @@ def do_ALLPLOTS():
         plt.show()
     return
 
-print do_ALLPLOTS()
+print do_ALLTPLOTS()
 

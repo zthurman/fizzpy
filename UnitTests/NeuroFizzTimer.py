@@ -46,13 +46,40 @@ print vdp[0]
 #         times = model[0]
 #         print times
 
+# Euler plots
+
 timed = model_timer()
 times = []
-for i in np.arange(0, 20):
+my_xticks = []
+for i in np.arange(0, 20, 3):
     model = timed[i]
-    times += model[0]
-    xaxis = '{0} and {1}' .format(model[1], model[2])
+    times += [(model[0])]
+    # my_xticks += [model[1]]
+
+plt.figure()
+# plt.xticks(my_xticks)
+plt.plot(times, '.')
+plt.savefig('euler.png')
+
+# Second Order Plots
+
+times = []
+for i in np.arange(1, 20, 3):
+    model = timed[i]
+    times += [(model[0])]
 
 plt.figure()
 plt.plot(times, '.')
-plt.savefig('test.png')
+plt.savefig('ord2.png')
+
+# Fourth Order Plots
+
+times = []
+for i in np.arange(2, 21, 3):
+    model = timed[i]
+    times += [(model[0])]
+
+plt.figure()
+plt.plot(times, '.')
+plt.savefig('rk4.png')
+
