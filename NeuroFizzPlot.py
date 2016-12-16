@@ -26,8 +26,6 @@ def do_tplot():
     plt.savefig('HH_tplot.png')
     return
 
-print(do_tplot())
-
 
 # Second example for phase plot of same model
 
@@ -44,8 +42,6 @@ def do_pplot():
     plt.ylabel('Membrane Potential')
     plt.savefig('HH_pplot.png')
     return
-
-print(do_pplot())
 
 
 # Third example for fft plot of same model
@@ -73,6 +69,8 @@ def do_fftplot():
     plt.savefig('HH_fftplot.png')
     return
 
-print(do_fftplot())
 
-
+if __name__ == '__main__':
+    print(do_tplot())
+    print(do_pplot())
+    print(do_fftplot())

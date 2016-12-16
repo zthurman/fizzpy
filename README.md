@@ -42,6 +42,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [ ] Resolve all non-abandoned or non-asserted status known issues
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
+* [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
 * [ ] Figure out how to OOP all this sh*t
 * [ ] Add approximately a bajillion other models
 * [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement might be gained
