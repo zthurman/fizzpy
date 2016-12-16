@@ -17,7 +17,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
     -'euler', for a simple numerical solver using Euler's method  
     -'ord2', for a second order Euler's method solver  
     -'rk4', for a fourth order Runge-Kutte solver  
-* Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutte:
+* Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutte:  
     solutionArray = solutionGenerator('HH', 'rk4')
 * Stock project plotter can be used, or can feed solution arrays into custom plotter
 
