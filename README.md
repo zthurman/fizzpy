@@ -34,8 +34,8 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [x] Determine that GUI's are stupid and backend projects manipulating data arrays are more fun
 * [x] Because so much work was done on GUI, don't delete code just let it fade into obscurity in Archive directory
 * [x] Give OOP and modularity a try all at once after getting mad at PyQT and fail miserably
-* [x] Ragequit ┻━┻ ︵ヽヽ(`Д´)ﾉ︵﻿ ┻━┻
-* [x] Let project sit for a year and simmer at the back of mind while immersing self in new employment
+* [x] Ragequit ┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻
+* [x] Let project sit for a year and gently fester and putrify at the back of mind while immersing self in new employment
 * [x] Come back thinking that the conceptual ideology behind of the practice of programming is now grasped 
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
