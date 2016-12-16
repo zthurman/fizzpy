@@ -53,7 +53,7 @@ Every effort will be made to keep the items on this list as few as possible with
 Issue | Status
 ------------ | -------------
 The Leaky Integrate and Fire model is borked, should be faster.  | In Progress
-Plotter isn't working yet.                                       | In Progress
+Plotter isn't working.                                           | Resolved
 HH membrane potential needs to be multiplied by -1 to be plotted.| Assessing Implications
 There's some gnarlymaths in this project, there will be bugs.    | Assertion
 The PyQT GUI is borked beyond repair, dont use it.               | Abandoned

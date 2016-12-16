@@ -94,7 +94,7 @@ def Euler(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
         X[i + 1] = X[i] + k1 * dt
-    return X
+    return X, tsp
 
 
 def SecondOrder(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
@@ -106,7 +106,7 @@ def SecondOrder(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
         k1 = model(X[i], tsp[i])
         k2 = model(X[i], tsp[i]) + k1 * (dt / 2)
         X[i + 1] = X[i] + k2 * dt
-    return X
+    return X, tsp
 
 
 def RungeKutte4(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
@@ -120,7 +120,7 @@ def RungeKutte4(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
         k3 = model(X[i] + dt/2*k2, tsp[i] + dt/2)
         k4 = model(X[i] + dt*k3, tsp[i] + dt)
         X[i+1] = X[i] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
-    return X
+    return X, tsp
 
 
 def VanDerPol(x, t):
@@ -179,13 +179,13 @@ def solutionGenerator(modelname, solvername):
             newsolvername = solverMapper(solvername)
             if modelSelector(modelname) in [1, 2, 3, 4, 5]:
                 solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution
+                return solution[0], solution[1]
             elif modelSelector(modelname) == 6:
                 solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution
+                return solution[0], solution[1]
             elif modelSelector(modelname) == 7:
                 solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution
+                return solution[0], solution[1]
             else:
                 solution = "Cheese please!"
                 return solution
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     startTime = tm.time()
     solutionArray = solutionGenerator('HH', 'rk4')
     endTime = tm.time()
-    timeTaken = (endTime - startTime)
+    elapsedTime = (endTime - startTime)
     print(solutionArray)
-    print('The solver took ' + str(timeTaken) + ' seconds to execute. Which is faster than '
-                                                'I could do it on paper so we\'ll call it good.')
+    print('The solver took ' + str(elapsedTime) + ' seconds to execute. Which is faster than '
+                                                  'I could do it on paper so we\'ll call it good.')
