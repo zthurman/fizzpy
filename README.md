@@ -44,7 +44,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [ ] Figure out how to OOP all this sh*t
 * [ ] Add approximately a bajillion other models
 * [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement might be gained
-* [ ] Write a paper outlining the project in its painful technical details and do a speed thorough speed analysis
+* [ ] Write a paper outlining the project in its painful technical details and do a thorough speed analysis
 
 ## Known Issues
 Every effort will be made to keep the items on this list as few as possible with additional information regarding the issue status.
