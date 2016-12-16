@@ -7,6 +7,7 @@
 from __future__ import division
 import numpy as np
 import math as mt
+import time as tm
 
 
 def modelSelector(modelname):
@@ -113,12 +114,12 @@ def RungeKutte4(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
     nsize = np.size(tsp)
     X = np.empty((nsize, np.size(x0)))
     X[0] = x0
-    for i in range(1, nsize):
-        k1 = model(X[i-1], tsp[i-1])
-        k2 = model(X[i-1] + dt/2*k1, tsp[i-1] + dt/2)
-        k3 = model(X[i-1] + dt/2*k2, tsp[i-1] + dt/2)
-        k4 = model(X[i-1] + dt*k3, tsp[i-1] + dt)
-        X[i] = X[i-1] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
+    for i in range(1, nsize - 1):
+        k1 = model(X[i], tsp[i])
+        k2 = model(X[i] + dt/2*k1, tsp[i] + dt/2)
+        k3 = model(X[i] + dt/2*k2, tsp[i] + dt/2)
+        k4 = model(X[i] + dt*k3, tsp[i] + dt)
+        X[i+1] = X[i] + dt/6*(k1 + 2*k2 + 2*k3 + k4)
     return X
 
 
@@ -191,13 +192,10 @@ def solutionGenerator(modelname, solvername):
 
 
 if __name__ == '__main__':
-    i = modelMapper(modelSelector('IZ'))
-    print(i)
-    j = solverMapper(solverSelector('ord2'))
-    print(j)
-    x = modelSelector('HR')
-    print(x)
-    y = solverSelector('ord2')
-    print(y)
-    z = solutionGenerator('HH', 'rk4')
-    print(z)
+    startTime = tm.time()
+    solutionArray = solutionGenerator('HH', 'rk4')
+    endTime = tm.time()
+    timeTaken = (endTime - startTime)
+    print(solutionArray)
+    print('The solver took ' + str(timeTaken) + ' seconds to execute. Which is faster than '
+                                                'I could do it on paper so we\'ll call it good.')
