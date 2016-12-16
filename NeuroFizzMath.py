@@ -3,13 +3,10 @@
 # Copyright (C) 2016 Zechariah Thurman
 # GNU GPLv2
 
+
 from __future__ import division
 import numpy as np
 import math as mt
-
-
-# class Neuron:
-#     def __init__(self):
 
 
 def modelSelector(modelname):
@@ -44,6 +41,48 @@ def solverSelector(solvername):
         return 3
     else:
         return 0
+
+
+def modelMapper(modelname):
+    if modelname in ['VDP', 'LIF', 'FN', 'ML', 'IZ', 'HR', 'HH']:
+        if modelname == 'VDP':
+            fullmodelname = VanDerPol
+            return fullmodelname
+        elif modelname == 'LIF':
+            fullmodelname = LeakyIntegrateandFire
+            return fullmodelname
+        elif modelname == 'FN':
+            fullmodelname = FitzhughNagumo
+            return fullmodelname
+        elif modelname == 'ML':
+            fullmodelname = MorrisLecar
+            return fullmodelname
+        elif modelname == 'IZ':
+            fullmodelname = Izhikevich
+            return fullmodelname
+        elif modelname == 'HR':
+            fullmodelname = HindmarshRose
+            return fullmodelname
+        elif modelname == 'HH':
+            fullmodelname = HodgkinHuxley
+            return fullmodelname
+        else:
+            return 'modelMapper is borked!'
+
+
+def solverMapper(solvername):
+    if solvername in ['euler', 'ord2', 'rk4']:
+        if solvername == 'euler':
+            fullsolvername = Euler
+            return fullsolvername
+        elif solvername == 'ord2':
+            fullsolvername = SecondOrder
+            return fullsolvername
+        elif solvername == 'rk4':
+            fullsolvername = RungeKutte4
+            return fullsolvername
+        else:
+            return 'solverMapper is borked!'
 
 
 def Euler(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
@@ -135,68 +174,16 @@ def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.61
 def solutionGenerator(modelname, solvername):
     if int(modelSelector(modelname)) and modelSelector(modelname) in np.arange(1, 8):
         if int(solverSelector(solvername)) and solverSelector(solvername) in np.arange(1, 4):
-            if solverSelector(solvername) == 1 and modelSelector(modelname) == 1:
-                solution = Euler(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=VanDerPol)
+            newmodelname = modelMapper(modelname)
+            newsolvername = solverMapper(solvername)
+            if modelSelector(modelname) in [1, 2, 3, 4, 5]:
+                solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
                 return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 1:
-                solution = SecondOrder(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=VanDerPol)
+            elif modelSelector(modelname) == 6:
+                solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
                 return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 1:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01]), t1=100, dt=0.01, model=VanDerPol)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 2:
-                solution = Euler(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=LeakyIntegrateandFire)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 2:
-                solution = SecondOrder(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=LeakyIntegrateandFire)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 2:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=LeakyIntegrateandFire)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 3:
-                solution = Euler(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=FitzhughNagumo)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 3:
-                solution = SecondOrder(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=FitzhughNagumo)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 3:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=FitzhughNagumo)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 4:
-                solution = Euler(x0=np.array([0, 0]), t1=100, dt=0.02, model=MorrisLecar)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 4:
-                solution = SecondOrder(x0=np.array([0, 0]), t1=100, dt=0.02, model=MorrisLecar)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 4:
-                solution = RungeKutte4(x0=np.array([0, 0]), t1=100, dt=0.02, model=MorrisLecar)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 5:
-                solution = Euler(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=Izhikevich)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 5:
-                solution = SecondOrder(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=Izhikevich)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 5:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=Izhikevich)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 6:
-                solution = Euler(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HindmarshRose)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 6:
-                solution = SecondOrder(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HindmarshRose)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 6:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HindmarshRose)
-                return solution
-            elif solverSelector(solvername) == 1 and modelSelector(modelname) == 7:
-                solution = Euler(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HodgkinHuxley)
-                return solution
-            elif solverSelector(solvername) == 2 and modelSelector(modelname) == 7:
-                solution = SecondOrder(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HodgkinHuxley)
-                return solution
-            elif solverSelector(solvername) == 3 and modelSelector(modelname) == 7:
-                solution = RungeKutte4(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=HodgkinHuxley)
+            elif modelSelector(modelname) == 7:
+                solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
                 return solution
             else:
                 solution = "Cheese please!"
@@ -204,9 +191,13 @@ def solutionGenerator(modelname, solvername):
 
 
 if __name__ == '__main__':
-    x = modelSelector('ML')
+    i = modelMapper(modelSelector('IZ'))
+    print(i)
+    j = solverMapper(solverSelector('ord2'))
+    print(j)
+    x = modelSelector('HR')
     print(x)
-    y = solverSelector('rk4')
+    y = solverSelector('ord2')
     print(y)
     z = solutionGenerator('HH', 'rk4')
     print(z)
