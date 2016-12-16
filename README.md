@@ -5,18 +5,18 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
-* Valid model inputs at this time are: 
-    -'VDP', for the Van Der Pol oscillator
-    -'LIF', for the Leaky Integrate and Fire neuron model
-    -'FN', for the Fitzhugh-Nagumo neuron model
-    -'ML', for the Morris-Lecar neuron model
-    -'IZ', for the Izhikevich neuron model
-    -'HR', for the Hindmarsh-Rose neuron model
-    -'HH', for the Hodgkin-Huxley neuron model
-* Valid solver inputs at this time are:
-    -'euler', for a simple numerical solver using Euler's method
-    -'ord2', for a second order Euler's method solver
-    -'rk4', for a fourth order Runge-Kutte solver
+* Valid model inputs at this time are:  
+    -'VDP', for the Van Der Pol oscillator  
+    -'LIF', for the Leaky Integrate and Fire neuron model  
+    -'FN', for the Fitzhugh-Nagumo neuron model  
+    -'ML', for the Morris-Lecar neuron model  
+    -'IZ', for the Izhikevich neuron model  
+    -'HR', for the Hindmarsh-Rose neuron model  
+    -'HH', for the Hodgkin-Huxley neuron model   
+* Valid solver inputs at this time are:  
+    -'euler', for a simple numerical solver using Euler's method  
+    -'ord2', for a second order Euler's method solver  
+    -'rk4', for a fourth order Runge-Kutte solver  
 * Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutte:
     solutionArray = solutionGenerator('HH', 'rk4')
 * Stock project plotter can be used, or can feed solution arrays into custom plotter
