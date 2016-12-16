@@ -19,7 +19,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
     -'rk4', for a fourth order Runge-Kutte solver  
 * Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutte:  
     solutionArray = solutionGenerator('HH', 'rk4')
-* Stock project plotter can be used, or can feed solution arrays into custom plotter
+* Stock project plotter can be used to generate time plot, phase plot or power spectrum, or can feed solution arrays into a custom plotter
 
 ## Punch List/Project Lifecycle Roadmap
 * [x] Try to extend collegiate senior project to more than one neuron model
