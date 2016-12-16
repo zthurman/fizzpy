@@ -34,24 +34,28 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [x] Determine that GUI's are stupid and backend projects manipulating data arrays are more fun
 * [x] Because so much work was done on GUI, don't delete code just let it fade into obscurity in Archive directory
 * [x] Give OOP and modularity a try all at once after getting mad at PyQT and fail miserably
-* [x] Ragequit (┛◉Д◉)┛彡┻━┻
+* [x] Ragequit ┻━┻ ︵ヽヽ(`Д´)ﾉ︵﻿ ┻━┻
 * [x] Let project sit for a year and simmer at the back of mind while immersing self in new employment
 * [x] Come back thinking that the conceptual ideology behind of the practice of programming is now grasped 
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
+* [ ] Resolve all non-abandoned or non-asserted status known issues
+* [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to OOP all this sh*t
 * [ ] Add approximately a bajillion other models
-* [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement can be gained
-
+* [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement might be gained
+* [ ] Write a paper outlining the project in its painful technical details and do a speed thorough speed analysis
 
 ## Known Issues
 Every effort will be made to keep the items on this list as few as possible with additional information regarding the issue status.
 
 Issue | Status
 ------------ | -------------
-The PyQT GUI is borked beyond repair, dont use it.             | Abandoned
-The Leaky Integrate and Fire model is borked, should be faster.| In Progress
-There's some gnarlymaths in this project, there will be bugs.  | Assertion
+The Leaky Integrate and Fire model is borked, should be faster.  | In Progress
+Plotter isn't working yet.                                       | In Progress
+HH membrane potential needs to be multiplied by -1 to be plotted.| Assessing Implications
+There's some gnarlymaths in this project, there will be bugs.    | Assertion
+The PyQT GUI is borked beyond repair, dont use it.               | Abandoned
 
 ## Copyright:
 
