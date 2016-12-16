@@ -6,14 +6,14 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
 * Valid model inputs at this time are: 
-    -'VDP', 
-    -'LIF', 
-    -'FN', 
-    -'ML', 
-    -'IZ', 
-    -'HR', 
-    -'HH'
-    
+>-'VDP', for the Van Der Pol oscillator  
+>-'LIF', for the Leaky Integrate and Fire neuron model  
+>-'FN', for the Fitzhugh-Nagumo neuron model  
+>-'ML', for the Morris-Lecar neuron model  
+>-'IZ', for the Izhikevich neuron model  
+>-'HR', for the Hindmarsh-Rose neuron model  
+>-'HH', for the Hodgkin-Huxley neuron model
+
 
 ## Known issues
 Every effort will be made to keep the items on this list as few as possible with additional information regarding the issue status.
