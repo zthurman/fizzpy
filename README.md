@@ -42,8 +42,9 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 * [x] Come back thinking that the conceptual ideology behind of the practice of programming is now grasped 
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
-* [x] Resolve all true, non-abandoned or non-asserted status known issues
+* [x] Resolve all non-abandoned or non-asserted status known issues
 * [x] Analyze execution speed for all models
+* [ ] Learn how to utilize modularity in project, because adding a new model in the old structure was a hassle
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
@@ -57,7 +58,7 @@ Every effort will be made to keep the items on this list as few as possible with
 
 Issue | Status
 ------------ | -------------
-The Leaky Integrate and Fire model is borked, should be faster.  | False
+The Leaky Integrate and Fire model is borked, should be faster.  | Resolved
 Plotter isn't working.                                           | Resolved
 HH membrane potential needs to be multiplied by -1 to be plotted.| Assertion
 There's some gnarlymaths in this project, there will be bugs.    | Assertion
