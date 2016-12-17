@@ -1,12 +1,13 @@
 # NeuroFizzMath
 
-Welcome to NeuroFizzMath, a python library for numerically solving various differential equations.
+Welcome to NeuroFizzMath, a library for numerically solving various differential equations.
 
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
+    -'SHM', for damped simple harmonic motion  
     -'LIF', for the Leaky Integrate and Fire neuron model  
     -'FN', for the Fitzhugh-Nagumo neuron model  
     -'ML', for the Morris-Lecar neuron model  
@@ -41,8 +42,8 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [x] Come back thinking that the conceptual ideology behind of the practice of programming is now grasped 
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
-* [x] Resolve all non-abandoned or non-asserted status known issues
-* [ ] Analyze execution speed for all models
+* [x] Resolve all true, non-abandoned or non-asserted status known issues
+* [x] Analyze execution speed for all models
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
@@ -56,28 +57,8 @@ Every effort will be made to keep the items on this list as few as possible with
 
 Issue | Status
 ------------ | -------------
-The Leaky Integrate and Fire model is borked, should be faster.  | Meh
+The Leaky Integrate and Fire model is borked, should be faster.  | False
 Plotter isn't working.                                           | Resolved
 HH membrane potential needs to be multiplied by -1 to be plotted.| Assertion
 There's some gnarlymaths in this project, there will be bugs.    | Assertion
 The PyQT GUI is borked beyond repair, dont use it.               | Abandoned
-
-## Copyright:
-
-NeuroFizzMath - Numerical Differential Equation Solving Toolkit
-
-Copyright (C) 2016  Zechariah Thurman
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.

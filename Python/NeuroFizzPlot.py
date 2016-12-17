@@ -5,9 +5,11 @@
 
 
 from __future__ import division
-from NeuroFizzMath import solutionGenerator
+
 import matplotlib.pyplot as plt
 import numpy as np
+
+from Python.NeuroFizzMath import solutionGenerator
 
 
 # Most complicated example, time plot Hodgkin-Huxley

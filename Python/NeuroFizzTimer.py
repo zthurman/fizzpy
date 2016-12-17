@@ -5,10 +5,10 @@
 
 
 from __future__ import division
-from NeuroFizzMath import solutionGenerator
-import numpy as np
-import math as mt
+
 import time as tm
+
+from Python.NeuroFizzMath import solutionGenerator
 
 
 def solutionTimer(numberoftimestorun, modelname, solvername):
