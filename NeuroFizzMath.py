@@ -10,92 +10,6 @@ import math as mt
 import time as tm
 
 
-def modelSelector(modelname):
-    if modelname is None:
-        raise TypeError
-    if modelname == 'VDP':
-        return 1
-    elif modelname == 'LIF':
-        return 2
-    elif modelname == 'FN':
-        return 3
-    elif modelname == 'ML':
-        return 4
-    elif modelname == 'IZ':
-        return 5
-    elif modelname == 'HR':
-        return 6
-    elif modelname == 'RB':
-        return 7
-    elif modelname == 'HH':
-        return 8
-    elif modelname == 'RI':
-        return 9
-    else:
-        return 0
-
-
-def solverSelector(solvername):
-    if solvername is None:
-        raise TypeError
-    if solvername == 'euler':
-        return 1
-    elif solvername == 'ord2':
-        return 2
-    elif solvername == 'rk4':
-        return 3
-    else:
-        return 0
-
-
-def modelMapper(modelname):
-    if modelname in ['VDP', 'LIF', 'FN', 'ML', 'IZ', 'HR', 'RB', 'HH', 'RI']:
-        if modelname == 'VDP':
-            fullmodelname = VanDerPol
-            return fullmodelname
-        elif modelname == 'LIF':
-            fullmodelname = LeakyIntegrateandFire
-            return fullmodelname
-        elif modelname == 'FN':
-            fullmodelname = FitzhughNagumo
-            return fullmodelname
-        elif modelname == 'ML':
-            fullmodelname = MorrisLecar
-            return fullmodelname
-        elif modelname == 'IZ':
-            fullmodelname = Izhikevich
-            return fullmodelname
-        elif modelname == 'HR':
-            fullmodelname = HindmarshRose
-            return fullmodelname
-        elif modelname == 'RB':
-            fullmodelname = Robbins
-            return fullmodelname
-        elif modelname == 'HH':
-            fullmodelname = HodgkinHuxley
-            return fullmodelname
-        elif modelname == 'RI':
-            fullmodelname = Rikitake
-            return fullmodelname
-        else:
-            return 'modelMapper is borked!'
-
-
-def solverMapper(solvername):
-    if solvername in ['euler', 'ord2', 'rk4']:
-        if solvername == 'euler':
-            fullsolvername = Euler
-            return fullsolvername
-        elif solvername == 'ord2':
-            fullsolvername = SecondOrder
-            return fullsolvername
-        elif solvername == 'rk4':
-            fullsolvername = RungeKutte4
-            return fullsolvername
-        else:
-            return 'solverMapper is borked!'
-
-
 def Euler(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
     tsp = np.arange(t0, t1, dt)
     nsize = np.size(tsp)
@@ -142,6 +56,11 @@ def LeakyIntegrateandFire(x, t, u_th=-55, u_reset=-75, u_eq=-65, r=10, i=1.2):
     if x[0] >= u_th:
         x[0] = u_reset
     return np.array([-(x[0] - u_eq) + r*i])
+
+
+def DampedSHM(x, t, r=0.035, s=0.5, m=0.2):
+    return np.array([x[1],
+                     (-r*x[1] - s*x[0])/m])
 
 
 def FitzhughNagumo(x, t, a=0.75, b=0.8, c=3, i=-0.40):
@@ -197,19 +116,140 @@ def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
                      g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
 
 
+def modelSelector(modelname):
+    if modelname is None:
+        raise TypeError
+    if modelname == 'VDP':
+        return 1
+    elif modelname == 'SHM':
+        return 2
+    elif modelname == 'LIF':
+        return 3
+    elif modelname == 'FN':
+        return 4
+    elif modelname == 'ML':
+        return 5
+    elif modelname == 'IZ':
+        return 6
+    elif modelname == 'HR':
+        return 7
+    elif modelname == 'RB':
+        return 8
+    elif modelname == 'HH':
+        return 9
+    elif modelname == 'RI':
+        return 10
+    else:
+        return 0
+
+
+def solverSelector(solvername):
+    if solvername is None:
+        raise TypeError
+    if solvername == 'euler':
+        return 1
+    elif solvername == 'ord2':
+        return 2
+    elif solvername == 'rk4':
+        return 3
+    else:
+        return 0
+
+
+def modelMapper(modelname):
+    if modelname in ['VDP', 'SHM', 'LIF', 'FN', 'ML', 'IZ', 'HR', 'RB', 'HH', 'RI']:
+        if modelname == 'VDP':
+            fullmodelname = VanDerPol
+            return fullmodelname
+        elif modelname == 'SHM':
+            fullmodelname = DampedSHM
+            return fullmodelname
+        elif modelname == 'LIF':
+            fullmodelname = LeakyIntegrateandFire
+            return fullmodelname
+        elif modelname == 'FN':
+            fullmodelname = FitzhughNagumo
+            return fullmodelname
+        elif modelname == 'ML':
+            fullmodelname = MorrisLecar
+            return fullmodelname
+        elif modelname == 'IZ':
+            fullmodelname = Izhikevich
+            return fullmodelname
+        elif modelname == 'HR':
+            fullmodelname = HindmarshRose
+            return fullmodelname
+        elif modelname == 'RB':
+            fullmodelname = Robbins
+            return fullmodelname
+        elif modelname == 'HH':
+            fullmodelname = HodgkinHuxley
+            return fullmodelname
+        elif modelname == 'RI':
+            fullmodelname = Rikitake
+            return fullmodelname
+        else:
+            return 'modelMapper is borked!'
+
+
+def solverMapper(solvername):
+    if solvername in ['euler', 'ord2', 'rk4']:
+        if solvername == 'euler':
+            fullsolvername = Euler
+            return fullsolvername
+        elif solvername == 'ord2':
+            fullsolvername = SecondOrder
+            return fullsolvername
+        elif solvername == 'rk4':
+            fullsolvername = RungeKutte4
+            return fullsolvername
+        else:
+            return 'solverMapper is borked!'
+
+
+def modelClassifier(modelname):
+    # evaluate dimension of the model
+    pass
+
+
+def initMapper(modelname):
+    # map inits for the model
+    pass
+
+
+def timeMapper(modelname):
+    # map times for the model
+    pass
+
+
+def stepMapper(modelname):
+    # map steps for the model
+    pass
+
+
+def modelLister(modelname):
+    # list out all of the models
+    pass
+
+
+def solverLister(modelname):
+    # list out all of the models
+    pass
+
+
 def solutionGenerator(modelname, solvername):
     newmodelname = modelMapper(modelname)
     newsolvername = solverMapper(solvername)
-    if modelSelector(modelname) in [1, 2, 3, 4, 5]:
+    if modelSelector(modelname) in [1, 2, 3, 4, 5, 6]:
         solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
-    elif modelSelector(modelname) in [6, 7]:
+    elif modelSelector(modelname) in [7, 8]:
         solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
-    elif modelSelector(modelname) == 8:
+    elif modelSelector(modelname) == 9:
         solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
-    elif modelSelector(modelname) == 9:
+    elif modelSelector(modelname) == 10:
         solution = newsolvername(x0=np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1=100, dt=0.0001, model=newmodelname)
         return solution[0], solution[1]
     else:
@@ -219,7 +259,7 @@ def solutionGenerator(modelname, solvername):
 
 if __name__ == '__main__':
     startTime = tm.time()
-    solutionArray = solutionGenerator('HH', 'euler')
+    solutionArray = solutionGenerator('SHM', 'rk4')
     endTime = tm.time()
     elapsedTime = (endTime - startTime)
     print(solutionArray)
