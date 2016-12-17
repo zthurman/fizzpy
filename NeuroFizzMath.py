@@ -25,8 +25,12 @@ def modelSelector(modelname):
         return 5
     elif modelname == 'HR':
         return 6
-    elif modelname == 'HH':
+    elif modelname == 'RB':
         return 7
+    elif modelname == 'HH':
+        return 8
+    elif modelname == 'RI':
+        return 9
     else:
         return 0
 
@@ -45,7 +49,7 @@ def solverSelector(solvername):
 
 
 def modelMapper(modelname):
-    if modelname in ['VDP', 'LIF', 'FN', 'ML', 'IZ', 'HR', 'HH']:
+    if modelname in ['VDP', 'LIF', 'FN', 'ML', 'IZ', 'HR', 'RB', 'HH', 'RI']:
         if modelname == 'VDP':
             fullmodelname = VanDerPol
             return fullmodelname
@@ -64,8 +68,14 @@ def modelMapper(modelname):
         elif modelname == 'HR':
             fullmodelname = HindmarshRose
             return fullmodelname
+        elif modelname == 'RB':
+            fullmodelname = Robbins
+            return fullmodelname
         elif modelname == 'HH':
             fullmodelname = HodgkinHuxley
+            return fullmodelname
+        elif modelname == 'RI':
+            fullmodelname = Rikitake
             return fullmodelname
         else:
             return 'modelMapper is borked!'
@@ -159,6 +169,12 @@ def HindmarshRose(x, t, a=1.0, b=3.0, c=1.0, d=5.0, r=0.006, s=4.0, i=1.3, xnot=
                     r*(s*(x[0] - xnot) - x[2])])
 
 
+def Robbins(x, t, V=1, sigma=5, R=13):
+    return np.array([R - x[1]*x[2] - V*x[0],
+                    x[0]*x[2] - x[1],
+                    sigma*(x[1] - x[2])])
+
+
 def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
     alpha_n = (0.01*(x[0]+10))/(mt.exp((x[0]+10)/10)-1)
     beta_n = 0.125*mt.exp(x[0]/80)
@@ -172,28 +188,38 @@ def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.61
                     alpha_h*(1-x[3]) - beta_h*x[3]])
 
 
+def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
+    return np.array([r*(x[3] - x[0]),
+                     r*(x[2] - x[1]),
+                     x[0]*x[4] + m*x[1] - (1 + m)*x[2],
+                     x[1]*x[5] + m*x[0] - (1 + m)*x[3],
+                     g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
+                     g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
+
+
 def solutionGenerator(modelname, solvername):
-    if int(modelSelector(modelname)) and modelSelector(modelname) in np.arange(1, 8):
-        if int(solverSelector(solvername)) and solverSelector(solvername) in np.arange(1, 4):
-            newmodelname = modelMapper(modelname)
-            newsolvername = solverMapper(solvername)
-            if modelSelector(modelname) in [1, 2, 3, 4, 5]:
-                solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution[0], solution[1]
-            elif modelSelector(modelname) == 6:
-                solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution[0], solution[1]
-            elif modelSelector(modelname) == 7:
-                solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
-                return solution[0], solution[1]
-            else:
-                solution = "Cheese please!"
-                return solution
+    newmodelname = modelMapper(modelname)
+    newsolvername = solverMapper(solvername)
+    if modelSelector(modelname) in [1, 2, 3, 4, 5]:
+        solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        return solution[0], solution[1]
+    elif modelSelector(modelname) in [6, 7]:
+        solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        return solution[0], solution[1]
+    elif modelSelector(modelname) == 8:
+        solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        return solution[0], solution[1]
+    elif modelSelector(modelname) == 9:
+        solution = newsolvername(x0=np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1=100, dt=0.0001, model=newmodelname)
+        return solution[0], solution[1]
+    else:
+        solution = "Cheese please!"
+        return solution
 
 
 if __name__ == '__main__':
     startTime = tm.time()
-    solutionArray = solutionGenerator('HH', 'rk4')
+    solutionArray = solutionGenerator('RK', 'rk4')
     endTime = tm.time()
     elapsedTime = (endTime - startTime)
     print(solutionArray)
