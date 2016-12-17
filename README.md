@@ -40,6 +40,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
 * [ ] Resolve all non-abandoned or non-asserted status known issues
+* [ ] Analyze execution speed for all models
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance

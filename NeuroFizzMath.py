@@ -219,7 +219,7 @@ def solutionGenerator(modelname, solvername):
 
 if __name__ == '__main__':
     startTime = tm.time()
-    solutionArray = solutionGenerator('RK', 'rk4')
+    solutionArray = solutionGenerator('HH', 'euler')
     endTime = tm.time()
     elapsedTime = (endTime - startTime)
     print(solutionArray)
