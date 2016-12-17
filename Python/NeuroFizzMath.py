@@ -5,9 +5,8 @@
 
 
 from __future__ import division
-import numpy as np
-import math as mt
-import time as tm
+from numpy import array, arange, size, empty
+from time import time
 
 
 # List out available models with dimension
@@ -18,10 +17,10 @@ modelList = [['LIF', 1], ['VDP', 2], ['SHM', 2],  ['FN', 2], ['ML', 2], ['IZ', 2
 
 # Solver functions
 
-def Euler(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
-    tsp = np.arange(t0, t1, dt)
-    nsize = np.size(tsp)
-    X = np.empty((nsize, np.size(x0)))
+def Euler(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
+    tsp = arange(t0, t1, dt)
+    nsize = size(tsp)
+    X = empty((nsize, size(x0)))
     X[0] = x0
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
@@ -29,10 +28,10 @@ def Euler(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
     return X, tsp
 
 
-def SecondOrder(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
-    tsp = np.arange(t0, t1, dt)
-    nsize = np.size(tsp)
-    X = np.empty((nsize, np.size(x0)))
+def SecondOrder(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
+    tsp = arange(t0, t1, dt)
+    nsize = size(tsp)
+    X = empty((nsize, size(x0)))
     X[0] = x0
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
@@ -41,10 +40,10 @@ def SecondOrder(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
     return X, tsp
 
 
-def RungeKutte4(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
-    tsp = np.arange(t0, t1, dt)
-    nsize = np.size(tsp)
-    X = np.empty((nsize, np.size(x0)))
+def RungeKutte4(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
+    tsp = arange(t0, t1, dt)
+    nsize = size(tsp)
+    X = empty((nsize, size(x0)))
     X[0] = x0
     for i in range(1, nsize - 1):
         k1 = model(X[i], tsp[i])
@@ -60,27 +59,27 @@ def RungeKutte4(t0=0, x0=np.array([1]), t1=5, dt=0.01, model=None):
 def LeakyIntegrateandFire(x, t, u_th=-55, u_reset=-75, u_eq=-65, r=10, i=1.2):
     if x[0] >= u_th:
         x[0] = u_reset
-    return np.array([-(x[0] - u_eq) + r*i])
+    return array([-(x[0] - u_eq) + r*i])
 
 
 def VanDerPol(x, t):
-    return np.array([x[1],
+    return array([x[1],
                     -x[0] + x[1]*(1-x[0]**2)])
 
 
 def DampedSHM(x, t, r=0.035, s=0.5, m=0.2):
-    return np.array([x[1],
+    return array([x[1],
                      (-r*x[1] - s*x[0])/m])
 
 
 def FitzhughNagumo(x, t, a=0.75, b=0.8, c=3, i=-0.40):
-    return np.array([c*(x[0] + x[1] - x[0]**3/3 + i),
+    return array([c*(x[0] + x[1] - x[0]**3/3 + i),
                     -1/c*(x[0] - a + b*x[1])])
 
 
 def MorrisLecar(x, t, c=20, vk=-84, gk=8, vca=130, gca=4.4, vl=-60, gl=2, phi=0.04, v1=-1.2, v2=18, v3=2, v4=30,
                 iapp=80):
-    return np.array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + iapp),
+    return array([(-gca*(0.5*(1 + mt.tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + iapp),
                     (phi*((0.5*(1 + mt.tanh((x[0] - v3)/v4))) - x[1]))/(1/mt.cosh((x[0] - v3)/(2*v4)))])
 
 
@@ -88,18 +87,18 @@ def Izhikevich(x, t, a=0.02, b=0.2, c=-65, d=2, i=10):
     if x[0] >= 30:
         x[0] = c
         x[1] = x[1] + d
-    return np.array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
+    return array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
                     a*(b*x[0] - x[1])])
 
 
 def HindmarshRose(x, t, a=1.0, b=3.0, c=1.0, d=5.0, r=0.006, s=4.0, i=1.3, xnot=-1.5):
-    return np.array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + i,
+    return array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + i,
                     c - d*(x[0]**2) - x[1],
                     r*(s*(x[0] - xnot) - x[2])])
 
 
 def Robbins(x, t, V=1, sigma=5, R=13):
-    return np.array([R - x[1]*x[2] - V*x[0],
+    return array([R - x[1]*x[2] - V*x[0],
                     x[0]*x[2] - x[1],
                     sigma*(x[1] - x[2])])
 
@@ -111,14 +110,14 @@ def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.61
     beta_m = 4*mt.exp(x[0]/18)
     alpha_h = (0.07*mt.exp(x[0]/20))
     beta_h = 1 / (mt.exp((x[0]+30)/10)+1)
-    return np.array([(g_K*(x[1]**4)*(x[0]-E_K) + g_Na*(x[2]**3)*x[3]*(x[0]-E_Na) + g_L*(x[0]-E_L) - I)*(-1/C_m),
+    return array([(g_K*(x[1]**4)*(x[0]-E_K) + g_Na*(x[2]**3)*x[3]*(x[0]-E_Na) + g_L*(x[0]-E_L) - I)*(-1/C_m),
                     alpha_n*(1-x[1]) - beta_n*x[1],
                     alpha_m*(1-x[2]) - beta_m*x[2],
                     alpha_h*(1-x[3]) - beta_h*x[3]])
 
 
 def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
-    return np.array([r*(x[3] - x[0]),
+    return array([r*(x[3] - x[0]),
                      r*(x[2] - x[1]),
                      x[0]*x[4] + m*x[1] - (1 + m)*x[2],
                      x[1]*x[5] + m*x[0] - (1 + m)*x[3],
@@ -212,19 +211,19 @@ def solutionGenerator(modelname, solvername):
     newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     if modelClassifier(modelname) == 1:
-        solution = newsolvername(x0=np.array([0.01]), t1=100, dt=0.02, model=newmodelname)
+        solution = newsolvername(x0=array([0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
     elif modelClassifier(modelname) == 2:
-        solution = newsolvername(x0=np.array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        solution = newsolvername(x0=array([0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
     elif modelClassifier(modelname) == 3:
-        solution = newsolvername(x0=np.array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        solution = newsolvername(x0=array([0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
     elif modelClassifier(modelname) == 4:
-        solution = newsolvername(x0=np.array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
+        solution = newsolvername(x0=array([0.01, 0.01, 0.01, 0.01]), t1=100, dt=0.02, model=newmodelname)
         return solution[0], solution[1]
     elif modelClassifier(modelname) == 6:
-        solution = newsolvername(x0=np.array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1=100, dt=0.0001, model=newmodelname)
+        solution = newsolvername(x0=array([-1.4, -1, -1, -1.4, 2.2, -1.5]), t1=100, dt=0.0001, model=newmodelname)
         return solution[0], solution[1]
     else:
         solution = "Cheese please!"
@@ -232,9 +231,9 @@ def solutionGenerator(modelname, solvername):
 
 
 if __name__ == '__main__':
-    startTime = tm.time()
+    startTime = time()
     solutionArray = solutionGenerator('RB', 'rk4')
-    endTime = tm.time()
+    endTime = time()
     elapsedTime = (endTime - startTime)
     dimension = modelClassifier('RB')
     print(solutionArray)

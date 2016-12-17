@@ -5,9 +5,7 @@
 
 
 from __future__ import division
-
-import time as tm
-
+from time import time
 from Python.NeuroFizzMath import solutionGenerator
 
 
@@ -15,9 +13,9 @@ def solutionTimer(numberoftimestorun, modelname, solvername):
     i = 0
     total = 0
     while i < numberoftimestorun:
-        start = tm.time()
+        start = time()
         solutionGenerator(modelname, solvername)
-        end = tm.time()
+        end = time()
         elapsed = end - start
         total += elapsed
         i += 1

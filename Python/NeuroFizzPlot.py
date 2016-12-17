@@ -5,10 +5,9 @@
 
 
 from __future__ import division
-
-import matplotlib.pyplot as plt
-import numpy as np
-
+from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
+from numpy import argsort, abs, mean
+from numpy.fft import fft, fftfreq
 from Python.NeuroFizzMath import solutionGenerator
 
 
@@ -20,12 +19,12 @@ def do_tplot():
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     timeArray = solution[1]
-    plt.figure()
-    plt.plot(timeArray, -membranePotential)
-    plt.title('Hodgkin-Huxley')
-    plt.xlabel('Time')
-    plt.ylabel('Membrane Potential')
-    plt.savefig('HH_tplot.png')
+    figure()
+    plot(timeArray, -membranePotential)
+    title('Hodgkin-Huxley')
+    xlabel('Time')
+    ylabel('Membrane Potential')
+    savefig('HH_tplot.png')
     return
 
 
@@ -37,12 +36,12 @@ def do_pplot():
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     KgatingVariable = solutionArray[:, 1]
-    plt.figure()
-    plt.plot(KgatingVariable, membranePotential)
-    plt.title('Hodgkin-Huxley')
-    plt.xlabel('Potassium Gating Variable')
-    plt.ylabel('Membrane Potential')
-    plt.savefig('HH_pplot.png')
+    figure()
+    plot(KgatingVariable, membranePotential)
+    title('Hodgkin-Huxley')
+    xlabel('Potassium Gating Variable')
+    ylabel('Membrane Potential')
+    savefig('HH_pplot.png')
     return
 
 
@@ -54,21 +53,21 @@ def do_fftplot():
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     timeArray = solution[1]
-    Y = np.mean(membranePotential)                  # determine DC component of signal
+    Y = mean(membranePotential)                  # determine DC component of signal
     X = membranePotential - Y       # subtract DC component from PS to get rid of peak at 0
     fdata = X.size
-    ps = np.abs(np.fft.fft(X))**2
+    ps = abs(fft(X))**2
     time_step = 1 / 30
-    freqs = np.fft.fftfreq(int(fdata/2 - 1), time_step)
-    idx = np.argsort(freqs)
-    plt.figure()
-    plt.plot(freqs[idx], ps[idx])
-    plt.title('Power Spectrum of Membrane Potential Signal')
-    plt.xlabel('Frequency')
-    plt.ylabel('Power')
-    plt.xlim(0, 1)
-    plt.ylim(0, 2.5e9)
-    plt.savefig('HH_fftplot.png')
+    freqs = fftfreq(int(fdata/2 - 1), time_step)
+    idx = argsort(freqs)
+    figure()
+    plot(freqs[idx], ps[idx])
+    title('Power Spectrum of Membrane Potential Signal')
+    xlabel('Frequency')
+    ylabel('Power')
+    xlim(0, 1)
+    ylim(0, 2.5e9)
+    savefig('HH_fftplot.png')
     return
 
 
