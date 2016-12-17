@@ -41,7 +41,7 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
 * [x] Come back thinking that the conceptual ideology behind of the practice of programming is now grasped 
 * [x] Learn how to utilize modularity in project
 * [x] Make silly punchlist in the project Readme so that self can track progress
-* [ ] Resolve all non-abandoned or non-asserted status known issues
+* [x] Resolve all non-abandoned or non-asserted status known issues
 * [ ] Analyze execution speed for all models
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
@@ -56,9 +56,9 @@ Every effort will be made to keep the items on this list as few as possible with
 
 Issue | Status
 ------------ | -------------
-The Leaky Integrate and Fire model is borked, should be faster.  | In Progress
+The Leaky Integrate and Fire model is borked, should be faster.  | Meh
 Plotter isn't working.                                           | Resolved
-HH membrane potential needs to be multiplied by -1 to be plotted.| Assessing Implications
+HH membrane potential needs to be multiplied by -1 to be plotted.| Assertion
 There's some gnarlymaths in this project, there will be bugs.    | Assertion
 The PyQT GUI is borked beyond repair, dont use it.               | Abandoned
 
