@@ -12,7 +12,12 @@ from math import exp, tanh, cosh
 
 # Dictionary of available models with solution array dimension
 
-modelDictionary = {'LIF': 1, 'VDP': 2, 'SHM': 2, 'FN': 2, 'ML': 2, 'IZ': 2, 'HR': 3, 'RB': 3, 'HH': 4, 'RI': 6}
+modelDictionary = {'LIF': 1, 'VDP': 2, 'SHM': 2, 'FN': 2, 'ML': 2, 'IZ': 2, 'HR': 3, 'RB': 3, 'LO': 3, 'HH': 4, 'RI': 6}
+
+
+# List of available solvers
+
+solverList = ['euler', 'ord2', 'rk4']
 
 
 # Solver functions
@@ -103,6 +108,12 @@ def Robbins(x, t, V=1, sigma=5, R=13):
                  sigma*(x[1] - x[2])])
 
 
+def Lorenz(x, t, sigma=10.0, rho=28.0, beta=10.0/3):
+    return array([sigma * (x[1] - x[0]),
+                 rho*x[0] - x[1] - x[0]*x[2],
+                 x[0]*x[1] - beta*x[2]])
+
+
 def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
     alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
     beta_n = 0.125*exp(x[0]/80)
@@ -161,6 +172,8 @@ def modelSelector(modelname):
         return HindmarshRose
     elif modelname == 'RB':
         return Robbins
+    elif modelname == 'LO':
+        return Lorenz
     elif modelname == 'HH':
         return HodgkinHuxley
     elif modelname == 'RI':
@@ -253,10 +266,9 @@ def solutionGenerator(modelname, solvername):
 
 if __name__ == '__main__':
     startTime = time()
-    solutionArray = solutionGenerator('SHM', 'euler')
+    solutionArray = solutionGenerator('LO', 'rk4')
     endTime = time()
     elapsedTime = (endTime - startTime)
     print(solutionArray)
     print('The solver took ' + str(elapsedTime) + ' seconds to execute. Which is faster than '
                                                   'I could do it on paper so we\'ll call it good.')
-

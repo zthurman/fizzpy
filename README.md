@@ -5,7 +5,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
-* Note, modelDictionary is the boss of allthethings, if you aren't in modelDictionary you don't exist
+* Note, modelDictionary and solverDictionary are the bigbadvoodoo daddies
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
     -'SHM', for damped simple harmonic motion  
@@ -15,6 +15,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
     -'IZ', for the Izhikevich neuron model  
     -'HR', for the Hindmarsh-Rose neuron model  
     -'RB', for the Robbins model for geomagnetic polarity reversal  
+    -'LO', for the Lorenz atmospheric model, strange attractor  
     -'HH', for the Hodgkin-Huxley neuron model  
     -'RI', for the Rikitake Dynamo model for geomagnetic polarity reversal 
 * Valid solver inputs at this time are:  
@@ -47,6 +48,7 @@ do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
 * [x] Resolve all non-abandoned or non-asserted status known issues
 * [x] Analyze execution speed for all models
 * [x] Learn how to utilize modularity in project again, because adding a new model in the old structure was a hassle
+* [x] Just let the archive directory go, there will always be someone to make a GUI
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
