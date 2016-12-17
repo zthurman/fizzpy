@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # NeuroFizzMath - NeuroFizzTimer
 # Copyright (C) 2016 Zechariah Thurman
-# GNU GPLv2
+# GNU GPLv3
 
 
 from __future__ import division

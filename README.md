@@ -5,6 +5,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
+* Note, modelDictionary is the boss of allthethings, if you aren't in modelDictionary you don't exist
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
     -'SHM', for damped simple harmonic motion  
@@ -19,12 +20,13 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 * Valid solver inputs at this time are:  
     -'euler', for a simple numerical solver using Euler's method  
     -'ord2', for a second order Euler's method solver  
-    -'rk4', for a fourth order Runge-Kutte solver  
-* Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutte:  
+    -'rk4', for a fourth order Runge-Kutta solver  
+* Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutta:  
     solutionArray = solutionGenerator('HH', 'rk4')
-* Stock project plotter can be used to generate time plot, phase plot or power spectrum, or can feed solution arrays into a custom plotter
+* Stock project plotter can be used to generate time plot, phase plot or power spectrum, using do_tplot,  
+do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
 
-## Punch List/Project Lifecycle Roadmap
+## Project Lifecycle Roadmap
 * [x] Try to extend collegiate senior project to more than one neuron model
 * [x] Determine that this is neato and that this should indeed be a thing
 * [x] Convert MatLab code to Python because $3000 is a big license fee after graduation and free is nice
@@ -44,11 +46,11 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 * [x] Make silly punchlist in the project Readme so that self can track progress
 * [x] Resolve all non-abandoned or non-asserted status known issues
 * [x] Analyze execution speed for all models
-* [ ] Learn how to utilize modularity in project, because adding a new model in the old structure was a hassle
+* [x] Learn how to utilize modularity in project again, because adding a new model in the old structure was a hassle
 * [ ] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
-* [ ] Figure out how to OOP all this sh*t
+* [ ] Figure out how to OO all this sh*t
 * [ ] Add approximately a bajillion other models
 * [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement might be gained
 * [ ] Write a paper outlining the project in its painful technical details and do a thorough speed analysis
@@ -58,8 +60,8 @@ Every effort will be made to keep the items on this list as few as possible with
 
 Issue | Status
 ------------ | -------------
-The Leaky Integrate and Fire model is borked, should be faster.  | Resolved
-Plotter isn't working.                                           | Resolved
-HH membrane potential needs to be multiplied by -1 to be plotted.| Assertion
-There's some gnarlymaths in this project, there will be bugs.    | Assertion
-The PyQT GUI is borked beyond repair, dont use it.               | Abandoned
+The Leaky Integrate and Fire model is borked, should be faster.                           | Resolved
+Plotter isn't working.                                                                    | Resolved
+HH membrane potential needs to be multiplied by -1 to be plotted.                         | Assertion
+There's some gnarlymaths in this code, there will probably be numpy bugs if you poke it.  | Assertion
+The PyQT GUI is borked beyond repair, dont use it.                                        | Abandoned
