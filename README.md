@@ -12,7 +12,9 @@ Welcome to NeuroFizzMath, a python library for numerically solving various diffe
     -'ML', for the Morris-Lecar neuron model  
     -'IZ', for the Izhikevich neuron model  
     -'HR', for the Hindmarsh-Rose neuron model  
-    -'HH', for the Hodgkin-Huxley neuron model   
+    -'RB', for the Robbins model for geomagnetic polarity reversal  
+    -'HH', for the Hodgkin-Huxley neuron model  
+    -'RI', for the Rikitake Dynamo model for geomagnetic polarity reversal 
 * Valid solver inputs at this time are:  
     -'euler', for a simple numerical solver using Euler's method  
     -'ord2', for a second order Euler's method solver  
