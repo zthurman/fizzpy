@@ -12,7 +12,8 @@ from math import exp, tanh, cosh
 
 # Dictionary of available models with solution array dimension
 
-modelDictionary = {'LIF': 1, 'VDP': 2, 'SHM': 2, 'FN': 2, 'ML': 2, 'IZ': 2, 'HR': 3, 'RB': 3, 'LO': 3, 'HH': 4, 'RI': 6}
+modelDictionary = {'LIF': 1, 'VDP': 2, 'SHM': 2, 'FN': 2, 'ML': 2, 'IZ': 2, 'HR': 3, 'RB': 3, 'LO': 3, 'HH': 4, 'CO': 4,
+                   'RI': 6}
 
 
 # List of available solvers
@@ -59,7 +60,7 @@ def RungeKutta4(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
     return X, tsp
 
 
-# Model functions
+# Uncoupled Model functions
 
 def LeakyIntegrateandFire(x, t, u_th=-55, u_reset=-75, u_eq=-65, r=10, i=1.2):
     if x[0] >= u_th:
@@ -136,6 +137,15 @@ def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
                  g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
 
 
+# Coupled model functions
+
+def CoupledOscillators(x, t, b=0.05, k1=0.35, k2=0.035, m=0.5):
+    return array([x[1],
+                 -(k1/m)*x[0] + (k2/m)*x[2] - (b/m)*x[1],
+                 x[3],
+                 (k1/m)*x[0] - (k2/m)*x[2] - (b/m)*x[3]])
+
+
 # Housekeeping functions
 
 def getModelDictionaryKeys(modeldictionary):
@@ -176,6 +186,8 @@ def modelSelector(modelname):
         return Lorenz
     elif modelname == 'HH':
         return HodgkinHuxley
+    elif modelname == 'CO':
+        return CoupledOscillators
     elif modelname == 'RI':
         return Rikitake
     else:
@@ -292,10 +304,10 @@ if __name__ == '__main__':
     startTime = time()
 
     # Execution example for default parameters: x0=array([0.01, 0.01]), t1=100, dt=0.02
-    # solutionArray = solutionGenerator('FN', 'euler')
+    # solutionArray = solutionGenerator('CO', 'ord2')
 
     # Execution example for non-default parameters:
-    solutionArray = solutionGenerator('FN', 'euler', inits=array([0.001, 0.001]), endtime=200, timestep=0.05)
+    solutionArray = solutionGenerator('CO', 'ord2', inits=array([0, 0, 0.1, 0]), endtime=40)
 
     endTime = time()
     elapsedTime = (endTime - startTime)

@@ -6,7 +6,7 @@
 
 from __future__ import division
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
-from numpy import argsort, abs, mean
+from numpy import argsort, abs, mean, array
 from numpy.fft import fft, fftfreq
 from Python.NeuroFizzMath import solutionGenerator
 
@@ -14,13 +14,15 @@ from Python.NeuroFizzMath import solutionGenerator
 # Most complicated example, time plot Hodgkin-Huxley
 
 
-def do_tplot():
-    solution = solutionGenerator('HH', 'rk4')
+def do_tplot(modelname, solvername):
+    solution = solutionGenerator(modelname, solvername, inits=array([0, 0, 0.5, 0]), endtime=40)
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
+    membranePotential1 = solutionArray[:, 2]
     timeArray = solution[1]
     figure()
-    plot(timeArray, -membranePotential)
+    plot(timeArray, membranePotential)
+    plot(timeArray, membranePotential1)
     title('Hodgkin-Huxley')
     xlabel('Time')
     ylabel('Membrane Potential')
@@ -31,8 +33,8 @@ def do_tplot():
 # Second example for phase plot of same model
 
 
-def do_pplot():
-    solution = solutionGenerator('HH', 'rk4')
+def do_pplot(modelname, solvername):
+    solution = solutionGenerator(modelname, solvername)
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     KgatingVariable = solutionArray[:, 1]
@@ -48,13 +50,13 @@ def do_pplot():
 # Third example for fft plot of same model
 
 
-def do_fftplot():
-    solution = solutionGenerator('HH', 'rk4')
+def do_psplot(modelname, solvername):
+    solution = solutionGenerator(modelname, solvername)
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     timeArray = solution[1]
-    Y = mean(membranePotential)                  # determine DC component of signal
-    X = membranePotential - Y       # subtract DC component from PS to get rid of peak at 0
+    Y = mean(membranePotential)                 # determine DC component of signal
+    X = membranePotential - Y                   # subtract DC component from PS to get rid of peak at 0
     fdata = X.size
     ps = abs(fft(X))**2
     time_step = 1 / 30
@@ -67,11 +69,11 @@ def do_fftplot():
     ylabel('Power')
     xlim(0, 1)
     ylim(0, 2.5e9)
-    savefig('HH_fftplot.png')
+    savefig('HH_psplot.png')
     return
 
 
 if __name__ == '__main__':
-    print(do_tplot())
-    print(do_pplot())
-    print(do_fftplot())
+    print(do_tplot('CO', 'ord2'))
+    # print(do_pplot('HH', 'rk4'))
+    # print(do_psplot('HH', 'rk4'))

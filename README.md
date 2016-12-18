@@ -27,7 +27,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 * Example syntax for solving the Hodgkin-Huxley model with non-default parameters using Runge-Kutta:  
     solutionArray = solutionGenerator('HH', 'rk4', inits=array([0.03, 0.03]), endtime=200, timestep=0.05)
 * Stock project plotter can be used to generate time plot, phase plot or power spectrum, using do_tplot,  
-do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
+do_pplot or do_psplot or solution arrays can be fed into a custom plotter
 
 ## Project Lifecycle Roadmap
 * [x] Try to extend collegiate senior project to more than one neuron model
@@ -56,7 +56,8 @@ do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
 * [ ] Figure out how to OO all this sh*t
 * [ ] Add approximately a bajillion other models
-* [ ] Do it all in c++ and Fortran to learn those languages and see what kind of speed improvement might be gained
+* [ ] Do it all in Fortran 
+* [ ] Do it all in c++
 * [ ] Write a paper outlining the project in its painful technical details and do a thorough speed analysis
 
 ## Known Issues
