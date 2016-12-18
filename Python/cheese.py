@@ -53,6 +53,7 @@ def stringjumbler(s):
 
 if __name__ == '__main__':
     # string = "Yvzs! I xzm'g yvorvev Lzmxv olhg srh qly zg gsv xlolmb!!"
+    "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
     string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~"
     print(string)
     reversedstring = stringjumbler(string)
