@@ -61,6 +61,7 @@ if __name__ == '__main__':
     # string = "Yvzs! I xzm'g yvorvev Lzmxv olhg srh qly zg gsv xlolmb!!"
     # string = "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
     string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~1"
+    "vmxibkgrlm"
     # print(string)
     # reversedstring = stringjumbler(string)
     # print(reversedstring)
