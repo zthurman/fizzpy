@@ -24,6 +24,8 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
     -'rk4', for a fourth order Runge-Kutta solver  
 * Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutta:  
     solutionArray = solutionGenerator('HH', 'rk4')
+* Example syntax for solving the Hodgkin-Huxley model with non-default parameters using Runge-Kutta:  
+    solutionArray = solutionGenerator('HH', 'rk4', inits=array([0.03, 0.03]), endtime=200, timestep=0.05)
 * Stock project plotter can be used to generate time plot, phase plot or power spectrum, using do_tplot,  
 do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
 
@@ -49,7 +51,7 @@ do_pplot or do_fftplot or solution arrays can be fed into a custom plotter
 * [x] Analyze execution speed for all models
 * [x] Learn how to utilize modularity in project again, because adding a new model in the old structure was a hassle
 * [x] Just let the archive directory go, there will always be someone to make a GUI
-* [ ] Figure out how to enable evaluating models with non-default parameters
+* [x] Figure out how to enable evaluating models with non-default parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
 * [ ] Figure out how to OO all this sh*t

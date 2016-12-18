@@ -210,10 +210,13 @@ def distinctdimensionIdentifier():
     return availabledimensions
 
 
-def initIdentifier(modelname):
+def initIdentifier(modelname, inits=None):
     if modelname in getModelDictionaryKeys(modelDictionary):
         dimension = dimensionIdentifier(modelname)
-        if dimension == 1:
+        if inits is not None:
+            x0 = inits
+            return x0
+        elif dimension == 1:
             x0 = array([0.01])
             return x0
         elif dimension == 2:
@@ -232,13 +235,21 @@ def initIdentifier(modelname):
         return 1
 
 
-def endtimeIdentifier():
-    t1 = 100
-    return t1
+def endtimeIdentifier(modelname, endtime=None):
+    if modelname in getModelDictionaryKeys(modelDictionary):
+        if endtime is not None:
+            t1 = endtime
+            return t1
+        else:
+            t1 = 100
+            return t1
 
 
-def timestepIdentifier(modelname):
-    if modelname != 'RI':
+def timestepIdentifier(modelname, timestep=None):
+    if timestep is not None:
+        dt = timestep
+        return dt
+    elif modelname != 'RI':
         dt = 0.02
         return dt
     elif modelname == 'RI':
@@ -250,11 +261,24 @@ def timestepIdentifier(modelname):
 
 # Workhorse function
 
-def solutionGenerator(modelname, solvername):
+def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=None):
     newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
-    if modelname in getModelDictionaryKeys(modelDictionary):
-        solution = newsolvername(x0=initIdentifier(modelname), t1=endtimeIdentifier(),
+    if modelname in getModelDictionaryKeys(modelDictionary) and ('inits' is not None or
+                                                                 'endtime' is not None or
+                                                                 'timestep' is not None):
+        if inits is not None:
+            inits = inits
+        if endtime is not None:
+            endtime = endtime
+        if timestep is not None:
+            timestep = timestep
+        solution = newsolvername(t0=0, x0=initIdentifier(modelname, inits=inits),
+                                 t1=endtimeIdentifier(modelname, endtime=endtime),
+                                 dt=timestepIdentifier(modelname, timestep=timestep), model=newmodelname)
+        return solution[0], solution[1]
+    elif modelname in getModelDictionaryKeys(modelDictionary):
+        solution = newsolvername(x0=initIdentifier(modelname), t1=endtimeIdentifier(modelname),
                                  dt=timestepIdentifier(modelname), model=newmodelname)
         return solution[0], solution[1]
     else:
@@ -266,7 +290,13 @@ def solutionGenerator(modelname, solvername):
 
 if __name__ == '__main__':
     startTime = time()
-    solutionArray = solutionGenerator('LO', 'rk4')
+
+    # Execution example for default parameters: x0=array([0.01, 0.01]), t1=100, dt=0.02
+    # solutionArray = solutionGenerator('FN', 'euler')
+
+    # Execution example for non-default parameters:
+    solutionArray = solutionGenerator('FN', 'euler', inits=array([0.001, 0.001]), endtime=200, timestep=0.05)
+
     endTime = time()
     elapsedTime = (endTime - startTime)
     print(solutionArray)
