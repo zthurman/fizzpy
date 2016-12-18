@@ -1,5 +1,5 @@
 def answer(s):
-    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o,'
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
                 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     reversedalphabet = alphabet[::-1]
     upperalphabet = [x.upper() for x in reversedalphabet]
@@ -25,3 +25,5 @@ def answer(s):
 if __name__ == '__main__':
     string = "Yvzs! I xzm'g yvorvev Lzmxv olhg srh qly zg gsv xlolmb!!"
     print(answer(string))
+
+
