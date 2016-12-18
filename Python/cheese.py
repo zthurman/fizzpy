@@ -4,6 +4,7 @@ def answer(s):
     reversedalphabet = alphabet[::-1]
     upperalphabet = [x.upper() for x in reversedalphabet]
     symbol = "~`!@#$%^&*()_-+={}[]:>;',</?*-+"
+    numbers = "0123456789"
     space = " "
     reversed_s = ""
     for i in s:
@@ -20,7 +21,9 @@ def answer(s):
                 reversed_s += i
             elif i == space:
                 reversed_s += i
-            elif "\\" in i:
+            elif i == "\\":
+                reversed_s += i
+            elif i in numbers:
                 reversed_s += i
     return reversed_s
 
@@ -31,6 +34,7 @@ def stringjumbler(s):
     upperalphabet = [x.upper() for x in alphabet]
     reversedalphabet = alphabet[::-1]
     symbol = "~`!@#$%^&*()_-+={}[]:>;',</?*-+"
+    numbers = "0123456789"
     space = " "
     reversed_s = ""
     for i in s:
@@ -47,17 +51,19 @@ def stringjumbler(s):
                 reversed_s += i
             elif i == space:
                 reversed_s += i
-            elif "\\" in i:
+            elif i == "\\":
+                reversed_s += i
+            elif i in numbers:
                 reversed_s += i
     return reversed_s
 
 if __name__ == '__main__':
     # string = "Yvzs! I xzm'g yvorvev Lzmxv olhg srh qly zg gsv xlolmb!!"
-    "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
-    string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~"
-    print(string)
-    reversedstring = stringjumbler(string)
-    print(reversedstring)
-    print(answer(reversedstring))
+    # string = "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
+    string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~1"
+    # print(string)
+    # reversedstring = stringjumbler(string)
+    # print(reversedstring)
+    print(answer(string))
 
 
