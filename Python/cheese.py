@@ -7,6 +7,7 @@ def answer(s):
     numbers = "0123456789"
     space = " "
     reversed_s = ""
+    asciishit = ['\'', '\"', '\\', '\a', '\b', '\f', '\n', '\r', '\t', '\v']
     for i in s:
         case = i.islower()
         if case:
@@ -21,9 +22,9 @@ def answer(s):
                 reversed_s += i
             elif i == space:
                 reversed_s += i
-            elif i == "\\":
-                reversed_s += i
             elif i in numbers:
+                reversed_s += i
+            elif i in asciishit:
                 reversed_s += i
     return reversed_s
 
@@ -60,8 +61,9 @@ def stringjumbler(s):
 if __name__ == '__main__':
     # string = "Yvzs! I xzm'g yvorvev Lzmxv olhg srh qly zg gsv xlolmb!!"
     # string = "wrw blf hvv ozhg mrtsg'h vkrhlwv?"
-    string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~1"
-    "vmxibkgrlm"
+    # string = "Eer\\mahgerdwat in dE Fa*&%[]i ng fre~1"
+    string = "vmxibk\ngrlm"
+    print(string)
     # print(string)
     # reversedstring = stringjumbler(string)
     # print(reversedstring)
