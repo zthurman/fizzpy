@@ -139,11 +139,11 @@ def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
 
 # Coupled model functions
 
-def CoupledOscillators(x, t, b=0.05, k1=0.35, k2=0.035, m=0.5):
+def CoupledOscillators(x, t, b=0.01, k1=0.27, k2=0.027, m=0.25):
     return array([x[1],
                  -(k1/m)*x[0] + (k2/m)*x[2] - (b/m)*x[1],
                  x[3],
-                 (k1/m)*x[0] - (k2/m)*x[2] - (b/m)*x[3]])
+                 (k2/m)*x[0] - (k1/m)*x[2] - (b/m)*x[3]])
 
 
 # Housekeeping functions

@@ -15,13 +15,13 @@ from Python.NeuroFizzMath import solutionGenerator
 
 
 def do_tplot(modelname, solvername):
-    solution = solutionGenerator(modelname, solvername, inits=array([0, 0, 0.5, 0]), endtime=40)
+    solution = solutionGenerator(modelname, solvername, inits=array([0, 0, 0.5, 0]), endtime=200)
     solutionArray = solution[0]
     membranePotential = solutionArray[:, 0]
     membranePotential1 = solutionArray[:, 2]
     timeArray = solution[1]
     figure()
-    plot(timeArray, membranePotential)
+    plot(timeArray, membranePotential, color='red')
     plot(timeArray, membranePotential1)
     title('Hodgkin-Huxley')
     xlabel('Time')
