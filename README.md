@@ -5,7 +5,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
-* Note, modelDictionary and solverDictionary are the bigbadvoodoo daddies
+* Note, modelDictionary and solverDictionary are the master lists of models with their dimensions and solvers
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
     -'SHM', for damped simple harmonic motion  
@@ -17,6 +17,7 @@ Welcome to NeuroFizzMath, a library for numerically solving various differential
     -'RB', for the Robbins model for geomagnetic polarity reversal  
     -'LO', for the Lorenz atmospheric model, strange attractor  
     -'HH', for the Hodgkin-Huxley neuron model  
+    -'CO', for a model of two coupled oscillators  
     -'RI', for the Rikitake Dynamo model for geomagnetic polarity reversal 
 * Valid solver inputs at this time are:  
     -'euler', for a simple numerical solver using Euler's method  

@@ -307,7 +307,7 @@ if __name__ == '__main__':
     # solutionArray = solutionGenerator('CO', 'ord2')
 
     # Execution example for non-default parameters:
-    solutionArray = solutionGenerator('CO', 'ord2', inits=array([0, 0, 0.1, 0]), endtime=40)
+    solutionArray = solutionGenerator('CO', 'ord2', inits=array([0, 0, 0.5, 0]), endtime=200)
 
     endTime = time()
     elapsedTime = (endTime - startTime)
