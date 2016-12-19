@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# NeuroFizzMath - NeuroFizzMath
+# FizzPyX - FizzPyX
 # Copyright (C) 2016 Zechariah Thurman
 # GNU GPLv3
 
@@ -62,60 +62,112 @@ def RungeKutta4(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
 
 # Uncoupled Model functions
 
-def LeakyIntegrateandFire(x, t, u_th=-55, u_reset=-75, u_eq=-65, r=10, i=1.2):
+def LeakyIntegrateandFire(x, t, u_th=None, u_reset=None, u_eq=None, r=None, i=None):
+    u_th = (-55, u_th)[u_th is not None]
+    u_reset = (-75, u_reset)[u_reset is not None]
+    u_eq = (-65, u_eq)[u_eq is not None]
+    r = (10, r)[r is not None]
+    i = (1.2, i)[i is not None]
     if x[0] >= u_th:
         x[0] = u_reset
     return array([-(x[0] - u_eq) + r*i])
 
 
-def VanDerPol(x, t):
+def VanDerPol(x, t, mu=None):
+    mu = (1, mu)[mu is not None]
     return array([x[1],
-                 -x[0] + x[1]*(1-x[0]**2)])
+                 mu*x[1]*(1-x[0]**2)-x[0]])
 
 
-def DampedSHM(x, t, r=0.035, s=0.5, m=0.2):
+def DampedSHM(x, t, r=None, s=None, m=None):
+    r = (0.035, r)[r is not None]
+    s = (0.5, s)[s is not None]
+    m = (0.2, m)[m is not None]
     return array([x[1],
                  (-r*x[1] - s*x[0])/m])
 
 
-def FitzhughNagumo(x, t, a=0.75, b=0.8, c=3, i=-0.40):
+def FitzhughNagumo(x, t, a=None, b=None, c=None, i=None):
+    a = (0.75, a)[a is not None]
+    b = (0.8, b)[b is not None]
+    c = (3, c)[c is not None]
+    i = (-0.4, i)[i is not None]
     return array([c*(x[0] + x[1] - x[0]**3/3 + i),
                  -1/c*(x[0] - a + b*x[1])])
 
 
-def MorrisLecar(x, t, c=20, vk=-84, gk=8, vca=130, gca=4.4, vl=-60, gl=2, phi=0.04, v1=-1.2, v2=18, v3=2, v4=30,
-                iapp=80):
+def MorrisLecar(x, t, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
+                v4=None, iapp=None):
+    vk = (-84, vk)[vk is not None]
+    gk = (8, gk)[gk is not None]
+    vca = (130, vca)[vca is not None]
+    gca = (4.4, gca)[gca is not None]
+    vl = (-60, vl)[vl is not None]
+    gl = (2, gl)[gl is not None]
+    phi = (0.04, phi)[phi is not None]
+    v1 = (-1.2, v1)[v1 is not None]
+    v2 = (18, v2)[v2 is not None]
+    v3 = (2, v3)[v3 is not None]
+    v4 = (30, v4)[v4 is not None]
+    iapp = (80, iapp)[iapp is not None]
     return array([(-gca*(0.5*(1 + tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + iapp),
                  (phi*((0.5*(1 + tanh((x[0] - v3)/v4))) - x[1]))/(1/cosh((x[0] - v3)/(2*v4)))])
 
 
-def Izhikevich(x, t, a=0.02, b=0.2, c=-65, d=2, i=10):
+def Izhikevich(x, t, a=None, b=None, c=None, d=None, i=None):
+    a = (0.02, a)[a is not None]
+    b = (0.2, b)[b is not None]
+    c = (-65, c)[c is not None]
+    d = (2, d)[d is not None]
+    i = (10, i)[i is not None]
     if x[0] >= 30:
         x[0] = c
-        x[1] = x[1] + d
+        x[1] += d
     return array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
                  a*(b*x[0] - x[1])])
 
 
-def HindmarshRose(x, t, a=1.0, b=3.0, c=1.0, d=5.0, r=0.006, s=4.0, i=1.3, xnot=-1.5):
+def HindmarshRose(x, t, a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=None):
+    a = (1.0, a)[a is not None]
+    b = (3.0, b)[b is not None]
+    c = (1.0, c)[c is not None]
+    d = (5.0, d)[d is not None]
+    r = (0.006, r)[r is not None]
+    s = (4.0, s)[s is not None]
+    i = (1.3, i)[i is not None]
+    xnot = (-1.5, xnot)[xnot is not None]
     return array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + i,
                  c - d*(x[0]**2) - x[1],
                  r*(s*(x[0] - xnot) - x[2])])
 
 
-def Robbins(x, t, V=1, sigma=5, R=13):
+def Robbins(x, t, V=None, sigma=None, R=None):
+    V = (1, V)[V is not None]
+    sigma = (5, sigma)[sigma is not None]
+    R = (13, R)[R is not None]
     return array([R - x[1]*x[2] - V*x[0],
                  x[0]*x[2] - x[1],
                  sigma*(x[1] - x[2])])
 
 
-def Lorenz(x, t, sigma=10.0, rho=28.0, beta=10.0/3):
+def Lorenz(x, t, sigma=None, rho=None, beta=None):
+    sigma = (10.0, sigma)[sigma is not None]
+    rho = (28.0, rho)[rho is not None]
+    beta = (10.0/3, beta)[beta is not None]
     return array([sigma * (x[1] - x[0]),
                  rho*x[0] - x[1] - x[0]*x[2],
                  x[0]*x[1] - beta*x[2]])
 
 
-def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.613, C_m=1, I=-10):
+def HodgkinHuxley(x, t, g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=None, C_m=None, I=None):
+    g_K = (36, g_K)[g_K is not None]
+    g_Na = (120, g_Na)[g_Na is not None]
+    g_L = (0.3, g_L)[g_L is not None]
+    E_K = (12, E_K)[E_K is not None]
+    E_Na = (-115, E_Na)[E_Na is not None]
+    E_L = (-10.613, E_L)[E_L is not None]
+    C_m = (1, C_m)[C_m is not None]
+    I = (-10, I)[I is not None]
     alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
     beta_n = 0.125*exp(x[0]/80)
     alpha_m = (0.1*(x[0]+25))/(exp((x[0]+25)/10)-1)
@@ -128,7 +180,11 @@ def HodgkinHuxley(x, t, g_K=36, g_Na=120, g_L=0.3, E_K=12, E_Na=-115, E_L=-10.61
                  alpha_h*(1-x[3]) - beta_h*x[3]])
 
 
-def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
+def Rikitake(x, t, m=None, g=None, r=None, f=None):
+    m = (0.5, m)[m is not None]
+    g = (50, g)[g is not None]
+    r = (8, r)[r is not None]
+    f = (0.5, f)[f is not None]
     return array([r*(x[3] - x[0]),
                  r*(x[2] - x[1]),
                  x[0]*x[4] + m*x[1] - (1 + m)*x[2],
@@ -139,7 +195,11 @@ def Rikitake(x, t, m=0.5, g=50, r=8, f=0.5):
 
 # Coupled model functions
 
-def CoupledOscillators(x, t, b=0.01, k1=0.27, k2=0.027, m=0.25):
+def CoupledOscillators(x, t, b=None, k1=None, k2=None, m=None):
+    b = (0.01, b)[b is not None]
+    k1 = (0.27, k1)[k1 is not None]
+    k2 = (0.027, k2)[k2 is not None]
+    m = (0.25, m)[m is not None]
     return array([x[1],
                  -(k1/m)*x[0] + (k2/m)*x[2] - (b/m)*x[1],
                  x[3],
@@ -237,6 +297,9 @@ def initIdentifier(modelname, inits=None):
         elif dimension == 3:
             x0 = array([0.01, 0.01, 0.01])
             return x0
+        elif dimension == 4 and modelname == 'CO':
+            x0 = array([0, 0, 0.5, 0])
+            return x0
         elif dimension == 4:
             x0 = array([0.01, 0.01, 0.01, 0.01])
             return x0
@@ -251,6 +314,9 @@ def endtimeIdentifier(modelname, endtime=None):
     if modelname in getModelDictionaryKeys(modelDictionary):
         if endtime is not None:
             t1 = endtime
+            return t1
+        elif modelname == 'CO':
+            t1 = 200
             return t1
         else:
             t1 = 100
@@ -307,7 +373,7 @@ if __name__ == '__main__':
     # solutionArray = solutionGenerator('CO', 'ord2')
 
     # Execution example for non-default parameters:
-    solutionArray = solutionGenerator('CO', 'ord2', inits=array([0, 0, 0.5, 0]), endtime=200)
+    solutionArray = solutionGenerator('ML', 'euler')
 
     endTime = time()
     elapsedTime = (endTime - startTime)

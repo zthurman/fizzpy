@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# NeuroFizzMath - NeuroFizzTimer
+# FizzPyX - FizzPyXTimer
 # Copyright (C) 2016 Zechariah Thurman
 # GNU GPLv3
 
@@ -7,7 +7,7 @@
 from __future__ import division
 from time import time
 from numpy import array
-from Python.NeuroFizzMath import solutionGenerator, modelDictionary, getModelDictionaryKeys, solverList
+from Python.FizzPyX import solutionGenerator, modelDictionary, getModelDictionaryKeys, solverList
 
 
 # Time performance evaluator function
@@ -77,11 +77,11 @@ def solutiontimeEvaluator(numberoftimestorun, modelname, inits=None, endtime=Non
 
 if __name__ == '__main__':
     # Default parameters
-    performanceevaluationfn = solutiontimeEvaluator(10, 'FN')
+    performanceevaluationfn = solutiontimeEvaluator(50, 'FN')
     print(performanceevaluationfn)
-    performanceevaluationiz = solutiontimeEvaluator(10, 'IZ')
+    performanceevaluationiz = solutiontimeEvaluator(50, 'IZ')
     print(performanceevaluationiz)
-    performanceevaluationHH = solutiontimeEvaluator(10, 'HH')
+    performanceevaluationHH = solutiontimeEvaluator(50, 'LIF')
     print(performanceevaluationHH)
 
     # # Non-default parameters

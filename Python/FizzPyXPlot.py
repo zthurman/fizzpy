@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# NeuroFizzMath - NeuroFizzPlot
+# FizzPyX - FizzPyXPlot
 # Copyright (C) 2016 Zechariah Thurman
 # GNU GPLv3
 
@@ -8,13 +8,13 @@ from __future__ import division
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
 from numpy import argsort, abs, mean, array
 from numpy.fft import fft, fftfreq
-from Python.NeuroFizzMath import solutionGenerator, dimensionIdentifier
+from Python.FizzPyX import solutionGenerator
 
 
 # Time series plot
 
 def do_tplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
-    solution = solutionGenerator(modelname, solvername, inits=array([0, 0, 0.5, 0]), endtime=200)
+    solution = solutionGenerator(modelname, solvername)
     solutionArray = solution[0]
     firstarray = solutionArray[:, 0]
     secondarray = solutionArray[:, 2]

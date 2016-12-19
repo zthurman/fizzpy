@@ -1,10 +1,10 @@
-# NeuroFizzMath
+# FizzPyX
 
-Welcome to NeuroFizzMath, a library for numerically solving various differential equations.
+Welcome to FizzPyX, a library for numerically solving various differential equations.
 
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
-* The base of the project is NeuroFizzMath.py and the solutionGenerator method therein
+* The base of the project is FizzPyX.py and the solutionGenerator method therein
 * Note, modelDictionary and solverDictionary are the master lists of models with their dimensions and solvers
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
@@ -52,7 +52,8 @@ do_pplot or do_psplot or solution arrays can be fed into a custom plotter
 * [x] Analyze execution speed for all models
 * [x] Learn how to utilize modularity in project again, because adding a new model in the old structure was a hassle
 * [x] Just let the archive directory go, there will always be someone to make a GUI
-* [x] Figure out how to enable evaluating models with non-default parameters
+* [x] Figure out how to enable evaluating solvers with non-default parameters
+* [ ] Figure out how to enable evaluating models with non-default model specific parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
 * [ ] Figure out how to OO all this sh*t
