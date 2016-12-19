@@ -71,6 +71,6 @@ def do_psplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
 
 
 if __name__ == '__main__':
-    print(do_tplot('CO', 'euler', plotname='Coupled Oscillators - Beats', xaxis='Time', yaxis='Mass Position'))
+    print(do_tplot('CO', 'ord2', plotname='Coupled Oscillators - Beats', xaxis='Time', yaxis='Mass Position'))
     # print(do_pplot('HH', 'rk4'))
     # print(do_psplot('HH', 'rk4'))

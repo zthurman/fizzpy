@@ -74,7 +74,7 @@ def LeakyIntegrateandFire(x, t, u_th=None, u_reset=None, u_eq=None, r=None, i=No
 
 
 def VanDerPol(x, t, mu=None):
-    mu = (1, mu)[mu is not None]
+    mu = (-1, mu)[mu is not None]
     return array([x[1],
                  mu*x[1]*(1-x[0]**2)-x[0]])
 
@@ -373,7 +373,7 @@ if __name__ == '__main__':
     # solutionArray = solutionGenerator('CO', 'ord2')
 
     # Execution example for non-default parameters:
-    solutionArray = solutionGenerator('ML', 'euler')
+    solutionArray = solutionGenerator('HH', 'ord2', inits=array([0.05, 0.01, 0.07, 0.01]), endtime=500, timestep=0.05)
 
     endTime = time()
     elapsedTime = (endTime - startTime)
