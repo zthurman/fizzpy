@@ -1,10 +1,26 @@
 # FizzPyX
 
-Welcome to FizzPyX, a library for numerically solving various differential equations.
+Welcome to FizzPyX, a library for numerically solving various differential equations. This library
+has basically become a sandbox for learning the practice of programming, the principles of high 
+performance scientific computing as well as solving as many differential equations as possible in 
+one place.
 
+## Package Requirements
+
+* This library is being built for use on Linux as a first priority, once that is complete porting
+over to OSX and Windows will be evaluated
+* Base project requirements are NumPy, Math and Matplotlib, some variation of the project with just these
+simple requirements will always exist for simplicity's sake
+* For the more adventurous among us there will also be the more facerollonkeyboard llvmlite/Numba implementation
+in an attempt to break all traditional pythonic speed barriers
+    -If using PyCharm create a Conda environment  
+    -Install llvmlite  
+    -Install Numba  
+    
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
-* The base of the project is FizzPyX.py and the solutionGenerator method therein
+* The FizzPyXScipy file has all of the model ready to be solved SciPy fashion 
+* For the more adventurous, the base of the DIY project is FizzPyX.py and the solutionGenerator function therein
 * Note, modelDictionary and solverDictionary are the master lists of models with their dimensions and solvers
 * Valid model inputs at this time are:  
     -'VDP', for the Van Der Pol oscillator  
@@ -30,6 +46,17 @@ Welcome to FizzPyX, a library for numerically solving various differential equat
 * Stock project plotter can be used to generate time plot, phase plot or power spectrum, using do_tplot,  
 do_pplot or do_psplot or solution arrays can be fed into a custom plotter
 
+## Known Issues
+Every effort will be made to keep the items on this list as few as possible with additional information regarding the issue status.
+
+Issue | Status
+------------ | -------------
+The Leaky Integrate and Fire model is borked, should be faster.                           | Resolved
+Plotter isn't working.                                                                    | Resolved
+HH membrane potential needs to be multiplied by -1 to be plotted.                         | Assertion
+There's some gnarlymaths in this code, there will probably be numpy bugs if you poke it.  | Assertion
+The PyQT GUI is borked beyond repair, dont use it.                                        | Abandoned
+
 ## Project Lifecycle Roadmap
 * [x] Try to extend collegiate senior project to more than one neuron model
 * [x] Determine that this is neato and that this should indeed be a thing
@@ -53,6 +80,7 @@ do_pplot or do_psplot or solution arrays can be fed into a custom plotter
 * [x] Learn how to utilize modularity in project again, because adding a new model in the old structure was a hassle
 * [x] Just let the archive directory go, there will always be someone to make a GUI
 * [x] Figure out how to enable evaluating solvers with non-default parameters
+* [ ] Do speed analysis against SciPy solver with same models tested against each
 * [ ] Figure out how to enable evaluating models with non-default model specific parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
@@ -61,14 +89,3 @@ do_pplot or do_psplot or solution arrays can be fed into a custom plotter
 * [ ] Do it all in Fortran 
 * [ ] Do it all in c++
 * [ ] Write a paper outlining the project in its painful technical details and do a thorough speed analysis
-
-## Known Issues
-Every effort will be made to keep the items on this list as few as possible with additional information regarding the issue status.
-
-Issue | Status
------------- | -------------
-The Leaky Integrate and Fire model is borked, should be faster.                           | Resolved
-Plotter isn't working.                                                                    | Resolved
-HH membrane potential needs to be multiplied by -1 to be plotted.                         | Assertion
-There's some gnarlymaths in this code, there will probably be numpy bugs if you poke it.  | Assertion
-The PyQT GUI is borked beyond repair, dont use it.                                        | Abandoned

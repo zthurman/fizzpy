@@ -5,9 +5,10 @@
 
 
 from __future__ import division
-from numpy import array, arange, size, empty
+from numpy import array, arange, size, empty, ndarray
 from time import time
 from math import exp, tanh, cosh
+# from numba import jit
 
 
 # Dictionary of available models with solution array dimension
@@ -41,7 +42,7 @@ def SecondOrder(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
     X[0] = x0
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
-        k2 = model(X[i], tsp[i]) + k1 * (dt / 2)
+        k2 = model(X[i], tsp[i]) + k1*(dt/2)
         X[i + 1] = X[i] + k2 * dt
     return X, tsp
 
@@ -74,7 +75,7 @@ def LeakyIntegrateandFire(x, t, u_th=None, u_reset=None, u_eq=None, r=None, i=No
 
 
 def VanDerPol(x, t, mu=None):
-    mu = (-1, mu)[mu is not None]
+    mu = (1, mu)[mu is not None]
     return array([x[1],
                  mu*x[1]*(1-x[0]**2)-x[0]])
 
@@ -196,7 +197,7 @@ def Rikitake(x, t, m=None, g=None, r=None, f=None):
 # Coupled model functions
 
 def CoupledOscillators(x, t, b=None, k1=None, k2=None, m=None):
-    b = (0.01, b)[b is not None]
+    b = (0.007, b)[b is not None]   # 0.01
     k1 = (0.27, k1)[k1 is not None]
     k2 = (0.027, k2)[k2 is not None]
     m = (0.25, m)[m is not None]
@@ -316,11 +317,13 @@ def endtimeIdentifier(modelname, endtime=None):
             t1 = endtime
             return t1
         elif modelname == 'CO':
-            t1 = 200
+            t1 = 160
             return t1
-        else:
+        elif modelname != 'CO':
             t1 = 100
             return t1
+        else:
+            return 1
 
 
 def timestepIdentifier(modelname, timestep=None):
@@ -364,19 +367,65 @@ def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=
         return solution
 
 
+# Numba Test
+
+# @jit
+# def euler_numba(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
+#     tsp = arange(t0, t1, dt)
+#     nsize = int(size(tsp))
+#     X = empty((nsize, size(x0)))
+#     X0 = X.item(0)
+#     X0 = x0
+#     for i in range(0, nsize - 1):
+#         k1 = model(X.item(i), tsp.item(i))
+#         X[i + 1] = X.item(i) + k1*dt
+#     return X, tsp
+#
+# @jit
+# def vdp_numba(z, t):
+#     ydot, xdot = z
+#     mu = 1
+#     return [xdot, mu*xdot*(1-ydot**2)-ydot]
+
+
 # Main
 
 if __name__ == '__main__':
     startTime = time()
 
     # Execution example for default parameters: x0=array([0.01, 0.01]), t1=100, dt=0.02
-    # solutionArray = solutionGenerator('CO', 'ord2')
+    solutionArray = solutionGenerator('VDP', 'ord2', timestep=0.02)
 
     # Execution example for non-default parameters:
-    solutionArray = solutionGenerator('HH', 'ord2', inits=array([0.05, 0.01, 0.07, 0.01]), endtime=500, timestep=0.05)
+    # solutionArray = solutionGenerator('CO', 'ord2', inits=array([0.05, 0.01, 0.07, 0.01]), endtime=500, timestep=0.05)
 
     endTime = time()
     elapsedTime = (endTime - startTime)
-    print(solutionArray)
+
+
+    # startTime2 = time()
+    # soln = Euler(x0=array([0.01, 0.01]), t1=100, dt=0.02, model=vdp_numba)
+    # endTime2 = time()
+    # elapsedTime2 = (endTime2 - startTime2)
+
+    # plot(phi, u)
+    # savefig('%s_tplot.png' % 'Noncheese')
+
+    # solution = solutionArray[0]
+    # firstarray = solution[:, 0]
+    # # secondarray = solutionArray[:, 2]
+    # timeArray = solutionArray[1]
+    # figure()
+    # plot(timeArray, firstarray)
+    # # plot(timeArray, secondarray)
+    # title("My Soln")
+    # xlabel('Time')
+    # ylabel('Dynamical Variable')
+    # savefig('%s_tplot.png' % 'Cheese')
+
+    # print(solutionArray)
+
     print('The solver took ' + str(elapsedTime) + ' seconds to execute. Which is faster than '
+                                                  'I could do it on paper so we\'ll call it good.')
+    print('The solver took ' + str(elapsedTime2) + ' seconds to execute. Which is faster than '
                                                   'I could do it on paper so we\'ll call it good.')
