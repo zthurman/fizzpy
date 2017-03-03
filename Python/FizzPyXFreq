@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+# FizzPyX - FizzPyXFreq
+# Copyright (C) 2016 Zechariah Thurman
+# GNU GPLv3
+
+
+from __future__ import division
+from numpy import mean, argmax, arange
+from numpy.fft import fft, fftfreq, rfft
+from Python.FizzPyX import FitzhughNagumoGen
+
+
+def InputtoFrequencyGen():
+    freq = []
+    inputs = []
+    for I in arange(0.398, 0.539, 0.001):
+        I *= -1
+        solution = FitzhughNagumoGen('FN', 'ord2', i=I)
+        solutionArray = solution[0]
+        membranePotential = solutionArray[:, 0]
+        Y = mean(membranePotential)  # determine DC component of signal
+        X = membranePotential - Y  # subtract DC component from PS to get rid of peak at 0
+        fdata = X.size
+        ps = abs(rfft(X)) ** 2
+        time_step = 1 / 30
+        freqs = fftfreq(int(fdata / 2 - 1), time_step)
+
+        locpeak = argmax(ps)  # Find its location
+        maxfreq = freqs[locpeak]  # Get the actual frequency value
+
+        freq.append(maxfreq)
+        inputs.append(I)
+
+    return inputs, freq
+
+
+data = InputtoFrequencyGen()
+print(data[0])
+print(data[1])
+
+
+

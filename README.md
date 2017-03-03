@@ -12,33 +12,34 @@ over to OSX and Windows will be evaluated
 * Base project requirements are NumPy, Math and Matplotlib, some variation of the project with just these
 simple requirements will always exist for simplicity's sake
 * For the more adventurous among us there will also be the more facerollonkeyboard llvmlite/Numba implementation
-in an attempt to break all traditional pythonic speed barriers
-    -If using PyCharm create a Conda environment  
-    -Install llvmlite  
-    -Install Numba  
-    
+in an attempt to break all traditional pythonic speed barriers:
+    *Create a Conda environment
+    *Install llvmlite
+    *Install Numba
+    *Leggo my eggo
+
 ## Intended Functionality
 * This library is meant to be used for generating solution arrays for differential equations
 * The FizzPyXScipy file has all of the model ready to be solved SciPy fashion 
 * For the more adventurous, the base of the DIY project is FizzPyX.py and the solutionGenerator function therein
 * Note, modelDictionary and solverDictionary are the master lists of models with their dimensions and solvers
-* Valid model inputs at this time are:  
-    -'VDP', for the Van Der Pol oscillator  
-    -'SHM', for damped simple harmonic motion  
-    -'LIF', for the Leaky Integrate and Fire neuron model  
-    -'FN', for the Fitzhugh-Nagumo neuron model  
-    -'ML', for the Morris-Lecar neuron model  
-    -'IZ', for the Izhikevich neuron model  
-    -'HR', for the Hindmarsh-Rose neuron model  
-    -'RB', for the Robbins model for geomagnetic polarity reversal  
-    -'LO', for the Lorenz atmospheric model, strange attractor  
-    -'HH', for the Hodgkin-Huxley neuron model  
-    -'CO', for a model of two coupled oscillators  
-    -'RI', for the Rikitake Dynamo model for geomagnetic polarity reversal 
-* Valid solver inputs at this time are:  
-    -'euler', for a simple numerical solver using Euler's method  
-    -'ord2', for a second order Euler's method solver  
-    -'rk4', for a fourth order Runge-Kutta solver  
+* Valid model inputs at this time are:
+    *'VDP', for the Van Der Pol oscillator
+    *'SHM', for damped simple harmonic motion
+    *'LIF', for the Leaky Integrate and Fire neuron model
+    *'FN', for the Fitzhugh-Nagumo neuron model
+    *'ML', for the Morris-Lecar neuron model
+    *'IZ', for the Izhikevich neuron model
+    *'HR', for the Hindmarsh-Rose neuron model
+    *'RB', for the Robbins model for geomagnetic polarity reversal
+    *'LO', for the Lorenz attractor
+    *'HH', for the Hodgkin-Huxley neuron model
+    *'CO', for a model of two coupled oscillators
+    *'RI', for the Rikitake Dynamo model for geomagnetic polarity reversal 
+* Valid solver inputs at this time are:
+    *'euler', for a simple numerical solver using Euler's method
+    *'ord2', for a second order Euler's method solver
+    *'rk4', for a fourth order Runge-Kutta solver  
 * Example syntax for solving the Hodgkin-Huxley model with default parameters using Runge-Kutta:  
     solutionArray = solutionGenerator('HH', 'rk4')
 * Example syntax for solving the Hodgkin-Huxley model with non-default parameters using Runge-Kutta:  

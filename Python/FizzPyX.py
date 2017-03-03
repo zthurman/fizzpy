@@ -31,7 +31,7 @@ def Euler(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
     X[0] = x0
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
-        X[i + 1] = X[i] + k1 * dt
+        X[i+1] = X[i] + k1 * dt
     return X, tsp
 
 
@@ -43,7 +43,7 @@ def SecondOrder(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
     for i in range(0, nsize - 1):
         k1 = model(X[i], tsp[i])
         k2 = model(X[i], tsp[i]) + k1*(dt/2)
-        X[i + 1] = X[i] + k2 * dt
+        X[i+1] = X[i] + k2 * dt
     return X, tsp
 
 
@@ -64,14 +64,17 @@ def RungeKutta4(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
 # Uncoupled Model functions
 
 def LeakyIntegrateandFire(x, t, u_th=None, u_reset=None, u_eq=None, r=None, i=None):
-    u_th = (-55, u_th)[u_th is not None]
-    u_reset = (-75, u_reset)[u_reset is not None]
-    u_eq = (-65, u_eq)[u_eq is not None]
-    r = (10, r)[r is not None]
-    i = (1.2, i)[i is not None]
-    if x[0] >= u_th:
-        x[0] = u_reset
-    return array([-(x[0] - u_eq) + r*i])
+    def model():
+        u_th = (-55, u_th)[u_th is not None]
+        u_reset = (-75, u_reset)[u_reset is not None]
+        u_eq = (-65, u_eq)[u_eq is not None]
+        r = (10, r)[r is not None]
+        i = (1.2, i)[i is not None]
+        if x[0] >= u_th:
+            x[0] = u_reset
+        return array([-(x[0] - u_eq) + r*i])
+
+    return model
 
 
 def VanDerPol(x, t, mu=None):
@@ -88,13 +91,24 @@ def DampedSHM(x, t, r=None, s=None, m=None):
                  (-r*x[1] - s*x[0])/m])
 
 
-def FitzhughNagumo(x, t, a=None, b=None, c=None, i=None):
+def FitzhughNagumo(a, b, c, i):
+    def model(x, t, a=a, b=b, c=c, i=i):
+        return array([c * (x[0] + x[1] - x[0] ** 3 / 3 + i),
+                      -1 / c * (x[0] - a + b * x[1])])
+    return model
+
+
+def FitzhughNagumoGen(modelname, solvername, a=None, b=None, c=None, i=None):
+    newmodelname = modelSelector(modelname)
+    newsolvername = solverSelector(solvername)
     a = (0.75, a)[a is not None]
     b = (0.8, b)[b is not None]
     c = (3, c)[c is not None]
     i = (-0.4, i)[i is not None]
-    return array([c*(x[0] + x[1] - x[0]**3/3 + i),
-                 -1/c*(x[0] - a + b*x[1])])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=FitzhughNagumo(a, b, c, i))
 
 
 def MorrisLecar(x, t, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
@@ -196,15 +210,26 @@ def Rikitake(x, t, m=None, g=None, r=None, f=None):
 
 # Coupled model functions
 
-def CoupledOscillators(x, t, b=None, k1=None, k2=None, m=None):
-    b = (0.007, b)[b is not None]   # 0.01
+def CoupledOscillators(b, k1, k2, m):
+    def model(x, t, b=b, k1=k1, k2=k2, m=m):
+        return array([x[1],
+                     -(k1/m)*x[0] + (k2/m)*x[2] - (b/m)*x[1],
+                     x[3],
+                     (k2/m)*x[0] - (k1/m)*x[2] - (b/m)*x[3]])
+    return model
+
+
+def CoupledOscillatorsGen(modelname, solvername, b=None, k1=None, k2=None, m=None):
+    newmodelname = modelSelector(modelname)
+    newsolvername = solverSelector(solvername)
+    b = (0.007, b)[b is not None]  # 0.01
     k1 = (0.27, k1)[k1 is not None]
     k2 = (0.027, k2)[k2 is not None]
     m = (0.25, m)[m is not None]
-    return array([x[1],
-                 -(k1/m)*x[0] + (k2/m)*x[2] - (b/m)*x[1],
-                 x[3],
-                 (k2/m)*x[0] - (k1/m)*x[2] - (b/m)*x[3]])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=CoupledOscillators(b, k1, k2, m))
 
 
 # Housekeeping functions
@@ -252,7 +277,7 @@ def modelSelector(modelname):
     elif modelname == 'RI':
         return Rikitake
     else:
-        return 1
+        return 'Ouchies! Something went wrong when selecting the model given the input provided.'
 
 
 def solverSelector(solvername):
@@ -265,7 +290,7 @@ def solverSelector(solvername):
     elif solvername == 'rk4':
         return RungeKutta4
     else:
-        return 1
+        return 'Oh dear! Something went wrong when selecting the solver given the input provided.'
 
 
 def dimensionIdentifier(modelname):
@@ -275,12 +300,26 @@ def dimensionIdentifier(modelname):
         dimension = getModelDictionaryValue(modelname)
         return dimension
     else:
-        return 1
+        return 'Oops! Something went wrong when identifying the dimension of the model equations.'
 
 
 def distinctdimensionIdentifier():
     availabledimensions = set(modelDictionary.values())
     return availabledimensions
+
+
+def modelParameterIdentifier(modelname, keyword_arguments=None):
+    if modelname in getModelDictionaryKeys(modelDictionary):
+        if modelname == 'CO':
+            if keyword_arguments is not None:
+                model = modelSelector(modelname)
+                model = model(keyword_arguments)
+                return model
+            elif keyword_arguments is None:
+                model = modelSelector(modelname)
+                return model
+            else:
+                return 'Uh-oh! Something went wrong when identifying model specific parameters. Please try again.'
 
 
 def initIdentifier(modelname, inits=None):
@@ -308,7 +347,7 @@ def initIdentifier(modelname, inits=None):
             x0 = array([-1.4, -1, -1, -1.4, 2.2, -1.5])
             return x0
     else:
-        return 1
+        return 'Initial conditions could not be identified, please check dimension of inits array.'
 
 
 def endtimeIdentifier(modelname, endtime=None):
@@ -323,7 +362,7 @@ def endtimeIdentifier(modelname, endtime=None):
             t1 = 100
             return t1
         else:
-            return 1
+            return 'Time array length could not be identified, please check endtime value.'
 
 
 def timestepIdentifier(modelname, timestep=None):
@@ -337,13 +376,13 @@ def timestepIdentifier(modelname, timestep=None):
         dt = 0.0001
         return dt
     else:
-        return 1
+        return 'Time step could not be identified, please check timestep value.'
 
 
 # Workhorse function
 
 def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=None):
-    newmodelname = modelSelector(modelname)
+    newmodelname = modelParameterIdentifier(modelname, keyword_arguments=0.01)
     newsolvername = solverSelector(solvername)
     if modelname in getModelDictionaryKeys(modelDictionary) and ('inits' is not None or
                                                                  'endtime' is not None or
@@ -368,6 +407,8 @@ def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=
 
 
 # Numba Test
+# Presumably the indexing on the arrays is blowing up because of https://github.com/QuantEcon/QuantEcon.py/issues/269,
+# can only get Numba 0.28 right meow in Conda, just need to be a real man and build the thing myself
 
 # @jit
 # def euler_numba(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
@@ -391,41 +432,22 @@ def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=
 # Main
 
 if __name__ == '__main__':
+    # startTime = time()
+    #
+    # # Execution example for default parameters: x0=array([0.01, 0.01]), t1=100, dt=0.02
+    # solutionArray = solutionGenerator('CO', 'ord2', timestep=0.02)
+    #
+    # # Execution example for non-default parameters:
+    # # solutionArray = solutionGenerator('CO', 'ord2', inits=array([0.05, 0.01, 0.07, 0.01]), endtime=500, timestep=0.05)
+    #
+    # endTime = time()
+    # elapsedTime = (endTime - startTime)
+    #
     startTime = time()
-
-    # Execution example for default parameters: x0=array([0.01, 0.01]), t1=100, dt=0.02
-    solutionArray = solutionGenerator('VDP', 'ord2', timestep=0.02)
-
-    # Execution example for non-default parameters:
-    # solutionArray = solutionGenerator('CO', 'ord2', inits=array([0.05, 0.01, 0.07, 0.01]), endtime=500, timestep=0.05)
-
+    # solutionArray2 = CoupledOscillatorsGen('CO', 'ord2')
+    solutionArray2 = FitzhughNagumoGen('FN', 'ord2')
     endTime = time()
     elapsedTime = (endTime - startTime)
 
-
-    # startTime2 = time()
-    # soln = Euler(x0=array([0.01, 0.01]), t1=100, dt=0.02, model=vdp_numba)
-    # endTime2 = time()
-    # elapsedTime2 = (endTime2 - startTime2)
-
-    # plot(phi, u)
-    # savefig('%s_tplot.png' % 'Noncheese')
-
-    # solution = solutionArray[0]
-    # firstarray = solution[:, 0]
-    # # secondarray = solutionArray[:, 2]
-    # timeArray = solutionArray[1]
-    # figure()
-    # plot(timeArray, firstarray)
-    # # plot(timeArray, secondarray)
-    # title("My Soln")
-    # xlabel('Time')
-    # ylabel('Dynamical Variable')
-    # savefig('%s_tplot.png' % 'Cheese')
-
-    # print(solutionArray)
-
     print('The solver took ' + str(elapsedTime) + ' seconds to execute. Which is faster than '
-                                                  'I could do it on paper so we\'ll call it good.')
-    print('The solver took ' + str(elapsedTime2) + ' seconds to execute. Which is faster than '
                                                   'I could do it on paper so we\'ll call it good.')

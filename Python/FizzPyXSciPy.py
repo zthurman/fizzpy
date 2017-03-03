@@ -45,20 +45,56 @@ def co_scipy(z, t):
     return array([xdot, -(k1/m)*x + (k2/m)*y - (b/m)*xdot, ydot, (k2/m)*x - (k1/m)*y - (b/m)*ydot])
 
 
+# Lorenz attractor
+
+def lo_scipy(z, t):
+    xdot, ydot, zdot = z
+    sigma = 10.0
+    rho = 28.0
+    beta = 10.0/3
+    return array([sigma * (ydot - xdot), rho*xdot - ydot - xdot*zdot, xdot*ydot - beta*zdot])
+
+
+# Robbins model
+
+def rb_scipy(z, t):
+    xdot, ydot, zdot = z
+    V = 1
+    sigma = 5
+    R = 13
+    return array([R - ydot*zdot - V*xdot, xdot*zdot - ydot, sigma*(ydot - zdot)])
+
+
+# Rikitake Dynamo
+
+def ri_scipy(z, t):
+    i, idot, j, jdot, k, kdot = z
+    m = 0.5
+    g = 50
+    r = 8
+    f = 0.5
+    return array([r*(jdot - i),
+                 r*(j - idot),
+                 i*k + m*idot - (1 + m)*j,
+                 idot*kdot + m*i - (1 + m)*jdot,
+                 g*(1 - (1 + m)*i*j + m*i*idot) - f*k,
+                 g*(1 - (1 + m)*idot*jdot + m*idot*i) - f*kdot])
+
+
 # Main
 
 if __name__ == '__main__':
     startTime1 = time()
 
     t = arange(0, 100, 0.02)
-    zinit = initIdentifier('VDP')    #   [0.01, 0.01]
-    z = integrate.odeint(vdp_scipy, zinit, t)
-    xdot, ydot = z.T
+    zinit = initIdentifier('RI')    #   [0.01, 0.01]
+    z = integrate.odeint(ri_scipy, zinit, t)
+    i, idot, j, jdot, k, kdot = z.T
     endTime1 = time()
     elapsedTime1 = (endTime1 - startTime1)
 
     figure()
-    plot(t, xdot)
+    plot(t, idot)
     # plot(t, y)
     title("My Soln")
     xlabel('Time')

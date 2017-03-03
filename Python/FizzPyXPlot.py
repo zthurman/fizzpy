@@ -7,8 +7,9 @@
 from __future__ import division
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
 from numpy import argsort, abs, mean, array
-from numpy.fft import fft, fftfreq
-from Python.FizzPyX import solutionGenerator
+from numpy.fft import fft, fftfreq, rfft
+from Python.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
+from Python.FizzPyXFreq import InputtoFrequencyGen
 
 
 # Time series plot
@@ -70,7 +71,41 @@ def do_psplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
     return
 
 
+# Power Spectrum
+
+def do_inputtofreqplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
+    solution = solutionGenerator(modelname, solvername)
+    solutionArray = solution[0]
+    membranePotential = solutionArray[:, 0]
+    timeArray = solution[1]
+    Y = mean(membranePotential)                 # determine DC component of signal
+    X = membranePotential - Y                   # subtract DC component from PS to get rid of peak at 0
+    fdata = X.size
+    ps = abs(fft(X))**2
+    time_step = 1 / 30
+    freqs = fftfreq(int(fdata/2 - 1), time_step)
+    idx = argsort(freqs)
+    figure()
+    plot(freqs[idx], ps[idx])
+    title(plotname)
+    xlabel(xaxis)
+    ylabel(yaxis)
+    xlim(0, 1)
+    ylim(0, 2.5e9)
+    savefig('%s_psplot.png' % plotname)
+    return
+
+
 if __name__ == '__main__':
-    print(do_tplot('CO', 'ord2', plotname='Coupled Oscillators - Beats', xaxis='Time', yaxis='Mass Position'))
+    # print(do_tplot('CO', 'ord2', plotname='Coupled Oscillators - Beats', xaxis='Time', yaxis='Mass Position'))
     # print(do_pplot('HH', 'rk4'))
     # print(do_psplot('HH', 'rk4'))
+
+    data = InputtoFrequencyGen()
+    plot(data[0], data[1])
+    title('Cheese')
+    xlabel('x')
+    ylabel('y')
+    # xlim(0, 1)
+    # ylim(0, 2.5e9)
+    savefig('cheese_tplot.png')
