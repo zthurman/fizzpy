@@ -34,9 +34,10 @@ def InputtoFrequencyGen():
     return inputs, freq
 
 
-data = InputtoFrequencyGen()
-print(data[0])
-print(data[1])
+if __name__ == '__main__':
+    data = InputtoFrequencyGen()
+    print(data[0])
+    print(data[1])
 
 
 

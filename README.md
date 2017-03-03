@@ -82,7 +82,7 @@ The PyQT GUI is borked beyond repair, dont use it.                              
 * [x] Just let the archive directory go, there will always be someone to make a GUI
 * [x] Figure out how to enable evaluating solvers with non-default parameters
 * [ ] Do speed analysis against SciPy solver with same models tested against each
-* [ ] Figure out how to enable evaluating models with non-default model specific parameters
+* [x] Figure out how to enable evaluating models with non-default model specific parameters
 * [ ] Figure out how to do coupled models in anything remotely resembling an elegant way
 * [ ] Figure out how to introduce noise to both coupled and uncoupled models for study of stochastic and coherence resonance
 * [ ] Figure out how to OO all this sh*t

@@ -111,8 +111,18 @@ def FitzhughNagumoGen(modelname, solvername, a=None, b=None, c=None, i=None):
                          model=FitzhughNagumo(a, b, c, i))
 
 
-def MorrisLecar(x, t, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
+def MorrisLecar(vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
                 v4=None, iapp=None):
+    def model(x, t, vk=vk, gk=gk, vca=vca, gca=gca, vl=vl, gl=gl, phi=phi, v1=v1, v2=v2, v3=v3, v4=v4, iapp=iapp):
+        return array([(-gca*(0.5*(1 + tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + iapp),
+                     (phi*((0.5*(1 + tanh((x[0] - v3)/v4))) - x[1]))/(1/cosh((x[0] - v3)/(2*v4)))])
+    return model
+
+
+def MorrisLecarGen(modelname, solvername, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
+                v4=None, iapp=None):
+    newmodelname = modelSelector(modelname)
+    newsolvername = solverSelector(solvername)
     vk = (-84, vk)[vk is not None]
     gk = (8, gk)[gk is not None]
     vca = (130, vca)[vca is not None]
@@ -125,24 +135,47 @@ def MorrisLecar(x, t, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, ph
     v3 = (2, v3)[v3 is not None]
     v4 = (30, v4)[v4 is not None]
     iapp = (80, iapp)[iapp is not None]
-    return array([(-gca*(0.5*(1 + tanh((x[0] - v1)/v2)))*(x[0]-vca) - gk*x[1]*(x[0]-vk) - gl*(x[0]-vl) + iapp),
-                 (phi*((0.5*(1 + tanh((x[0] - v3)/v4))) - x[1]))/(1/cosh((x[0] - v3)/(2*v4)))])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=MorrisLecar(vk, gk, vca, gca, vl, gl, phi, v1, v2, v3, v4, iapp))
 
 
-def Izhikevich(x, t, a=None, b=None, c=None, d=None, i=None):
+def Izhikevich(a=None, b=None, c=None, d=None, i=None):
+    def model(x, t, a=a, b=b, c=c, d=d, i=i):
+        if x[0] >= 30:
+            x[0] = c
+            x[1] += d
+        return array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
+                     a*(b*x[0] - x[1])])
+    return model
+
+
+def IzhikevichGen(modelname, solvername, a=None, b=None, c=None, d=None, i=None):
+    newmodelname = modelSelector(modelname)
+    newsolvername = solverSelector(solvername)
     a = (0.02, a)[a is not None]
     b = (0.2, b)[b is not None]
     c = (-65, c)[c is not None]
     d = (2, d)[d is not None]
     i = (10, i)[i is not None]
-    if x[0] >= 30:
-        x[0] = c
-        x[1] += d
-    return array([0.04*(x[0]**2) + 5*x[0] + 140 - x[1] + i,
-                 a*(b*x[0] - x[1])])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=Izhikevich(a, b, c, d, i))
 
 
-def HindmarshRose(x, t, a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=None):
+def HindmarshRose(a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=None):
+    def model(x, t, a=a, b=b, c=c, d=d, r=r, s=s, i=i, xnot=xnot):
+        return array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + i,
+                     c - d*(x[0]**2) - x[1],
+                     r*(s*(x[0] - xnot) - x[2])])
+    return model
+
+
+def HindmarshRoseGen(modelname, solvername, a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=None):
+    newmodelname = modelSelector(modelname)
+    newsolvername = solverSelector(solvername)
     a = (1.0, a)[a is not None]
     b = (3.0, b)[b is not None]
     c = (1.0, c)[c is not None]
@@ -151,9 +184,10 @@ def HindmarshRose(x, t, a=None, b=None, c=None, d=None, r=None, s=None, i=None, 
     s = (4.0, s)[s is not None]
     i = (1.3, i)[i is not None]
     xnot = (-1.5, xnot)[xnot is not None]
-    return array([x[1] - a*(x[0]**3) + (b*(x[0]**2)) - x[2] + i,
-                 c - d*(x[0]**2) - x[1],
-                 r*(s*(x[0] - xnot) - x[2])])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=HindmarshRose(a, b, c, d, r, s, i, xnot))
 
 
 def Robbins(x, t, V=None, sigma=None, R=None):
@@ -445,7 +479,10 @@ if __name__ == '__main__':
     #
     startTime = time()
     # solutionArray2 = CoupledOscillatorsGen('CO', 'ord2')
-    solutionArray2 = FitzhughNagumoGen('FN', 'ord2')
+    # solutionArray2 = FitzhughNagumoGen('FN', 'ord2', i=-0.45)
+    # solutionArray2 = MorrisLecarGen('ML', 'ord2', iapp=85)
+    # solutionArray2 = IzhikevichGen('IZ', 'ord2', i=12)
+    solutionArray2 = HindmarshRoseGen('HR', 'ord2', i=1.5)
     endTime = time()
     elapsedTime = (endTime - startTime)
 

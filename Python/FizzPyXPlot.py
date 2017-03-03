@@ -6,10 +6,10 @@
 
 from __future__ import division
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
-from numpy import argsort, abs, mean, array
-from numpy.fft import fft, fftfreq, rfft
+from numpy import argsort, abs, mean, arange, argmax
+from numpy.fft import fft, rfft, fftfreq
+# from Python.FizzPyXFreq import InputtoFrequencyGen
 from Python.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
-from Python.FizzPyXFreq import InputtoFrequencyGen
 
 
 # Time series plot
@@ -71,29 +71,30 @@ def do_psplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
     return
 
 
-# Power Spectrum
+# Input Stimulus to Frequency Plot
 
-def do_inputtofreqplot(modelname, solvername, plotname=None, xaxis=None, yaxis=None):
-    solution = solutionGenerator(modelname, solvername)
-    solutionArray = solution[0]
-    membranePotential = solutionArray[:, 0]
-    timeArray = solution[1]
-    Y = mean(membranePotential)                 # determine DC component of signal
-    X = membranePotential - Y                   # subtract DC component from PS to get rid of peak at 0
-    fdata = X.size
-    ps = abs(fft(X))**2
-    time_step = 1 / 30
-    freqs = fftfreq(int(fdata/2 - 1), time_step)
-    idx = argsort(freqs)
-    figure()
-    plot(freqs[idx], ps[idx])
-    title(plotname)
-    xlabel(xaxis)
-    ylabel(yaxis)
-    xlim(0, 1)
-    ylim(0, 2.5e9)
-    savefig('%s_psplot.png' % plotname)
-    return
+def InputtoFrequencyGen():
+    freq = []
+    inputs = []
+    for I in arange(0.398, 0.539, 0.001):
+        I *= -1
+        solution = FitzhughNagumoGen('FN', 'ord2', i=I)
+        solutionArray = solution[0]
+        membranePotential = solutionArray[:, 0]
+        Y = mean(membranePotential)  # determine DC component of signal
+        X = membranePotential - Y  # subtract DC component from PS to get rid of peak at 0
+        fdata = X.size
+        ps = abs(rfft(X)) ** 2
+        time_step = 1 / 30
+        freqs = fftfreq(int(fdata / 2 - 1), time_step)
+
+        locpeak = argmax(ps)  # Find its location
+        maxfreq = freqs[locpeak]  # Get the actual frequency value
+
+        freq.append(maxfreq)
+        inputs.append(I)
+
+    return inputs, freq
 
 
 if __name__ == '__main__':
@@ -102,7 +103,7 @@ if __name__ == '__main__':
     # print(do_psplot('HH', 'rk4'))
 
     data = InputtoFrequencyGen()
-    plot(data[0], data[1])
+    plot(abs(data[0]), data[1])
     title('Cheese')
     xlabel('x')
     ylabel('y')
