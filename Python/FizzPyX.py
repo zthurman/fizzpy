@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # FizzPyX - FizzPyX
-# Copyright (C) 2016 Zechariah Thurman
+# Copyright (C) 2017 Zechariah Thurman
 # GNU GPLv3
 
 
 from __future__ import division
-from numpy import array, arange, size, empty, ndarray
+from numpy import array, arange, size, empty
 from time import time
 from math import exp, tanh, cosh
 # from numba import jit
@@ -84,18 +84,38 @@ def LeakyIntegrateandFireGen(modelname, solvername, u_th=None, u_reset=None, u_e
                          model=LeakyIntegrateandFire(u_th, u_reset, u_eq, r, i))
 
 
-def VanDerPol(x, t, mu=None):
+def VanDerPol(mu=None):
+    def model(x, t, mu=mu):
+        return array([x[1],
+                     mu*x[1]*(1-x[0]**2)-x[0]])
+    return model
+
+
+def VanDerPolGen(modelname, solvername, mu=None):
+    newsolvername = solverSelector(solvername)
     mu = (1, mu)[mu is not None]
-    return array([x[1],
-                 mu*x[1]*(1-x[0]**2)-x[0]])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=VanDerPol(mu))
 
 
-def DampedSHM(x, t, r=None, s=None, m=None):
+def DampedSHM(r=None, s=None, m=None):
+    def model(x, t, r=r, s=s, m=m):
+        return array([x[1],
+                     (-r*x[1] - s*x[0])/m])
+    return model
+
+
+def DampedSHMGen(modelname, solvername, r=None, s=None, m=None):
+    newsolvername = solverSelector(solvername)
     r = (0.035, r)[r is not None]
     s = (0.5, s)[s is not None]
     m = (0.2, m)[m is not None]
-    return array([x[1],
-                 (-r*x[1] - s*x[0])/m])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=DampedSHM(r, s, m))
 
 
 def FitzhughNagumo(a, b, c, i):
@@ -193,22 +213,42 @@ def HindmarshRoseGen(modelname, solvername, a=None, b=None, c=None, d=None, r=No
                          model=HindmarshRose(a, b, c, d, r, s, i, xnot))
 
 
-def Robbins(x, t, V=None, sigma=None, R=None):
+def Robbins(V=None, sigma=None, R=None):
+    def model(x, t, V=V, sigma=sigma, R=R):
+        return array([R - x[1]*x[2] - V*x[0],
+                     x[0]*x[2] - x[1],
+                     sigma*(x[1] - x[2])])
+    return model
+
+
+def RobbinsGen(modelname, solvername, V=None, sigma=None, R=None):
+    newsolvername = solverSelector(solvername)
     V = (1, V)[V is not None]
     sigma = (5, sigma)[sigma is not None]
     R = (13, R)[R is not None]
-    return array([R - x[1]*x[2] - V*x[0],
-                 x[0]*x[2] - x[1],
-                 sigma*(x[1] - x[2])])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=Robbins(V, sigma, R))
 
 
-def Lorenz(x, t, sigma=None, rho=None, beta=None):
+def Lorenz(sigma=None, rho=None, beta=None):
+    def model(x, t, sigma=sigma, rho=rho, beta=beta):
+        return array([sigma * (x[1] - x[0]),
+                     rho*x[0] - x[1] - x[0]*x[2],
+                     x[0]*x[1] - beta*x[2]])
+    return model
+
+
+def LorenzGen(modelname, solvername, sigma=None, rho=None, beta=None):
+    newsolvername = solverSelector(solvername)
     sigma = (10.0, sigma)[sigma is not None]
     rho = (28.0, rho)[rho is not None]
     beta = (10.0/3, beta)[beta is not None]
-    return array([sigma * (x[1] - x[0]),
-                 rho*x[0] - x[1] - x[0]*x[2],
-                 x[0]*x[1] - beta*x[2]])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=Lorenz(sigma, rho, beta))
 
 
 def HodgkinHuxley(g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=None, C_m=None, I=None):
@@ -243,17 +283,27 @@ def HodgkinHuxleyGen(modelname, solvername, g_K=None, g_Na=None, g_L=None, E_K=N
                          model=HodgkinHuxley(g_K, g_Na, g_L, E_K, E_Na, E_L, C_m, I))
 
 
-def Rikitake(x, t, m=None, g=None, r=None, f=None):
+def Rikitake(m=None, g=None, r=None, f=None):
+    def model(x, t, m=m, g=g, r=r, f=f):
+        return array([r*(x[3] - x[0]),
+                     r*(x[2] - x[1]),
+                     x[0]*x[4] + m*x[1] - (1 + m)*x[2],
+                     x[1]*x[5] + m*x[0] - (1 + m)*x[3],
+                     g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
+                     g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
+    return model
+
+
+def RikitakeGen(modelname, solvername, m=None, g=None, r=None, f=None):
+    newsolvername = solverSelector(solvername)
     m = (0.5, m)[m is not None]
     g = (50, g)[g is not None]
     r = (8, r)[r is not None]
     f = (0.5, f)[f is not None]
-    return array([r*(x[3] - x[0]),
-                 r*(x[2] - x[1]),
-                 x[0]*x[4] + m*x[1] - (1 + m)*x[2],
-                 x[1]*x[5] + m*x[0] - (1 + m)*x[3],
-                 g*(1 - (1 + m)*x[0]*x[2] + m*x[0]*x[1]) - f*x[4],
-                 g*(1 - (1 + m)*x[1]*x[3] + m*x[1]*x[0]) - f*x[5]])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=Rikitake(m, g, r, f))
 
 
 # Coupled model functions
@@ -491,13 +541,18 @@ if __name__ == '__main__':
     # elapsedTime = (endTime - startTime)
     #
     startTime = time()
-    # solutionArray2 = CoupledOscillatorsGen('CO', 'ord2')
-    # solutionArray2 = LeakyIntegrateandFire('LIF', 'euler', i=1.3)
-    # solutionArray2 = FitzhughNagumoGen('FN', 'ord2', i=-0.45)
-    # solutionArray2 = MorrisLecarGen('ML', 'ord2', iapp=85)
-    # solutionArray2 = IzhikevichGen('IZ', 'ord2', i=12)
-    # solutionArray2 = HindmarshRoseGen('HR', 'ord2', i=1.5)
-    # solutionArray2 = HodgkinHuxleyGen('HH', 'rk4', I=-15)
+    # solutionArray = CoupledOscillatorsGen('CO', 'ord2')
+    # solutionArray = LeakyIntegrateandFire('LIF', 'euler', i=1.3)
+    # solutionArray = VanDerPolGen('VDP', 'ord2', mu=-1)
+    # solutionArray = DampedSHMGen('SHM', 'ord2', m=0.5)
+    # solutionArray = FitzhughNagumoGen('FN', 'ord2', i=-0.45)
+    # solutionArray = MorrisLecarGen('ML', 'ord2', iapp=85)
+    # solutionArray = IzhikevichGen('IZ', 'ord2', i=12)
+    # solutionArray = HindmarshRoseGen('HR', 'ord2', i=1.5)
+    # solutionArray = RobbinsGen('RB', 'rk4', R=15)
+    # solutionArray = LorenzGen('LO', 'rk4', rho=29)
+    # solutionArray = HodgkinHuxleyGen('HH', 'rk4', I=-15)
+    # solutionArray = RikitakeGen('RI', 'rk4', f=0.7)
     endTime = time()
     elapsedTime = (endTime - startTime)
 

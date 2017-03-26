@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # FizzPyX - FizzPyXSciPy
-# Copyright (C) 2016 Zechariah Thurman
+# Copyright (C) 2017 Zechariah Thurman
 # GNU GPLv3
 
 
