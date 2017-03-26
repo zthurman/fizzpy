@@ -99,7 +99,6 @@ def FitzhughNagumo(a, b, c, i):
 
 
 def FitzhughNagumoGen(modelname, solvername, a=None, b=None, c=None, i=None):
-    newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     a = (0.75, a)[a is not None]
     b = (0.8, b)[b is not None]
@@ -121,7 +120,6 @@ def MorrisLecar(vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None
 
 def MorrisLecarGen(modelname, solvername, vk=None, gk=None, vca=None, gca=None, vl=None, gl=None, phi=None, v1=None, v2=None, v3=None,
                 v4=None, iapp=None):
-    newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     vk = (-84, vk)[vk is not None]
     gk = (8, gk)[gk is not None]
@@ -152,7 +150,6 @@ def Izhikevich(a=None, b=None, c=None, d=None, i=None):
 
 
 def IzhikevichGen(modelname, solvername, a=None, b=None, c=None, d=None, i=None):
-    newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     a = (0.02, a)[a is not None]
     b = (0.2, b)[b is not None]
@@ -174,7 +171,6 @@ def HindmarshRose(a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=N
 
 
 def HindmarshRoseGen(modelname, solvername, a=None, b=None, c=None, d=None, r=None, s=None, i=None, xnot=None):
-    newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     a = (1.0, a)[a is not None]
     b = (3.0, b)[b is not None]
@@ -208,7 +204,24 @@ def Lorenz(x, t, sigma=None, rho=None, beta=None):
                  x[0]*x[1] - beta*x[2]])
 
 
-def HodgkinHuxley(x, t, g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=None, C_m=None, I=None):
+def HodgkinHuxley(g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=None, C_m=None, I=None):
+    def model(x, t, g_K=g_K, g_Na=g_Na, g_L=g_L, E_K=E_K, E_Na=E_Na, E_L=E_L, C_m=C_m, I=I):
+        alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
+        beta_n = 0.125*exp(x[0]/80)
+        alpha_m = (0.1*(x[0]+25))/(exp((x[0]+25)/10)-1)
+        beta_m = 4*exp(x[0]/18)
+        alpha_h = (0.07*exp(x[0]/20))
+        beta_h = 1 / (exp((x[0]+30)/10)+1)
+        return array([(g_K*(x[1]**4)*(x[0]-E_K) + g_Na*(x[2]**3)*x[3]*(x[0]-E_Na) + g_L*(x[0]-E_L) - I)*(-1/C_m),
+                     alpha_n*(1-x[1]) - beta_n*x[1],
+                     alpha_m*(1-x[2]) - beta_m*x[2],
+                     alpha_h*(1-x[3]) - beta_h*x[3]])
+    return model
+
+
+def HodgkinHuxleyGen(modelname, solvername, g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=None, C_m=None,
+                     I=None):
+    newsolvername = solverSelector(solvername)
     g_K = (36, g_K)[g_K is not None]
     g_Na = (120, g_Na)[g_Na is not None]
     g_L = (0.3, g_L)[g_L is not None]
@@ -217,16 +230,10 @@ def HodgkinHuxley(x, t, g_K=None, g_Na=None, g_L=None, E_K=None, E_Na=None, E_L=
     E_L = (-10.613, E_L)[E_L is not None]
     C_m = (1, C_m)[C_m is not None]
     I = (-10, I)[I is not None]
-    alpha_n = (0.01*(x[0]+10))/(exp((x[0]+10)/10)-1)
-    beta_n = 0.125*exp(x[0]/80)
-    alpha_m = (0.1*(x[0]+25))/(exp((x[0]+25)/10)-1)
-    beta_m = 4*exp(x[0]/18)
-    alpha_h = (0.07*exp(x[0]/20))
-    beta_h = 1 / (exp((x[0]+30)/10)+1)
-    return array([(g_K*(x[1]**4)*(x[0]-E_K) + g_Na*(x[2]**3)*x[3]*(x[0]-E_Na) + g_L*(x[0]-E_L) - I)*(-1/C_m),
-                 alpha_n*(1-x[1]) - beta_n*x[1],
-                 alpha_m*(1-x[2]) - beta_m*x[2],
-                 alpha_h*(1-x[3]) - beta_h*x[3]])
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=HodgkinHuxley(g_K, g_Na, g_L, E_K, E_Na, E_L, C_m, I))
 
 
 def Rikitake(x, t, m=None, g=None, r=None, f=None):
@@ -254,7 +261,6 @@ def CoupledOscillators(b, k1, k2, m):
 
 
 def CoupledOscillatorsGen(modelname, solvername, b=None, k1=None, k2=None, m=None):
-    newmodelname = modelSelector(modelname)
     newsolvername = solverSelector(solvername)
     b = (0.007, b)[b is not None]  # 0.01
     k1 = (0.27, k1)[k1 is not None]
@@ -482,7 +488,8 @@ if __name__ == '__main__':
     # solutionArray2 = FitzhughNagumoGen('FN', 'ord2', i=-0.45)
     # solutionArray2 = MorrisLecarGen('ML', 'ord2', iapp=85)
     # solutionArray2 = IzhikevichGen('IZ', 'ord2', i=12)
-    solutionArray2 = HindmarshRoseGen('HR', 'ord2', i=1.5)
+    # solutionArray2 = HindmarshRoseGen('HR', 'ord2', i=1.5)
+    solutionArray2 = HodgkinHuxleyGen('HH', 'rk4', I=-15)
     endTime = time()
     elapsedTime = (endTime - startTime)
 
