@@ -63,18 +63,25 @@ def RungeKutta4(t0=0, x0=array([1]), t1=5, dt=0.01, model=None):
 
 # Uncoupled Model functions
 
-def LeakyIntegrateandFire(x, t, u_th=None, u_reset=None, u_eq=None, r=None, i=None):
-    def model():
-        u_th = (-55, u_th)[u_th is not None]
-        u_reset = (-75, u_reset)[u_reset is not None]
-        u_eq = (-65, u_eq)[u_eq is not None]
-        r = (10, r)[r is not None]
-        i = (1.2, i)[i is not None]
+def LeakyIntegrateandFire(u_th=None, u_reset=None, u_eq=None, r=None, i=None):
+    def model(x, t, u_th=u_th, u_reset=u_reset, u_eq=u_eq, r=r, i=i):
         if x[0] >= u_th:
             x[0] = u_reset
         return array([-(x[0] - u_eq) + r*i])
-
     return model
+
+
+def LeakyIntegrateandFireGen(modelname, solvername, u_th=None, u_reset=None, u_eq=None, r=None, i=None):
+    newsolvername = solverSelector(solvername)
+    u_th = (-55, u_th)[u_th is not None]
+    u_reset = (-75, u_reset)[u_reset is not None]
+    u_eq = (-65, u_eq)[u_eq is not None]
+    r = (10, r)[r is not None]
+    i = (1.2, i)[i is not None]
+    return newsolvername(t0=0, x0=initIdentifier(modelname),
+                         t1=endtimeIdentifier(modelname),
+                         dt=timestepIdentifier(modelname),
+                         model=LeakyIntegrateandFire(u_th, u_reset, u_eq, r, i))
 
 
 def VanDerPol(x, t, mu=None):
@@ -485,11 +492,12 @@ if __name__ == '__main__':
     #
     startTime = time()
     # solutionArray2 = CoupledOscillatorsGen('CO', 'ord2')
+    # solutionArray2 = LeakyIntegrateandFire('LIF', 'euler', i=1.3)
     # solutionArray2 = FitzhughNagumoGen('FN', 'ord2', i=-0.45)
     # solutionArray2 = MorrisLecarGen('ML', 'ord2', iapp=85)
     # solutionArray2 = IzhikevichGen('IZ', 'ord2', i=12)
     # solutionArray2 = HindmarshRoseGen('HR', 'ord2', i=1.5)
-    solutionArray2 = HodgkinHuxleyGen('HH', 'rk4', I=-15)
+    # solutionArray2 = HodgkinHuxleyGen('HH', 'rk4', I=-15)
     endTime = time()
     elapsedTime = (endTime - startTime)
 
