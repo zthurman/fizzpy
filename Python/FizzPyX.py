@@ -476,6 +476,11 @@ def timestepIdentifier(modelname, timestep=None):
         return 'Time step could not be identified, please check timestep value.'
 
 
+def modelGen(modelname, solvername, params):
+    newsolvername = solverSelector(solvername)
+    pass
+
+
 # Workhorse function
 
 def solutionGenerator(modelname, solvername, inits=None, endtime=None, timestep=None):
