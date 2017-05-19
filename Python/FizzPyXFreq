@@ -8,6 +8,7 @@ from __future__ import division
 from numpy import mean, argmax, arange
 from numpy.fft import fft, fftfreq, rfft
 from Python.FizzPyX import FitzhughNagumoGen
+from matplotlib.pyplot import plot, savefig
 
 
 def InputtoFrequencyGen():
@@ -33,6 +34,11 @@ def InputtoFrequencyGen():
 
     return inputs, freq
 
+
+def freqplot():
+    plot(abs(data[0]), data[1])
+    savefig('frequency_plot.png')
+    return
 
 if __name__ == '__main__':
     data = InputtoFrequencyGen()
