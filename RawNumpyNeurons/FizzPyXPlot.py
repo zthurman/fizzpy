@@ -8,8 +8,8 @@ from __future__ import division
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, savefig
 from numpy import argsort, abs, mean, arange, argmax
 from numpy.fft import fft, rfft, fftfreq
-# from Python.FizzPyXFreq import InputtoFrequencyGen
-from Python.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
+# from Numpy_Neurons.FizzPyXFreq import InputtoFrequencyGen
+from Numpy_Neurons.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
 
 
 # Time series plot

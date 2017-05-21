@@ -11,7 +11,7 @@ from math import exp, tanh, cosh
 import scipy.integrate as integrate
 from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, savefig
 
-from Python.FizzPyX import initIdentifier
+from Numpy_Neurons.FizzPyX import initIdentifier
 
 
 # Scipy Implementations

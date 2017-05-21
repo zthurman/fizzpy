@@ -7,7 +7,7 @@
 from __future__ import division
 from numpy import mean, argmax, arange
 from numpy.fft import fft, fftfreq, rfft
-from Python.FizzPyX import FitzhughNagumoGen
+from Numpy_Neurons.FizzPyX import FitzhughNagumoGen
 from matplotlib.pyplot import plot, savefig
 
 
