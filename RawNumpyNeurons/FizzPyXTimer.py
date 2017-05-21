@@ -8,7 +8,7 @@ from __future__ import division
 from time import time
 from numpy import array
 
-from Numpy_Neurons.FizzPyX import solutionGenerator, modelDictionary, getModelDictionaryKeys, solverList
+from RawNumpyNeurons.FizzPyX import solutionGenerator, modelDictionary, getModelDictionaryKeys, solverList
 
 
 # Time performance evaluator function

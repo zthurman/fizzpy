@@ -9,7 +9,7 @@ from matplotlib.pyplot import figure, plot, title, xlabel, ylabel, xlim, ylim, s
 from numpy import argsort, abs, mean, arange, argmax
 from numpy.fft import fft, rfft, fftfreq
 # from Numpy_Neurons.FizzPyXFreq import InputtoFrequencyGen
-from Numpy_Neurons.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
+from RawNumpyNeurons.FizzPyX import solutionGenerator, CoupledOscillatorsGen, FitzhughNagumoGen
 
 
 # Time series plot
