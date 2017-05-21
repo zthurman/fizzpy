@@ -28,31 +28,31 @@ b = 0.8
 c = 3
 i = -0.4
 
-# The Lorenz equations
+# The Fitzhugh-Nagumo equations
 eq.define_quantity(xy, np.array([0.1, 0.1]), 0, 1)(tf.stack([c * (xy.d(0)[0] + xy.d(0)[1] - (xy.d(0)[0]**3/3) + i),
                                                             -1/c * (xy.d(0)[0] - a + b*xy.d(0)[1])]))
 
-# Start tensorflow
-sess = tf.Session()
-sess.run(tf.initialize_all_variables())
-simulate_op = eq.generate_simulate_operation(0.02)
 
-xs = np.zeros(2000)
-ys = np.zeros(2000)
-ts = np.zeros(2000)
-(x, y) = (xy.d(0)[0], xy.d(0)[1])
-for i in tqdm.tqdm(range(2000)):
-    xs[i] = sess.run(x)
-    ys[i] = sess.run(y)
-    if i < 1999:
-        sess.run(simulate_op)
-        sess.run(simulate_op)
-        ts[i+1] = ts[i] + 0.01
+if __name__ == '__main__':
+    # Start tensorflow
+    sess = tf.Session()
+    sess.run(tf.initialize_all_variables())
+    simulate_op = eq.generate_simulate_operation(0.025)
 
-np.save("lorenz_sim_data", [xs, ys])
+    xs = np.zeros(2000)
+    ys = np.zeros(2000)
+    ts = np.zeros(2000)
+    (x, y) = (xy.d(0)[0], xy.d(0)[1])
+    for i in tqdm.tqdm(range(2000)):
+        xs[i] = sess.run(x)
+        ys[i] = sess.run(y)
+        if i < 1999:
+            sess.run(simulate_op)
+            sess.run(simulate_op)
+            ts[i+1] = ts[i] + 0.01
 
-fig = plt.figure()
-plt.plot(ts, xs)
-plt.legend()
+    fig = plt.figure()
+    plt.plot(ts, xs)
+    plt.legend()
 
-plt.show()
+    plt.show()
