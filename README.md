@@ -8,4 +8,5 @@ This is library for doing stuff with:
 * Neural networks
 * Non-linear dynamical systems that exhibit fractal dimensions
 
-
+#### How to FizzPyX  
+* Notebooks directory is for developing the math
