@@ -21,6 +21,7 @@ class WarningFilter(logging.Filter):
 logger = logging.getLogger('tensorflow')
 logger.addFilter(WarningFilter())
 
+
 # Generate solutions to the ODEs, solve up that ferndangled biscuit
 
 
@@ -29,6 +30,20 @@ def generate_odesolution(function, initial_conditions, t0=0, tfinal=50, n=1000):
     t = np.linspace(t0, tfinal, num=n)
     tensor_state, tensor_info = tf.contrib.integrate.odeint(function, init_state, t, full_output=True)
     return [tensor_state, tensor_info]
+
+
+# Generate Tensorflow session
+
+
+def generate_tensorflowsession(function, initial_conditions, t0=0, tfinal=50, n=1000):
+    sess = tf.Session()
+    state, info = sess.run(generate_odesolution(function, initial_conditions, t0=t0, tfinal=tfinal, n=n))
+    columns = len(state.T)
+    rows = len(state)
+    output = np.ndarray(columns)
+    output = state.T
+    return output
+
 
 # Function that removes the DC component of a signal so that power spectrum doesn't have peak at 0
 
