@@ -1,6 +1,7 @@
 # fizzpy
 
-#### Fizzicks solvers in python
+#### An interdisciplinary library for Fizzicks, Math, Biology and Engineering
 
-This is library for doing stuff with:
-* Ordinary Differential Equations (ODEs)
+##### Goals
+* Reduce code overhead for user interaction with mathematical models
+* Expose tools that facilitate a deeper understanding of mathematical models

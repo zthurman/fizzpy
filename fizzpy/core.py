@@ -1,11 +1,11 @@
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 
 
 class Model:
 
     """ Model class
-    Used for storing methods related to the solution of the individual models.
+    Used for storing methods that generalize to all models.
     """
 
     def __init__(
@@ -57,12 +57,6 @@ class Model:
             Tensorflow stack representing the equations for the system of ODEs.
         arg2
             Initial conditions for the system of ODEs to be solved.
-        initial_time : int
-            Initial time value for the time array.
-        final_time : int
-            Final time value for the time array.
-        time_steps : int
-            Number of steps between initial and final time in time array.
 
         Returns
         -------
@@ -89,12 +83,6 @@ class Model:
             Tensorflow stack representing the equations for the system of ODEs.
         arg2
             Initial conditions for the system of ODEs to be solved.
-        initial_time : int
-            Initial time value for the time array.
-        final_time : int
-            Final time value for the time array.
-        time_steps : int
-            Number of steps between initial and final time in time array.
 
         Returns
         -------
@@ -109,31 +97,11 @@ class Model:
         return output
 
 
-class DampedSHM(Model):
-
-    def __init__(
-            self,
-            initial_conditions=[0.1, 0.1],
-            model_parameters=[0.035, 0.5, 0.2],
-            final_time=50,
-            time_steps=500):
-        self.initial_conditions = np.array(initial_conditions)
-        self.model_parameters = model_parameters
-        self.final_time = final_time
-        self.time_steps = time_steps
-
-    def equations(self, state, t):
-        x, y = tf.unstack(state)
-        dx = y
-        dy = (-self.model_parameters[0] * y - self.model_parameters[1] * x) / self.model_parameters[2]
-        return tf.stack([dx, dy])
-
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
-
-
 class CoupledDampedSHM(Model):
+
+    """
+
+    """
 
     def __init__(
             self,
@@ -163,7 +131,168 @@ class CoupledDampedSHM(Model):
         return self.solution
 
 
+class DampedSHM(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1],
+            model_parameters=[0.035, 0.5, 0.2],
+            final_time=50,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y = tf.unstack(state)
+        dx = y
+        dy = (-self.model_parameters[0] * y - self.model_parameters[1] * x) / self.model_parameters[2]
+        return tf.stack([dx, dy])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class FitzhughNagumo(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[0.75, 0.8, 3, -0.4],
+            final_time=100,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        v, w = tf.unstack(state)
+        dv = self.model_parameters[2] * (v + w - (v**3/3) + self.model_parameters[3])
+        dw = -1/self.model_parameters[2] * (v - self.model_parameters[0] + self.model_parameters[1]*w)
+        return tf.stack([dv, dw])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class HindmarshRose(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1, 0.1],
+            model_parameters=[1., 3., 1., 5., 0.006, 4., 1.3, -1.5],
+            final_time=100,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y, z = tf.unstack(state)
+        dx = y - self.model_parameters[0] * (x ** 3) \
+            + (self.model_parameters[1] * (x ** 2)) - z + self.model_parameters[6]
+        dy = self.model_parameters[2] - self.model_parameters[3] * (x ** 2) - y
+        dz = self.model_parameters[4] * (self.model_parameters[5] * (x - self.model_parameters[7]) - z)
+        return tf.stack([dx, dy, dz])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class HodgkinHuxley(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1, 0.1, 0.1],
+            model_parameters=[36., 120., 0.3, 12., -115., -10.613, 1., -10.],
+            final_time=100,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        i, n, m, h = tf.unstack(state)
+        # Alpha and beta functions for channel activation functions
+        alpha_n = (0.01 * (i + 10)) / (tf.exp((i + 10) / 10) - 1)
+        beta_n = 0.125 * tf.exp(i / 80)
+        alpha_m = (0.1 * (i + 25)) / (tf.exp((i + 25) / 10) - 1)
+        beta_m = 4 * tf.exp(i / 18)
+        alpha_h = (0.07 * tf.exp(i / 20))
+        beta_h = 1 / (tf.exp((i + 30) / 10) + 1)
+        # Differential Equations
+        di = (self.model_parameters[0] * (n ** 4) * (i - self.model_parameters[3])
+              + self.model_parameters[1] * (m ** 3) * h * (i - self.model_parameters[4])
+              + self.model_parameters[2] * (i - self.model_parameters[5])
+              - self.model_parameters[7]) * (-1 / self.model_parameters[6])
+        dn = alpha_n * (1 - n) - beta_n * n
+        dm = alpha_m * (1 - m) - beta_m * m
+        dh = alpha_h * (1 - h) - beta_h * h
+        return hp.tf.stack([di, dn, dm, dh])
+
+    def solve(self):
+        i, n, m, h = self.tf_session(self.equations, self.initial_conditions)
+        self.solution = -1*i, n, m, h
+        return self.solution
+
+
+class HIV(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[1000, 0, 1],
+            model_parameters=[10., 0.02, 0.24, 2.4, 2.4e-5, 100],
+            final_time=500,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x1, x2, x3 = tf.unstack(state)
+        dx1 = -self.model_parameters[1] * x1 - self.model_parameters[4] * x1 * x3 + self.model_parameters[0]
+        dx2 = -self.model_parameters[3] * x2 + self.model_parameters[4] * x1 * x3
+        dx3 = self.model_parameters[5] * x2 - self.model_parameters[2] * x3
+        return tf.stack([dx1, dx2, dx3])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
 class Lorenz(Model):
+
+    """
+
+    """
 
     def __init__(
             self,
@@ -182,6 +311,68 @@ class Lorenz(Model):
         dy = x * (self.model_parameters[0] - z) - y
         dz = x * y - self.model_parameters[2] * z
         return tf.stack([dx, dy, dz])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class MorrisLecar(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[-84., 8., 130., 4.4, -60., 2., 0.04, -1.2, 18., 2., 30., 80.],
+            final_time=500,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        v, n = tf.unstack(state)
+        dv = (-self.model_parameters[3]
+              * (0.5 * (1 + tf.tanh((v - self.model_parameters[7]) / self.model_parameters[8])))
+              * (v - self.model_parameters[2]) - self.model_parameters[1] * n
+              * (v - self.model_parameters[0]) - self.model_parameters[5]
+              * (v - self.model_parameters[4]) + self.model_parameters[11])
+        dn = (self.model_parameters[6]
+              * ((0.5 * (1 + tf.tanh((v - self.model_parameters[9]) / self.model_parameters[10]))) - n)) \
+            / (1 / tf.cosh((v - self.model_parameters[9]) / (2 * self.model_parameters[10])))
+        return tf.stack([dv, dn])
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class Vanderpol(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[-0.05],
+            final_time=50,
+            time_steps=250):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y = tf.unstack(state)
+        dx = y
+        dy = self.model_parameters[0]*y*(1 - x**2) - x
+        return tf.stack([dx, dy])
 
     def solve(self):
         self.solution = self.tf_session(self.equations, self.initial_conditions)
