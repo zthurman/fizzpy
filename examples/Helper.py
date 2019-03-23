@@ -1,105 +1,6 @@
-# Please reference Documentation.ipynb for more details
-
-# Shebang
-import tensorflow as tf
-import numpy as np
-from numpy.fft import fft, fftfreq, rfft, fftshift
 import matplotlib.pyplot as plt
-import logging
-
-#  Using this to circumvent some borked sauces in the tensorflow 1.7.0 version that I'm on in combination with
-# Arch and python 3.6
-
-
-class WarningFilter(logging.Filter):
-    def filter(self, record):
-        msg = record.getMessage()
-        tf_warning = 'retry (from tensorflow.contrib.learn.python.learn.datasets.base)' in msg
-        return not tf_warning
-
-
-logger = logging.getLogger('tensorflow')
-logger.addFilter(WarningFilter())
-
-
-# Generate solutions to the ODEs, solve up that ferndangled biscuit
-
-
-def generate_odesolution(function, initial_conditions, t0=0, tfinal=50, n=1000):
-    init_state = tf.constant(initial_conditions, dtype=tf.float64)
-    t = np.linspace(t0, tfinal, num=n)
-    tensor_state, tensor_info = tf.contrib.integrate.odeint(function, init_state, t, full_output=True)
-    return [tensor_state, tensor_info]
-
-
-# Generate Tensorflow session
-
-
-def generate_tensorflowsession(function, initial_conditions, t0=0, tfinal=50, n=1000):
-    sess = tf.Session()
-    state, info = sess.run(generate_odesolution(function, initial_conditions, t0=t0, tfinal=tfinal, n=n))
-    columns = len(state.T)
-    rows = len(state)
-    output = np.ndarray(columns)
-    output = state.T
-    return output
-
-
-# Function that removes the DC component of a signal so that power spectrum doesn't have peak at 0
-
-
-def dc_remover(membranepotential):
-    dc_component = np.mean(membranepotential) # determine DC component of membrane potential signal
-    signal_sans_dc = membranepotential - dc_component # subtract DC component from PS to get rid of peak at 0
-    return signal_sans_dc
-
-# Generate a power spectrum, gotta do some twerking to get the shpongle fongled
-
-
-def generate_powerspectrum(membranepotential, tfinal, n):
-    X = dc_remover(membranepotential)
-    fdata = X.size
-    ps = abs(fft(X))**2
-    time_step = tfinal/n
-    freqs = fftfreq(fdata, time_step)
-    idx = np.argsort(freqs)
-    return freqs, ps, idx
-
-# Generate the max frequency of the membrane potential at a given input
-
-
-def generate_maxfrequency(membranepotential, tfinal, n):
-    X = dc_remover(membranepotential)
-    frame_rate = tfinal/10
-    fdata = X.size
-    ps = abs(fft(X))**2
-    time_step = tfinal/n
-    freqs = fftfreq(fdata)
-    idx = np.argmax(np.abs(ps))
-    maxfreq = np.abs(freqs[idx])
-    maxfreq = np.abs(maxfreq*frame_rate)
-    return maxfreq
-
-# Plotting helper functions
-
-
-def plotface(arg1, arg2=None, xlim=None, ylim=None, xlabel=None, ylabel=None, grid=None):
-    plt.figure()
-    if arg2 is not None:
-        plt.plot(arg1, arg2)
-    else:
-        plt.plot(arg1)
-    if xlim is not None:
-        plt.xlim(xlim)
-    if ylim is not None:
-        plt.ylim(ylim)
-    if xlabel is not None:
-        plt.xlabel(xlabel)
-    if ylabel is not None:
-        plt.ylabel(ylabel)
-    if grid is not None:
-        plt.grid()
-    return plt.show()
+import numpy as np
+import tensorflow as tf
 
 
 class Model:
@@ -195,3 +96,276 @@ class Model:
         state, info = sess.run(self.ode_solver(arg1, arg2))
         output = state.T
         return output
+
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
+
+class CoupledDampedSHM(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.5, 0.1, 0.1, 0.1],
+            model_parameters=[0.007, 0.27, 0.027, 0.25],
+            final_time=200,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y, x1, y1 = tf.unstack(state)
+        dx = y
+        dy = -(self.model_parameters[1] / self.model_parameters[3]) * x \
+            + (self.model_parameters[2] / self.model_parameters[3]) * x1 \
+            - (self.model_parameters[0] / self.model_parameters[3]) * y
+        dx1 = y1
+        dy1 = (self.model_parameters[2] / self.model_parameters[3]) * x \
+            - (self.model_parameters[1] / self.model_parameters[3]) * x1 \
+            - (self.model_parameters[0] / self.model_parameters[3]) * y1
+        return tf.stack([dx, dy, dx1, dy1])
+
+
+class DampedSHM(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1],
+            model_parameters=[0.035, 0.5, 0.2],
+            final_time=50,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y = tf.unstack(state)
+        dx = y
+        dy = (-self.model_parameters[0] * y - self.model_parameters[1] * x) / self.model_parameters[2]
+        return tf.stack([dx, dy])
+
+
+class FitzhughNagumo(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[0.75, 0.8, 3, -0.4],
+            final_time=100,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        v, w = tf.unstack(state)
+        dv = self.model_parameters[2] * (v + w - (v**3/3) + self.model_parameters[3])
+        dw = -1/self.model_parameters[2] * (v - self.model_parameters[0] + self.model_parameters[1]*w)
+        return tf.stack([dv, dw])
+
+
+class HindmarshRose(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1, 0.1],
+            model_parameters=[1., 3., 1., 5., 0.006, 4., 1.3, -1.5],
+            final_time=100,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y, z = tf.unstack(state)
+        dx = y - self.model_parameters[0] * (x ** 3) \
+            + (self.model_parameters[1] * (x ** 2)) - z + self.model_parameters[6]
+        dy = self.model_parameters[2] - self.model_parameters[3] * (x ** 2) - y
+        dz = self.model_parameters[4] * (self.model_parameters[5] * (x - self.model_parameters[7]) - z)
+        return tf.stack([dx, dy, dz])
+
+
+class HodgkinHuxley(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.1, 0.1, 0.1, 0.1],
+            model_parameters=[36., 120., 0.3, 12., -115., -10.613, 1., -10.],
+            final_time=100,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        i, n, m, h = tf.unstack(state)
+        # Alpha and beta functions for channel activation functions
+        alpha_n = (0.01 * (i + 10)) / (tf.exp((i + 10) / 10) - 1)
+        beta_n = 0.125 * tf.exp(i / 80)
+        alpha_m = (0.1 * (i + 25)) / (tf.exp((i + 25) / 10) - 1)
+        beta_m = 4 * tf.exp(i / 18)
+        alpha_h = (0.07 * tf.exp(i / 20))
+        beta_h = 1 / (tf.exp((i + 30) / 10) + 1)
+        # Differential Equations
+        di = (self.model_parameters[0] * (n ** 4) * (i - self.model_parameters[3])
+              + self.model_parameters[1] * (m ** 3) * h * (i - self.model_parameters[4])
+              + self.model_parameters[2] * (i - self.model_parameters[5])
+              - self.model_parameters[7]) * (-1 / self.model_parameters[6])
+        dn = alpha_n * (1 - n) - beta_n * n
+        dm = alpha_m * (1 - m) - beta_m * m
+        dh = alpha_h * (1 - h) - beta_h * h
+        return tf.stack([di, dn, dm, dh])
+
+    def solve(self):
+        i, n, m, h = self.tf_session(self.equations, self.initial_conditions)
+        self.solution = -1*i, n, m, h
+        return self.solution
+
+
+class HIV(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[1000, 0, 1],
+            model_parameters=[10., 0.02, 0.24, 2.4, 2.4e-5, 100],
+            final_time=500,
+            time_steps=500):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x1, x2, x3 = tf.unstack(state)
+        dx1 = -self.model_parameters[1] * x1 - self.model_parameters[4] * x1 * x3 + self.model_parameters[0]
+        dx2 = -self.model_parameters[3] * x2 + self.model_parameters[4] * x1 * x3
+        dx3 = self.model_parameters[5] * x2 - self.model_parameters[2] * x3
+        return tf.stack([dx1, dx2, dx3])
+
+
+class Lorenz(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0, 2, 20],
+            model_parameters=[28., 10., 8. / 3.],
+            final_time=50,
+            time_steps=5000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y, z = tf.unstack(state)
+        dx = self.model_parameters[1] * (y - x)
+        dy = x * (self.model_parameters[0] - z) - y
+        dz = x * y - self.model_parameters[2] * z
+        return tf.stack([dx, dy, dz])
+
+
+class MorrisLecar(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[-84., 8., 130., 4.4, -60., 2., 0.04, -1.2, 18., 2., 30., 80.],
+            final_time=500,
+            time_steps=1000):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        v, n = tf.unstack(state)
+        dv = (-self.model_parameters[3]
+              * (0.5 * (1 + tf.tanh((v - self.model_parameters[7]) / self.model_parameters[8])))
+              * (v - self.model_parameters[2]) - self.model_parameters[1] * n
+              * (v - self.model_parameters[0]) - self.model_parameters[5]
+              * (v - self.model_parameters[4]) + self.model_parameters[11])
+        dn = (self.model_parameters[6]
+              * ((0.5 * (1 + tf.tanh((v - self.model_parameters[9]) / self.model_parameters[10]))) - n)) \
+            / (1 / tf.cosh((v - self.model_parameters[9]) / (2 * self.model_parameters[10])))
+        return tf.stack([dv, dn])
+
+
+class Vanderpol(Model):
+
+    """
+
+    """
+
+    def __init__(
+            self,
+            initial_conditions=[0.01, 0.01],
+            model_parameters=[-0.05],
+            final_time=50,
+            time_steps=250):
+        self.initial_conditions = np.array(initial_conditions)
+        self.model_parameters = model_parameters
+        self.final_time = final_time
+        self.time_steps = time_steps
+
+    def equations(self, state, t):
+        x, y = tf.unstack(state)
+        dx = y
+        dy = self.model_parameters[0]*y*(1 - x**2) - x
+        return tf.stack([dx, dy])
+
+
+def plotface(arg1, arg2=None, xlim=None, ylim=None, xlabel=None, ylabel=None, grid=None):
+    plt.figure()
+    if arg2 is not None:
+        plt.plot(arg1, arg2)
+    else:
+        plt.plot(arg1)
+    if xlim is not None:
+        plt.xlim(xlim)
+    if ylim is not None:
+        plt.ylim(ylim)
+    if xlabel is not None:
+        plt.xlabel(xlabel)
+    if ylabel is not None:
+        plt.ylabel(ylabel)
+    if grid is not None:
+        plt.grid()
+    return plt.show()
