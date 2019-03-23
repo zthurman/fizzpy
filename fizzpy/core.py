@@ -96,6 +96,10 @@ class Model:
         output = state.T
         return output
 
+    def solve(self):
+        self.solution = self.tf_session(self.equations, self.initial_conditions)
+        return self.solution
+
 
 class CoupledDampedSHM(Model):
 
@@ -126,10 +130,6 @@ class CoupledDampedSHM(Model):
             - (self.model_parameters[0] / self.model_parameters[3]) * y1
         return tf.stack([dx, dy, dx1, dy1])
 
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
-
 
 class DampedSHM(Model):
 
@@ -154,10 +154,6 @@ class DampedSHM(Model):
         dy = (-self.model_parameters[0] * y - self.model_parameters[1] * x) / self.model_parameters[2]
         return tf.stack([dx, dy])
 
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
-
 
 class FitzhughNagumo(Model):
 
@@ -181,10 +177,6 @@ class FitzhughNagumo(Model):
         dv = self.model_parameters[2] * (v + w - (v**3/3) + self.model_parameters[3])
         dw = -1/self.model_parameters[2] * (v - self.model_parameters[0] + self.model_parameters[1]*w)
         return tf.stack([dv, dw])
-
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
 
 
 class HindmarshRose(Model):
@@ -211,10 +203,6 @@ class HindmarshRose(Model):
         dy = self.model_parameters[2] - self.model_parameters[3] * (x ** 2) - y
         dz = self.model_parameters[4] * (self.model_parameters[5] * (x - self.model_parameters[7]) - z)
         return tf.stack([dx, dy, dz])
-
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
 
 
 class HodgkinHuxley(Model):
@@ -251,7 +239,7 @@ class HodgkinHuxley(Model):
         dn = alpha_n * (1 - n) - beta_n * n
         dm = alpha_m * (1 - m) - beta_m * m
         dh = alpha_h * (1 - h) - beta_h * h
-        return hp.tf.stack([di, dn, dm, dh])
+        return tf.stack([di, dn, dm, dh])
 
     def solve(self):
         i, n, m, h = self.tf_session(self.equations, self.initial_conditions)
@@ -283,10 +271,6 @@ class HIV(Model):
         dx3 = self.model_parameters[5] * x2 - self.model_parameters[2] * x3
         return tf.stack([dx1, dx2, dx3])
 
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
-
 
 class Lorenz(Model):
 
@@ -311,10 +295,6 @@ class Lorenz(Model):
         dy = x * (self.model_parameters[0] - z) - y
         dz = x * y - self.model_parameters[2] * z
         return tf.stack([dx, dy, dz])
-
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
 
 
 class MorrisLecar(Model):
@@ -346,10 +326,6 @@ class MorrisLecar(Model):
             / (1 / tf.cosh((v - self.model_parameters[9]) / (2 * self.model_parameters[10])))
         return tf.stack([dv, dn])
 
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
-
 
 class Vanderpol(Model):
 
@@ -374,6 +350,3 @@ class Vanderpol(Model):
         dy = self.model_parameters[0]*y*(1 - x**2) - x
         return tf.stack([dx, dy])
 
-    def solve(self):
-        self.solution = self.tf_session(self.equations, self.initial_conditions)
-        return self.solution
