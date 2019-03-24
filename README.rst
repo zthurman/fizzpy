@@ -6,6 +6,7 @@ An interdisciplinary library of mathematical models for Fizzicks, Math, Biology 
 
 Goals
 ^^^^^
-* Reduce code overhead for user interaction with mathematical models
-* Allow users to spend less time figuring out how to formulate the code and more time exploring model behavior
+* Reduce code overhead for interaction with mathematical models
+* Spend less time figuring out how to formulate the code and more time exploring model behavior
 * Expose tools that assist with exploring model solutions
+

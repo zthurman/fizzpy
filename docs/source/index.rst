@@ -9,6 +9,7 @@
    :maxdepth: 2
    :caption: Contents:
 
+   documentation
 
 Indices and tables
 ==================
