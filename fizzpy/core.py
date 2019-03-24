@@ -4,7 +4,7 @@ import tensorflow as tf
 
 class Model:
 
-    """ Model class
+    """Model class
     Used for storing methods that generalize to all models.
     """
 
@@ -97,13 +97,32 @@ class Model:
         return output
 
     def solve(self):
+        """Solve
+
+        Solves the provided equations in a Tensorflow session with either the provided
+        or the default initial conditions.
+
+        Parameters
+        ----------
+        self
+            Current instance state.
+
+        Returns
+        -------
+        np.ndarray
+            Returns the solution from the Tensorflow session.
+
+        """
         self.solution = self.tf_session(self.equations, self.initial_conditions)
         return self.solution
 
 
 class CoupledDampedSHM(Model):
 
-    """
+    """Coupled Damped Simple Harmonic Motion
+
+    This system of ODEs models coupled damped simple harmonic motion, such as two carts
+    on a track coupled to each other and each edge of the track by springs.
 
     """
 
@@ -133,7 +152,9 @@ class CoupledDampedSHM(Model):
 
 class DampedSHM(Model):
 
-    """
+    """Damped Simple Harmonic Motion
+
+    This system of ODEs models damped simple harmonic motion.
 
     """
 
@@ -157,7 +178,10 @@ class DampedSHM(Model):
 
 class FitzhughNagumo(Model):
 
-    """
+    """Fitzhugh-Nagumo neuron model
+
+    This system of ODEs is an implementation of the Fitzhugh-Nagumo
+    model for the action potential of a point neuron.
 
     """
 
@@ -181,7 +205,10 @@ class FitzhughNagumo(Model):
 
 class HindmarshRose(Model):
 
-    """
+    """Hindmarsh-Rose neuron model
+
+    This system of ODEs is an implementation of the Hindmarsh-Rose
+    model for the action potential of a point neuron.
 
     """
 
@@ -207,7 +234,10 @@ class HindmarshRose(Model):
 
 class HodgkinHuxley(Model):
 
-    """
+    """Hodgkin-Huxley neuron model
+
+    This system of ODEs is an implementation of the Hodgkin-Huxley
+    model for the action potential of a point neuron.
 
     """
 
@@ -249,7 +279,10 @@ class HodgkinHuxley(Model):
 
 class HIV(Model):
 
-    """
+    """HIV dynamics
+
+    This system of ODEs is an implementation of a model for HIV
+    dynamics in a T-cell population.
 
     """
 
@@ -274,7 +307,10 @@ class HIV(Model):
 
 class Lorenz(Model):
 
-    """
+    """Lorenz equations
+
+    This system of ODEs is an implementation of the Lorenz equations
+    which model atmospheric convection.
 
     """
 
@@ -299,7 +335,10 @@ class Lorenz(Model):
 
 class MorrisLecar(Model):
 
-    """
+    """Morris-Lecar neuron model
+
+    This system of ODEs is an implementation of the Morris-Lecar
+    model for the action potential of a point neuron.
 
     """
 
@@ -329,7 +368,11 @@ class MorrisLecar(Model):
 
 class Vanderpol(Model):
 
-    """
+    """Van der pol oscillator
+
+    This system of ODEs is an implementation of the van der pol
+    oscillator, a commonly used introductory system in the study
+    of dynamical systems.
 
     """
 
@@ -349,4 +392,3 @@ class Vanderpol(Model):
         dx = y
         dy = self.model_parameters[0]*y*(1 - x**2) - x
         return tf.stack([dx, dy])
-
