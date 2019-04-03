@@ -324,6 +324,7 @@ class Lorenz(Model):
         self.model_parameters = model_parameters
         self.final_time = final_time
         self.time_steps = time_steps
+        self.state = tf.tensor()
 
     def equations(self, state, t):
         x, y, z = tf.unstack(state)

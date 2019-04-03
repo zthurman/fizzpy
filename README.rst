@@ -1,6 +1,12 @@
 fizzpy
 ======
 
+
+.. image:: https://readthedocs.org/projects/fizzpy/badge/?version=latest
+:target: https://fizzpy.rtfd.io/en/latest/?badge=latest
+:alt: Documentation Status
+
+
 An interdisciplinary library of mathematical models for Fizzicks, Math, Biology and Engineering
 -----------------------------------------------------------------------------------------------
 
